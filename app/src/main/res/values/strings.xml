@@ -3,6 +3,21 @@
 
     <string name="lblLogoApp">Powered by JM and JQ</string>
 
+    <string name="lblNombreUsuario">Usuario</string>
+    <string name="lblClaveUsuario">Contraseña</string>
+    <string name="lblCorreoElectronico">Email</string>
+    <string name="lblRepetirCorreoElectronico">Repetir Email</string>
+
+    <string name="btnCrearUsuario">Crear Usuario</string>
+    <string name="btnCancelar">Cancelar</string>
+    <string name="btnLimpiar">Limpiar</string>
+
+    <string name="txtNombreUsuario">Nombre de Usuario</string>
+    <string name="txtClaveUsuario">Contraseña</string>
+    <string name="txtCorreoElectronico">Email</string>
+    <string name="txtRepetirCorreoElectronico">Repita su email</string>
+
+
     <string name="lblUsuarioLogin">Usuario</string>
     <string name="lblClaveLogin">Contraseña</string>
     <string name="txtUsuarioLogin">Introduzca su usuario</string>

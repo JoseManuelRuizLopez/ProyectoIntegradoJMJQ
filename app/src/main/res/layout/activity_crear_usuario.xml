@@ -4,4 +4,151 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CrearUsuario"/>
+    android:background="@color/colorCrearUsuario"
+    tools:context=".CrearUsuario">
+
+    <TextView
+        android:id="@+id/lblNombreUsuarioCU"
+        android:layout_width="110dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="68dp"
+        android:text="@string/lblNombreUsuario"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/lblClaveUsuarioCU"
+        android:layout_width="110dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="28dp"
+        android:text="@string/lblClaveUsuario"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="@+id/lblNombreUsuarioCU"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lblNombreUsuarioCU" />
+
+    <TextView
+        android:id="@+id/lblEmailCU"
+        android:layout_width="110dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="28dp"
+        android:text="@string/lblCorreoElectronico"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="@+id/lblClaveUsuarioCU"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lblClaveUsuarioCU" />
+
+    <TextView
+        android:id="@+id/lblRepetirEmailCU"
+        android:layout_width="136dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:text="@string/lblRepetirCorreoElectronico"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="@+id/lblEmailCU"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lblEmailCU" />
+
+    <EditText
+        android:id="@+id/txtNombreUsuarioCU"
+        android:layout_width="216dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="56dp"
+        android:ems="10"
+        android:hint="@string/txtNombreUsuario"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.567"
+        app:layout_constraintStart_toEndOf="@+id/lblNombreUsuarioCU"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/txtClaveUsuarioCU"
+        android:layout_width="216dp"
+        android:layout_height="41dp"
+        android:layout_marginTop="36dp"
+        android:ems="10"
+        android:hint="@string/txtClaveUsuario"
+        android:inputType="textPassword"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/txtNombreUsuarioCU"
+        app:layout_constraintTop_toBottomOf="@+id/txtNombreUsuarioCU" />
+
+    <EditText
+        android:id="@+id/txtEmailUsuarioCU"
+        android:layout_width="216dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="24dp"
+        android:ems="10"
+        android:hint="@string/txtCorreoElectronico"
+        android:inputType="textEmailAddress"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/txtClaveUsuarioCU"
+        app:layout_constraintTop_toBottomOf="@+id/txtClaveUsuarioCU" />
+
+    <EditText
+        android:id="@+id/txtRepetirEmailCU"
+        android:layout_width="216dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="24dp"
+        android:ems="10"
+        android:hint="@string/txtRepetirCorreoElectronico"
+        android:inputType="textEmailAddress"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/txtEmailUsuarioCU"
+        app:layout_constraintTop_toBottomOf="@+id/txtEmailUsuarioCU" />
+
+    <Button
+        android:id="@+id/btnCrearUsuario"
+        style="@android:style/Widget.Holo.Button.Small"
+        android:layout_width="183dp"
+        android:layout_height="42dp"
+        android:layout_marginStart="112dp"
+        android:layout_marginTop="100dp"
+        android:text="@string/btnCrearUsuario"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.017"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lblRepetirEmailCU" />
+
+    <Button
+        android:id="@+id/btnLimpiar"
+        style="@android:style/Widget.Holo.Button.Small"
+        android:layout_width="125dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="112dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/btnLimpiar"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.178"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnCrearUsuario" />
+
+    <Button
+        android:id="@+id/btnCancelar"
+        style="@android:style/Widget.Holo.Button.Small"
+        android:layout_width="122dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="16dp"
+        android:text="@string/btnCancelar"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.944"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnLimpiar"
+        app:layout_constraintVertical_bias="1.0" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
