@@ -2,4 +2,15 @@
     <string name="app_name">ProyectoIntegradoJMJQ</string>
 
     <string name="lblLogoApp">Powered by JM and JQ</string>
+
+    <string name="lblUsuarioLogin">Usuario</string>
+    <string name="lblClaveLogin">Contraseña</string>
+    <string name="txtUsuarioLogin">Introduzca su usuario</string>
+    <string name="txtClaveLogin">Introduzca su contraseña</string>
+    <string name="swMantenerSesionLogin">Mantener sesión iniciada</string>
+    <string name="btnEntrarLogin">Entrar</string>
+    <string name="btnRecordarClaveLogin">Recordar Contraseña</string>
+    <string name="btnRegistrarLogin">¿Eres Nuevo?</string>
+
+
 </resources>
