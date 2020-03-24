@@ -33,11 +33,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.logoApp:
                 Intent intentLogin = new Intent(MainActivity.this, Login.class);
                 startActivity(intentLogin);
+                finish();
                 break;
 
             case R.id.lblLogoApp:
                 Intent intentCrearUsuario = new Intent(MainActivity.this, CrearUsuario.class);
                 startActivity(intentCrearUsuario);
+                finish();
                 break;
         }
     }
