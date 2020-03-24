@@ -95,7 +95,7 @@ public class CrearUsuario extends AppCompatActivity implements View.OnClickListe
                                 postDataParams.put("claveUsuario", claveUsuario);
                                 postDataParams.put("emailUsuario", emailUsuario);
 
-                                URL url = new URL("http://192.168.1.66/prueba.php");
+                                URL url = new URL("http://192.168.1.42/prueba.php");
                                 HttpURLConnection connection = (HttpURLConnection)url.openConnection();
                                 connection.setReadTimeout(15000);
                                 connection.setConnectTimeout(15000);
@@ -148,9 +148,9 @@ public class CrearUsuario extends AppCompatActivity implements View.OnClickListe
                     });
                 }
                 else
-                    {
-                        txtRepetirClaveUsuario.setError(getString(R.string.errorClaveUsuarioRepetidaCU));
-                    }
+                {
+                    txtRepetirClaveUsuario.setError(getString(R.string.errorClaveUsuarioRepetidaCU));
+                }
 
 
 
@@ -184,7 +184,7 @@ public class CrearUsuario extends AppCompatActivity implements View.OnClickListe
                 first = false;
             }
             else
-                {
+            {
                 result.append("&");
                 result.append(URLEncoder.encode(entry.getKey(), "UTF-8"));
                 result.append("=");
