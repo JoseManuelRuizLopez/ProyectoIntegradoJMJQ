@@ -1,20 +1,27 @@
 <resources>
+
     <string name="app_name">ProyectoIntegradoJMJQ</string>
 
     <string name="lblLogoApp">Powered by JM and JQ</string>
 
+
     <!-- Crear Usuario -->
-    <string name="lblNombreUsuario">Usuario</string>
-    <string name="lblClaveUsuario">Contraseña</string>
-    <string name="lblCorreoElectronico">Email</string>
-    <string name="lblRepetirCorreoElectronico">Repetir Email</string>
-    <string name="btnCrearUsuario">Crear Usuario</string>
-    <string name="btnCancelar">Cancelar</string>
-    <string name="btnLimpiar">Limpiar</string>
-    <string name="txtNombreUsuario">Nombre de Usuario</string>
-    <string name="txtClaveUsuario">Contraseña</string>
-    <string name="txtCorreoElectronico">Email</string>
-    <string name="txtRepetirCorreoElectronico">Repita su email</string>
+    <string name="lblNombreUsuarioCU">Usuario</string>
+    <string name="lblClaveUsuarioCU">Contraseña</string>
+    <string name="lblRepetirClaveCU">Repetir Contraseña</string>
+    <string name="lblEmailCU">Email</string>
+
+    <string name="txtNombreUsuarioCU">Nombre de Usuario</string>
+    <string name="txtClaveUsuarioCU">Contraseña</string>
+    <string name="txtEmailCU">Email</string>
+    <string name="txtRepetirClaveCU">Repetir Contraseña</string>
+
+    <string name="btnCrearUsuarioCU">Crear Usuario</string>
+    <string name="btnCancelarCU">Cancelar</string>
+    <string name="btnLimpiarCU">Limpiar</string>
+
+
+
 
     <!-- Login -->
     <string name="lblUsuarioLogin">Usuario</string>
@@ -25,6 +32,7 @@
     <string name="btnEntrarLogin">Entrar</string>
     <string name="btnRecordarClaveLogin">¿Has olvidado la contraseña?</string>
     <string name="btnRegistrarLogin">¿Eres Nuevo?</string>
+
 
     <!-- Recordar contraseña -->
     <string name="lblRecordarClaveRC">Escriba aquí el correo al que quiere que le enviemos una nueva contraseña provisional</string>

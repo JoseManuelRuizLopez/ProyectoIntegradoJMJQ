@@ -34,11 +34,11 @@ public class CrearUsuario extends AppCompatActivity implements View.OnClickListe
         txtNombreUsuario = findViewById(R.id.txtNombreUsuarioCU);
         txtClaveUsuario = findViewById(R.id.txtClaveUsuarioCU);
         txtEmailUsuario = findViewById(R.id.txtEmailUsuarioCU);
-        txtRepetirEmailUsuario = findViewById(R.id.txtRepetirEmailCU);
+        txtRepetirEmailUsuario = findViewById(R.id.txtEmailCU);
 
-        btnCrearUsuario = findViewById(R.id.btnCrearUsuario);
-        btnLimpiar = findViewById(R.id.btnLimpiar);
-        btnCancelar = findViewById(R.id.btnCancelar);
+        btnCrearUsuario = findViewById(R.id.btnCrearUsuarioCU);
+        btnLimpiar = findViewById(R.id.btnLimpiarCU);
+        btnCancelar = findViewById(R.id.btnCancelarCU);
 
         btnCrearUsuario.setOnClickListener(this);
         btnLimpiar.setOnClickListener(this);
@@ -52,7 +52,7 @@ public class CrearUsuario extends AppCompatActivity implements View.OnClickListe
         switch(v.getId())
         {
 
-            case R.id.btnCrearUsuario:
+            case R.id.btnCrearUsuarioCU:
 
                 nombreUsuario = txtNombreUsuario.getText().toString();
                 claveUsuario =  txtClaveUsuario.getText().toString();
@@ -62,7 +62,7 @@ public class CrearUsuario extends AppCompatActivity implements View.OnClickListe
                 txtNombreUsuario.setText(claveUsuario);
                 break;
 
-            case R.id.btnLimpiar:
+            case R.id.btnLimpiarCU:
 
                 txtNombreUsuario.setText("");
                 txtClaveUsuario.setText("");
@@ -70,10 +70,11 @@ public class CrearUsuario extends AppCompatActivity implements View.OnClickListe
                 txtRepetirEmailUsuario.setText("");
                 break;
 
-            case R.id.btnCancelar:
+            case R.id.btnCancelarCU:
 
                 Intent intencionCancelar = new Intent(CrearUsuario.this, Login.class);
                 startActivity(intencionCancelar);
+                finish();
                 break;
 
         }
