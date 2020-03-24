@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/fondappac"
     tools:context=".Login">
 
     <TextView
@@ -74,6 +75,7 @@
 
     <Button
         android:id="@+id/btnEntrarLogin"
+        style="@style/estiloBoton"
         android:layout_width="177dp"
         android:layout_height="45dp"
         android:text="@string/btnEntrarLogin"
@@ -84,32 +86,21 @@
         app:layout_constraintTop_toBottomOf="@+id/swMantenerSesion"
         app:layout_constraintVertical_bias="0.129" />
 
-    <Button
-        android:id="@+id/btnRecordarClaveLogin"
-        android:layout_width="280dp"
-        android:layout_height="45dp"
-        android:text="@string/btnRecordarClaveLogin"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnEntrarLogin"
-        app:layout_constraintVertical_bias="0.084" />
-
     <ProgressBar
         android:id="@+id/progressBar2"
         style="?android:attr/progressBarStyle"
         android:layout_width="125dp"
         android:layout_height="128dp"
+        android:indeterminateTint="@color/azulC"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnRecordarClaveLogin"
-        app:layout_constraintVertical_bias="0.205" />
+        app:layout_constraintTop_toBottomOf="@+id/lblRecordarClave"
+        app:layout_constraintVertical_bias="0.254" />
 
     <Button
         android:id="@+id/btnRegistrarLogin"
+        style="@style/estiloBoton"
         android:layout_width="192dp"
         android:layout_height="43sp"
         android:text="@string/btnRegistrarLogin"
@@ -120,5 +111,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/progressBar2"
         app:layout_constraintVertical_bias="0.63" />
+
+    <TextView
+        android:id="@+id/lblRecordarClave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/btnRecordarClaveLogin"
+        android:textColor="@color/azulO"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnEntrarLogin"
+        app:layout_constraintVertical_bias="0.084" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

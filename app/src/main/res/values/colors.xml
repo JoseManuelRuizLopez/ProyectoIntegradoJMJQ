@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
+    <color name="colorPrimary">@color/azulI</color>
+    <color name="colorPrimaryDark">#000000</color>
+    <color name="colorAccent">@color/azulO</color>
 
     <color name="colorCrearUsuario">#a9a9a9</color>
+    
+    <color name="azulC">#0099ff</color>
+    <color name="azulI">#008ae6</color>
+    <color name="azulO">#006bb3</color>
+    <color name="blanco">#ffffff</color>
 </resources>
