@@ -2,19 +2,34 @@ package com.example.proyectointegradojmjq;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.net.ssl.HttpsURLConnection;
 
 public class CrearUsuario extends AppCompatActivity implements View.OnClickListener
 {
 
     EditText txtNombreUsuario;
     EditText txtClaveUsuario;
+    EditText txtRepetirClaveUsuario;
     EditText txtEmailUsuario;
-    EditText txtRepetirEmailUsuario;
 
     Button btnCrearUsuario;
     Button btnLimpiar;
@@ -22,8 +37,8 @@ public class CrearUsuario extends AppCompatActivity implements View.OnClickListe
 
     String nombreUsuario;
     String claveUsuario;
+    String repetirClaveUsuario;
     String emailUsuario;
-    String repetirEmailUsuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -33,8 +48,9 @@ public class CrearUsuario extends AppCompatActivity implements View.OnClickListe
 
         txtNombreUsuario = findViewById(R.id.txtNombreUsuarioCU);
         txtClaveUsuario = findViewById(R.id.txtClaveUsuarioCU);
+        txtRepetirClaveUsuario = findViewById(R.id.txtRepetirClaveUsuarioCU);
         txtEmailUsuario = findViewById(R.id.txtEmailUsuarioCU);
-        txtRepetirEmailUsuario = findViewById(R.id.txtEmailCU);
+
 
         btnCrearUsuario = findViewById(R.id.btnCrearUsuarioCU);
         btnLimpiar = findViewById(R.id.btnLimpiarCU);
@@ -56,10 +72,88 @@ public class CrearUsuario extends AppCompatActivity implements View.OnClickListe
 
                 nombreUsuario = txtNombreUsuario.getText().toString();
                 claveUsuario =  txtClaveUsuario.getText().toString();
+                repetirClaveUsuario = txtRepetirClaveUsuario.getText().toString();
                 emailUsuario = txtEmailUsuario.getText().toString();
-                repetirEmailUsuario = txtRepetirEmailUsuario.getText().toString();
 
-                txtNombreUsuario.setText(claveUsuario);
+                /*if (nombreUsuario.length() <= 3)
+                {
+                    txtNombreUsuario.setError(getString(R.string.errorNombreUsuarioCU));
+                }*/
+
+                if (claveUsuario.equals(repetirClaveUsuario))
+                {
+                    AsyncTask.execute(new Runnable()
+                    {
+                        @Override
+                        public void run()
+                        {
+                            try
+                            {
+                                String respuesta = "";
+                                HashMap<String, String> postDataParams = new HashMap<String, String>();
+                                postDataParams.put("nombreUsuario", nombreUsuario);
+                                postDataParams.put("claveUsuario", claveUsuario);
+                                postDataParams.put("emailUsuario", emailUsuario);
+
+                                URL url = new URL("http://192.168.1.66/prueba.php");
+                                HttpURLConnection connection = (HttpURLConnection)url.openConnection();
+                                connection.setReadTimeout(15000);
+                                connection.setConnectTimeout(15000);
+                                connection.setRequestMethod("POST");
+                                connection.setDoInput(true);
+                                connection.setDoOutput(true);
+
+                                OutputStream os = connection.getOutputStream();
+                                BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
+                                writer.write(getPostDataString(postDataParams));
+
+                                writer.flush();
+                                writer.close();
+                                os.close();
+
+                                int responseCode = connection.getResponseCode();
+
+                                if (responseCode == HttpsURLConnection.HTTP_OK)
+                                {
+                                    String line;
+                                    BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+
+                                    while ((line=br.readLine()) != null)
+                                    {
+                                        respuesta += line;
+                                    }
+                                }
+                                else
+                                {
+                                    respuesta = "";
+                                }
+                                connection.getResponseCode();
+
+                                if (connection.getResponseCode() == 200)
+                                {
+                                    Log.println(Log.ASSERT,"Registro exitoso", "Registrado con éxito: " + respuesta);
+                                    connection.disconnect();
+                                }
+                                else
+                                {
+                                    Log.println(Log.ASSERT,"Error", "Error");
+                                }
+                            }
+                            catch(Exception e)
+                            {
+                                Log.println(Log.ASSERT,"Excepción", e.getMessage());
+                            }
+                            finish();
+                        }
+                    });
+                }
+                else
+                    {
+                        txtRepetirClaveUsuario.setError(getString(R.string.errorClaveUsuarioRepetidaCU));
+                    }
+
+
+
                 break;
 
             case R.id.btnLimpiarCU:
@@ -67,16 +161,36 @@ public class CrearUsuario extends AppCompatActivity implements View.OnClickListe
                 txtNombreUsuario.setText("");
                 txtClaveUsuario.setText("");
                 txtEmailUsuario.setText("");
-                txtRepetirEmailUsuario.setText("");
+                txtRepetirClaveUsuario.setText("");
                 break;
 
             case R.id.btnCancelarCU:
 
-                Intent intencionCancelar = new Intent(CrearUsuario.this, Login.class);
-                startActivity(intencionCancelar);
                 finish();
                 break;
 
         }
+    }
+
+    private String getPostDataString(HashMap<String, String> params) throws UnsupportedEncodingException
+    {
+        StringBuilder result = new StringBuilder();
+        boolean first = true;
+
+        for(Map.Entry<String, String> entry : params.entrySet())
+        {
+            if (first)
+            {
+                first = false;
+            }
+            else
+                {
+                result.append("&");
+                result.append(URLEncoder.encode(entry.getKey(), "UTF-8"));
+                result.append("=");
+                result.append(URLEncoder.encode(entry.getValue(), "UTF-8"));
+            }
+        }
+        return result.toString();
     }
 }
