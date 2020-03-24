@@ -87,7 +87,7 @@
         app:layout_constraintVertical_bias="0.129" />
 
     <ProgressBar
-        android:id="@+id/progressBar2"
+        android:id="@+id/cargaLogin"
         style="?android:attr/progressBarStyle"
         android:layout_width="125dp"
         android:layout_height="128dp"
@@ -109,7 +109,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.926"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/progressBar2"
+        app:layout_constraintTop_toBottomOf="@+id/cargaLogin"
         app:layout_constraintVertical_bias="0.63" />
 
     <TextView

@@ -8,15 +8,14 @@
 
     <ImageView
         android:id="@+id/logoApp"
-        android:layout_width="285dp"
-        android:layout_height="374dp"
+        android:layout_width="343dp"
+        android:layout_height="425dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.579"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.422"
-        app:srcCompat="@drawable/logito" />
+        app:layout_constraintVertical_bias="0.261"
+        app:srcCompat="@drawable/chaterinoslogo" />
 
     <TextView
         android:id="@+id/lblLogoApp"
@@ -26,8 +25,7 @@
         android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.607"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/logoApp"
-        app:layout_constraintVertical_bias="0.496" />
+        app:layout_constraintVertical_bias="0.4" />
 </androidx.constraintlayout.widget.ConstraintLayout>

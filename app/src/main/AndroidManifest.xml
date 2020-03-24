@@ -12,10 +12,17 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".RecordarClave"></activity>
-        <activity android:name=".CrearUsuario" />
-        <activity android:name=".Login" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".RecordarClave"
+            android:label="Recordar Contraseña"></activity>
+
+        <activity android:name=".CrearUsuario"
+            android:label="Registro de Usuario"/>
+
+        <activity android:name=".Login"
+            android:label="Inicio de Sesión"/>
+
+        <activity android:name=".MainActivity"
+            android:theme="@style/quitarTitulo">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

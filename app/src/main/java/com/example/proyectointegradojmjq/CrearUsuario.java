@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -35,10 +36,13 @@ public class CrearUsuario extends AppCompatActivity implements View.OnClickListe
     Button btnLimpiar;
     Button btnCancelar;
 
+    ProgressBar cargaCU;
+
     String nombreUsuario;
     String claveUsuario;
     String repetirClaveUsuario;
     String emailUsuario;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -51,15 +55,17 @@ public class CrearUsuario extends AppCompatActivity implements View.OnClickListe
         txtRepetirClaveUsuario = findViewById(R.id.txtRepetirClaveUsuarioCU);
         txtEmailUsuario = findViewById(R.id.txtEmailUsuarioCU);
 
-
         btnCrearUsuario = findViewById(R.id.btnCrearUsuarioCU);
         btnLimpiar = findViewById(R.id.btnLimpiarCU);
         btnCancelar = findViewById(R.id.btnCancelarCU);
+
+        cargaCU = findViewById(R.id.cargaCU);
 
         btnCrearUsuario.setOnClickListener(this);
         btnLimpiar.setOnClickListener(this);
         btnCancelar.setOnClickListener(this);
 
+        cargaCU.setVisibility(View.GONE);
     }
 
     @Override
@@ -186,10 +192,11 @@ public class CrearUsuario extends AppCompatActivity implements View.OnClickListe
             else
             {
                 result.append("&");
-                result.append(URLEncoder.encode(entry.getKey(), "UTF-8"));
-                result.append("=");
-                result.append(URLEncoder.encode(entry.getValue(), "UTF-8"));
             }
+
+            result.append(URLEncoder.encode(entry.getKey(), "UTF-8"));
+            result.append("=");
+            result.append(URLEncoder.encode(entry.getValue(), "UTF-8"));
         }
         return result.toString();
     }

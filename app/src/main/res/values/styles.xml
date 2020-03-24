@@ -9,6 +9,13 @@
     </style>
 
 
+    If your application theme is AppTheme(or anything else), then in styles.xml add the following code:
+
+    <style name="quitarTitulo" parent="AppTheme">
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+    </style>
+
     <style name="estiloBoton">
         <item name="android:textColor">@color/blanco</item>
         <item name="android:background">@color/azulO</item>
