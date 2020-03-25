@@ -25,9 +25,6 @@
     <string name="errorEmailUsuarioCU">Escriba un email válido</string>
 
 
-
-
-
     <!-- Login -->
     <string name="lblUsuarioLogin">Usuario</string>
     <string name="lblClaveLogin">Contraseña</string>
