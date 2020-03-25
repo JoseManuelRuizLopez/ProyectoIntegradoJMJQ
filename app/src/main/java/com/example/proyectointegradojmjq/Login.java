@@ -2,6 +2,7 @@ package com.example.proyectointegradojmjq;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -12,10 +13,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
 
+import org.apache.commons.codec.binary.Hex;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -32,6 +37,10 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
     EditText txtUsuarioLogin, txtClaveLogin;
 
+    Switch swMantenerSesion;
+
+    SharedPreferences sharedPref;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,12 +52,15 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         cargaLogin = findViewById(R.id.cargaLogin);
         txtUsuarioLogin = findViewById(R.id.txtUsuarioLogin);
         txtClaveLogin = findViewById(R.id.txtClaveLogin);
+        swMantenerSesion = findViewById(R.id.swMantenerSesion);
 
         btnRegistrarLogin.setOnClickListener(this);
         lblRecordarClave.setOnClickListener(this);
         btnEntrarLogin.setOnClickListener(this);
 
         cargaLogin.setVisibility(View.GONE);
+
+        sharedPref = getSharedPreferences("logeado", Context.MODE_PRIVATE);
     }
 
     @Override
@@ -69,26 +81,19 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
                 final String usuario = txtUsuarioLogin.getText().toString();
                 final String clave = txtClaveLogin.getText().toString();
+                final String claveEncriptada = new String(Hex.encodeHex(DigestUtils.md5(clave)));
 
                 String respuesta = "";
 
                 AsyncTask.execute(new Runnable() {
                     @Override
                     public void run() {
-                        // All your networking logic
-                        // should be here
                         try {
-                            // Create URL
                             URL url = new URL("http://192.168.1.42/prueba.php?nombreUsuario=" + usuario + "");
-
-                            //Log.println(Log.ASSERT, "Resultado", "Registromodificado:" + clave);
-                            // Create connection
                             HttpURLConnection myConnection = (HttpURLConnection)
                                     url.openConnection();
-                            // Establecer método. Por defecto GET.
                             myConnection.setRequestMethod("GET");
                             if (myConnection.getResponseCode() == 200) {
-                                // Success
                                 InputStream responseBody =
                                         myConnection.getInputStream();
                                 InputStreamReader responseBodyReader =
@@ -103,22 +108,32 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
                                 JSONObject jsonobject = new JSONObject(responseStrBuilder.toString());
 
-                                String respuesta = jsonobject.getString("mensaje");
+                                String respuesta = jsonobject.getString("claveUsuario");
                                 responseBody.close();
                                 responseBodyReader.close();
                                 myConnection.disconnect();
 
                                 Log.println(Log.ASSERT, "Resultado", respuesta);
 
-                                if(respuesta.equals(clave))
-                                {
-                                    Intent intentMenuPrincipal = new Intent(Login.this, MenuPrincipal.class);
-                                    startActivity(intentMenuPrincipal);
-                                    finish();
-                                }
-                                else
-                                {
-                                    Snackbar.make(v, "El usuario o la contraseña son incorrectas", Snackbar.LENGTH_LONG).setAction("Action", null).show();;
+                                if (respuesta.equals(claveEncriptada)) {
+                                    if (swMantenerSesion.isChecked()) {
+                                        SharedPreferences.Editor editor = sharedPref.edit();
+                                        editor.putBoolean("isLogged", true);
+
+                                        editor.commit();
+
+                                        Intent intentMenuPrincipal = new Intent(Login.this, MenuPrincipal.class);
+                                        startActivity(intentMenuPrincipal);
+                                        finish();
+                                    }
+                                    else
+                                    {
+                                        Intent intentMenuPrincipal = new Intent(Login.this, MenuPrincipal.class);
+                                        startActivity(intentMenuPrincipal);
+                                        finish();
+                                    }
+                                } else {
+                                    Snackbar.make(v, "El usuario o la contraseña son incorrectas", Snackbar.LENGTH_LONG).setAction("Action", null).show();
                                 }
 
 /*
@@ -146,15 +161,19 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 */
                             } else {
                                 // Error handling code goes here
-                                Snackbar.make(v, "Error", Snackbar.LENGTH_LONG).setAction("Action", null).show();;
-                                Log.println(Log.ASSERT, "Error", "Error");
+                                Snackbar.make(v, "Ha ocurrido un error", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+
                             }
                         } catch (Exception e) {
-                            Snackbar.make(v, "Excepción", Snackbar.LENGTH_LONG).setAction("Action", null).show();;
-                            Log.println(Log.ASSERT, "Excepción", e.getMessage());
+                            Snackbar.make(v, "El usuario o la contraseña son incorrectas", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+
                         }
                     }
                 });
+
+                cargaLogin.setVisibility(View.GONE);
+
+                break;
         }
     }
 }
