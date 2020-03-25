@@ -1,7 +1,5 @@
 package com.example.proyectointegradojmjq;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -11,6 +9,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -74,7 +74,7 @@ public class CrearUsuario extends AppCompatActivity implements View.OnClickListe
         btnLimpiar.setOnClickListener(this);
         btnCancelar.setOnClickListener(this);
 
-        sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+        sharedPref = getSharedPreferences("logeado", Context.MODE_PRIVATE);
 
         cargaCU.setVisibility(View.GONE);
     }
