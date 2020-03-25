@@ -1,21 +1,21 @@
 package com.example.proyectointegradojmjq;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     ImageView logoApp;
-
     TextView txt;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -24,7 +24,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         txt = findViewById(R.id.lblLogoApp);
         txt.setOnClickListener(this);
-
     }
 
     @Override

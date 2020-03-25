@@ -8,7 +8,7 @@
     tools:context=".RecordarClave">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/txtMensajeRC"
         android:layout_width="377dp"
         android:layout_height="47dp"
         android:text="@string/lblRecordarClaveRC"
@@ -25,11 +25,11 @@
         android:layout_height="47dp"
         android:ems="10"
         android:hint="@string/txtCorreoRC"
-        android:inputType="textPersonName"
+        android:inputType="textEmailAddress"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/txtMensajeRC"
         app:layout_constraintVertical_bias="0.026" />
 
     <Button
