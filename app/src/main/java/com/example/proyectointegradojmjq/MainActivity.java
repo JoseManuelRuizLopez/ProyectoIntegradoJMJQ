@@ -12,6 +12,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     ImageView logoApp;
 
+    TextView txt;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,18 +21,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         logoApp = findViewById(R.id.logoApp);
         logoApp.setOnClickListener(this);
+
+        txt = findViewById(R.id.lblLogoApp);
+        txt.setOnClickListener(this);
+
     }
 
     @Override
-    public void onClick(View v) {
-
-        switch (v.getId()) {
+    public void onClick(View v)
+    {
+        switch (v.getId())
+        {
             case R.id.logoApp:
                 Intent intentLogin = new Intent(MainActivity.this, Login.class);
                 startActivity(intentLogin);
                 finish();
                 break;
 
+            case R.id.lblLogoApp:
+                Intent intentNuevo = new Intent(MainActivity.this, CrearUsuario.class);
+                startActivity(intentNuevo);
+                finish();
+                break;
         }
     }
 }

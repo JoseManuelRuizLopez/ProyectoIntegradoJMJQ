@@ -9,7 +9,7 @@
 
     <TextView
         android:id="@+id/lblNombreUsuarioCU"
-        android:layout_width="66dp"
+        android:layout_width="70dp"
         android:layout_height="27dp"
         android:text="@string/lblNombreUsuarioCU"
         android:textSize="18sp"
@@ -22,7 +22,7 @@
 
     <TextView
         android:id="@+id/lblClaveUsuarioCU"
-        android:layout_width="101dp"
+        android:layout_width="104dp"
         android:layout_height="28dp"
         android:text="@string/lblClaveUsuarioCU"
         android:textSize="18sp"
@@ -70,10 +70,10 @@
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.569"
+        app:layout_constraintHorizontal_bias="0.573"
         app:layout_constraintStart_toEndOf="@+id/lblNombreUsuarioCU"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.089" />
+        app:layout_constraintVertical_bias="0.087" />
 
     <EditText
         android:id="@+id/txtClaveUsuarioCU"
@@ -87,7 +87,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/txtNombreUsuarioCU"
         app:layout_constraintTop_toTopOf="@+id/lblClaveUsuarioCU"
-        app:layout_constraintVertical_bias="0.033" />
+        app:layout_constraintVertical_bias="1.0" />
 
     <EditText
         android:id="@+id/txtRepetirClaveUsuarioCU"
@@ -102,7 +102,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/txtClaveUsuarioCU"
         app:layout_constraintTop_toBottomOf="@+id/txtClaveUsuarioCU"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.016" />
 
     <EditText
         android:id="@+id/txtEmailUsuarioCU"
@@ -117,7 +117,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/txtRepetirClaveUsuarioCU"
         app:layout_constraintTop_toBottomOf="@+id/txtRepetirClaveUsuarioCU"
-        app:layout_constraintVertical_bias="0.026" />
+        app:layout_constraintVertical_bias="0.012" />
 
     <Button
         android:id="@+id/btnCrearUsuarioCU"

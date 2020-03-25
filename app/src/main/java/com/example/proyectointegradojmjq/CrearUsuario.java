@@ -2,6 +2,8 @@ package com.example.proyectointegradojmjq;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,6 +11,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+
+import org.apache.commons.codec.binary.Hex;
+import org.apache.commons.codec.digest.DigestUtils;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -43,10 +48,14 @@ public class CrearUsuario extends AppCompatActivity implements View.OnClickListe
     String repetirClaveUsuario;
     String emailUsuario;
 
+    String claveEncriptada;
+
+    SharedPreferences sharedPref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crear_usuario);
 
@@ -65,6 +74,8 @@ public class CrearUsuario extends AppCompatActivity implements View.OnClickListe
         btnLimpiar.setOnClickListener(this);
         btnCancelar.setOnClickListener(this);
 
+        sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+
         cargaCU.setVisibility(View.GONE);
     }
 
@@ -81,13 +92,23 @@ public class CrearUsuario extends AppCompatActivity implements View.OnClickListe
                 repetirClaveUsuario = txtRepetirClaveUsuario.getText().toString();
                 emailUsuario = txtEmailUsuario.getText().toString();
 
-                /*if (nombreUsuario.length() <= 3)
+
+                if (nombreUsuario.length() <= 3)
                 {
                     txtNombreUsuario.setError(getString(R.string.errorNombreUsuarioCU));
-                }*/
-
-                if (claveUsuario.equals(repetirClaveUsuario))
+                }
+                else if (!claveUsuario.equals(repetirClaveUsuario))
                 {
+                    txtRepetirClaveUsuario.setError(getString(R.string.errorClaveUsuarioRepetidaCU));
+                }
+                else if (!emailUsuario.contains("@"))
+                {
+                    txtEmailUsuario.setError(getString(R.string.errorEmailUsuarioCU));
+                }
+                else
+                {
+                    //cargaCU.setVisibility(View.VISIBLE);
+
                     AsyncTask.execute(new Runnable()
                     {
                         @Override
@@ -95,13 +116,15 @@ public class CrearUsuario extends AppCompatActivity implements View.OnClickListe
                         {
                             try
                             {
+                                claveEncriptada = new String(Hex.encodeHex(DigestUtils.md5(claveUsuario)));
+
                                 String respuesta = "";
                                 HashMap<String, String> postDataParams = new HashMap<String, String>();
                                 postDataParams.put("nombreUsuario", nombreUsuario);
-                                postDataParams.put("claveUsuario", claveUsuario);
+                                postDataParams.put("claveUsuario", claveEncriptada);
                                 postDataParams.put("emailUsuario", emailUsuario);
 
-                                URL url = new URL("http://192.168.1.42/prueba.php");
+                                URL url = new URL("http://192.168.1.66/prueba.php");
                                 HttpURLConnection connection = (HttpURLConnection)url.openConnection();
                                 connection.setReadTimeout(15000);
                                 connection.setConnectTimeout(15000);
@@ -138,7 +161,13 @@ public class CrearUsuario extends AppCompatActivity implements View.OnClickListe
                                 if (connection.getResponseCode() == 200)
                                 {
                                     Log.println(Log.ASSERT,"Registro exitoso", "Registrado con éxito: " + respuesta);
+                                    //cargaCU.setVisibility(View.GONE);
                                     connection.disconnect();
+
+                                    SharedPreferences.Editor editor = sharedPref.edit();
+                                    editor.putBoolean("isLogged", true);
+
+                                    editor.commit();
                                 }
                                 else
                                 {
@@ -149,16 +178,10 @@ public class CrearUsuario extends AppCompatActivity implements View.OnClickListe
                             {
                                 Log.println(Log.ASSERT,"Excepción", e.getMessage());
                             }
-                            finish();
+                            //finish();
                         }
                     });
                 }
-                else
-                {
-                    txtRepetirClaveUsuario.setError(getString(R.string.errorClaveUsuarioRepetidaCU));
-                }
-
-
 
                 break;
 

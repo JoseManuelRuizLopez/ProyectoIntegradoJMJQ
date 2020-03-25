@@ -8,7 +8,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-public class RecordarClave extends AppCompatActivity implements View.OnClickListener {
+public class RecordarClave extends AppCompatActivity implements View.OnClickListener
+{
 
     Button btnCancelarRC, btnEnviarRC;
 

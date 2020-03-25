@@ -22,7 +22,7 @@
 
     <string name="errorNombreUsuarioCU">El nombre de usuario ha de tener más de 3 carácteres</string>
     <string name="errorClaveUsuarioRepetidaCU">Las claves no coinciden</string>
-    <string name="errorEmailUsuarioCU">Limpiar</string>
+    <string name="errorEmailUsuarioCU">Escriba un email válido</string>
 
 
 
