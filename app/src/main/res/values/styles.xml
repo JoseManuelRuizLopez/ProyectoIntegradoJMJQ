@@ -16,9 +16,12 @@
         <item name="windowActionBar">false</item>
     </style>
 
-    <style name="estiloBoton">
+    <style name="estiloBotonPrincipal">
         <item name="android:textColor">@color/blanco</item>
-        <item name="android:background">@color/azulO</item>
+    </style>
+
+    <style name="estiloBotonSecundario">
+        <item name="android:textColor">@color/azulO</item>
     </style>
 
 </resources>

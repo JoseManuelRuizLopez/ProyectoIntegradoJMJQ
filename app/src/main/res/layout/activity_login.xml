@@ -75,7 +75,8 @@
 
     <Button
         android:id="@+id/btnEntrarLogin"
-        style="@style/estiloBoton"
+        style="@style/estiloBotonPrincipal"
+        android:background="@drawable/botonprincipal"
         android:layout_width="177dp"
         android:layout_height="45dp"
         android:text="@string/btnEntrarLogin"
@@ -100,7 +101,8 @@
 
     <Button
         android:id="@+id/btnRegistrarLogin"
-        style="@style/estiloBoton"
+        style="@style/estiloBotonSecundario"
+        android:background="@drawable/botonsecundario"
         android:layout_width="192dp"
         android:layout_height="43sp"
         android:text="@string/btnRegistrarLogin"

@@ -33,10 +33,11 @@
         app:layout_constraintVertical_bias="0.026" />
 
     <Button
-        style="@style/estiloBoton"
         android:id="@+id/btnEnviarRC"
+        style="@style/estiloBotonPrincipal"
         android:layout_width="250dp"
         android:layout_height="40dp"
+        android:background="@drawable/botonprincipal"
         android:text="@string/btnEnviarRC"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -46,10 +47,11 @@
         app:layout_constraintVertical_bias="0.13" />
 
     <Button
-        style="@style/estiloBoton"
         android:id="@+id/btnCancelarRC"
+        style="@style/estiloBotonSecundario"
         android:layout_width="250dp"
         android:layout_height="40dp"
+        android:background="@drawable/botonsecundario"
         android:text="@string/btnCancelarRC"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"

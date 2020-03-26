@@ -121,9 +121,10 @@
 
     <Button
         android:id="@+id/btnCrearUsuarioCU"
-        style="@style/estiloBoton"
+        style="@style/estiloBotonPrincipal"
         android:layout_width="270dp"
         android:layout_height="40dp"
+        android:background="@drawable/botonprincipal"
         android:text="@string/btnCrearUsuarioCU"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -134,9 +135,10 @@
 
     <Button
         android:id="@+id/btnLimpiarCU"
-        style="@style/estiloBoton"
+        style="@style/estiloBotonSecundario"
         android:layout_width="270dp"
         android:layout_height="40dp"
+        android:background="@drawable/botonsecundario"
         android:text="@string/btnLimpiarCU"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -148,10 +150,11 @@
 
     <Button
         android:id="@+id/btnCancelarCU"
-        style="@style/estiloBoton"
+        style="@style/estiloBotonSecundario"
         android:layout_width="122dp"
         android:layout_height="40dp"
         android:layout_marginBottom="16dp"
+        android:background="@drawable/botonsecundario"
         android:text="@string/btnCancelarCU"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"

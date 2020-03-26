@@ -5,6 +5,9 @@
     <color name="colorAccent">@color/azulO</color>
 
     <color name="colorCrearUsuario">#a9a9a9</color>
+
+    <color name="pressBtnSecundario">#d9d9d9</color>
+    <color name="pressBtnPrincipal">#004d80</color>
     
     <color name="azulC">#0099ff</color>
     <color name="azulI">#008ae6</color>
