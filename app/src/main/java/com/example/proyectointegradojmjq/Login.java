@@ -7,15 +7,16 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
-import android.view.Menu;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
 
@@ -29,7 +30,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class Login extends AppCompatActivity implements View.OnClickListener {
+public class Login extends AppCompatActivity implements View.OnClickListener, View.OnTouchListener {
 
     Button btnRegistrarLogin, btnEntrarLogin;
     TextView lblRecordarClave;
@@ -38,6 +39,8 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     EditText txtUsuarioLogin, txtClaveLogin;
 
     Switch swMantenerSesion;
+
+    ImageView imgOjo;
 
     SharedPreferences sharedPref;
 
@@ -53,10 +56,12 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         txtUsuarioLogin = findViewById(R.id.txtUsuarioLogin);
         txtClaveLogin = findViewById(R.id.txtClaveLogin);
         swMantenerSesion = findViewById(R.id.swMantenerSesion);
+        imgOjo = findViewById(R.id.imgOjoLogin);
 
         btnRegistrarLogin.setOnClickListener(this);
         lblRecordarClave.setOnClickListener(this);
         btnEntrarLogin.setOnClickListener(this);
+        imgOjo.setOnTouchListener(this);
 
         cargaLogin.setVisibility(View.GONE);
 
@@ -90,16 +95,12 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                     public void run() {
                         try {
                             URL url = new URL("http://192.168.1.42/prueba.php?nombreUsuario=" + usuario + "");
-                            HttpURLConnection myConnection = (HttpURLConnection)
-                                    url.openConnection();
+                            HttpURLConnection myConnection = (HttpURLConnection) url.openConnection();
                             myConnection.setRequestMethod("GET");
                             if (myConnection.getResponseCode() == 200) {
-                                InputStream responseBody =
-                                        myConnection.getInputStream();
-                                InputStreamReader responseBodyReader =
-                                        new InputStreamReader(responseBody, "UTF-8");
-                                BufferedReader bR = new
-                                        BufferedReader(responseBodyReader);
+                                InputStream responseBody = myConnection.getInputStream();
+                                InputStreamReader responseBodyReader = new InputStreamReader(responseBody, "UTF-8");
+                                BufferedReader bR = new BufferedReader(responseBodyReader);
                                 String line = "";
                                 StringBuilder responseStrBuilder = new StringBuilder();
                                 while ((line = bR.readLine()) != null) {
@@ -122,13 +123,13 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
                                         editor.commit();
 
-                                        Intent intentMenuPrincipal = new Intent(Login.this, MenuPrincipal.class);
+                                        Intent intentMenuPrincipal = new Intent(Login.this, MenuPrincipalApp.class);
                                         startActivity(intentMenuPrincipal);
                                         finish();
                                     }
                                     else
                                     {
-                                        Intent intentMenuPrincipal = new Intent(Login.this, MenuPrincipal.class);
+                                        Intent intentMenuPrincipal = new Intent(Login.this, MenuPrincipalApp.class);
                                         startActivity(intentMenuPrincipal);
                                         finish();
                                     }
@@ -165,15 +166,25 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
                             }
                         } catch (Exception e) {
-                            Snackbar.make(v, "El usuario o la contraseña son incorrectas", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-
+                            Snackbar.make(v, "Ha ocurrido un error", Snackbar.LENGTH_LONG).setAction("Action", null).show();
                         }
                     }
                 });
 
-                cargaLogin.setVisibility(View.GONE);
-
                 break;
         }
+    }
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                txtClaveLogin.setInputType(InputType.TYPE_CLASS_TEXT);
+                break;
+            case MotionEvent.ACTION_UP:
+                txtClaveLogin.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                break;
+        }
+        return true;
     }
 }

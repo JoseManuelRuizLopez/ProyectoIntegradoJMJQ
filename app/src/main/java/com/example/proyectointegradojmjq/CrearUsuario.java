@@ -124,7 +124,7 @@ public class CrearUsuario extends AppCompatActivity implements View.OnClickListe
                                 postDataParams.put("claveUsuario", claveEncriptada);
                                 postDataParams.put("emailUsuario", emailUsuario);
 
-                                URL url = new URL("http://192.168.1.66/prueba.php");
+                                URL url = new URL("http://192.168.1.42/prueba.php");
                                 HttpURLConnection connection = (HttpURLConnection)url.openConnection();
                                 connection.setReadTimeout(15000);
                                 connection.setConnectTimeout(15000);

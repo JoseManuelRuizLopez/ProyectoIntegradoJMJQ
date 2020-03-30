@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_inicio"
+            android:icon="@drawable/ic_inicio"
+            android:title="@string/menu_inicio" />
+        <item
+            android:id="@+id/nav_busqueda"
+            android:icon="@drawable/ic_busqueda"
+            android:title="@string/menu_busqueda" />
+        <item
+            android:id="@+id/nav_conversaciones"
+            android:icon="@drawable/ic_conversaciones"
+            android:title="@string/menu_conversaciones" />
+        <item
+            android:id="@+id/nav_miperfil"
+            android:icon="@drawable/ic_miperfil"
+            android:title="@string/menu_miperfil" />
+    </group>
+
+</menu>

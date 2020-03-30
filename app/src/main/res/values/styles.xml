@@ -9,7 +9,8 @@
     </style>
 
 
-    If your application theme is AppTheme(or anything else), then in styles.xml add the following code:
+    If your application theme is AppTheme(or anything else), then in styles.xml add the following
+    code:
 
     <style name="quitarTitulo" parent="AppTheme">
         <item name="windowNoTitle">true</item>
@@ -23,5 +24,14 @@
     <style name="estiloBotonSecundario">
         <item name="android:textColor">@color/azulO</item>
     </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 </resources>

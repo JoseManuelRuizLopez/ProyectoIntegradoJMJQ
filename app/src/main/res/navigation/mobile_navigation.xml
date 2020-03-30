@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_inicio">
+
+    <fragment
+        android:id="@+id/nav_inicio"
+        android:name="com.example.proyectointegradojmjq.ui.Inicio.FragmentoInicio"
+        android:label="@string/menu_inicio"
+        tools:layout="@layout/fragment_inicio" />
+
+    <fragment
+        android:id="@+id/nav_busqueda"
+        android:name="com.example.proyectointegradojmjq.ui.Busqueda.FragmentoBusqueda"
+        android:label="@string/menu_busqueda"
+        tools:layout="@layout/fragment_busqueda" />
+
+    <fragment
+        android:id="@+id/nav_conversaciones"
+        android:name="com.example.proyectointegradojmjq.ui.Conversaciones.FragmentoConversaciones"
+        android:label="@string/menu_conversaciones"
+        tools:layout="@layout/fragment_conversaciones" />
+
+    <fragment
+        android:id="@+id/nav_miperfil"
+        android:name="com.example.proyectointegradojmjq.ui.MiPerfil.FragmentoMiPerfil"
+        android:label="@string/menu_miperfil"
+        tools:layout="@layout/fragment_miperfil" />
+
+</navigation>

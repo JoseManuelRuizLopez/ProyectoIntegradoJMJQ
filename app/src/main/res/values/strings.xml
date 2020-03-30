@@ -6,6 +6,7 @@
 
 
     <!-- Crear Usuario -->
+    <string name="tituloActCrearUsuario">Registro de Usuario</string>
     <string name="lblNombreUsuarioCU">Usuario</string>
     <string name="lblClaveUsuarioCU">Contraseña</string>
     <string name="lblRepetirClaveCU">Repetir Contraseña</string>
@@ -26,6 +27,7 @@
 
 
     <!-- Login -->
+    <string name="tituloActLogin">Inicio de Sesión</string>
     <string name="lblUsuarioLogin">Usuario</string>
     <string name="lblClaveLogin">Contraseña</string>
     <string name="txtUsuarioLogin">Introduzca su usuario</string>
@@ -37,11 +39,28 @@
 
 
     <!-- Recordar contraseña -->
+    <string name="tituloActRecordarClave">Recuperación de Contraseña</string>
     <string name="lblRecordarClaveRC">Escriba aquí el correo al que quiere que le enviemos una nueva contraseña provisional</string>
     <string name="txtCorreoRC">ejemplo@dominio.com</string>
     <string name="btnEnviarRC">Enviar correo</string>
     <string name="btnCancelarRC">Cancelar</string>
     <string name="tsCorreoEnviadoRC">Se el correo con exito</string>
     <string name="tsCorreoErrorRC">Error al enviar el correo</string>
+
+    <!-- Nav Drawer/Menu principal -->
+    <string name="tituloActMenuPrincipalApp">Menu Principal</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_nombreusuario">Usuario</string>
+    <string name="nav_nombrecompletousuario">Nombre Completo Usuario</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="mn_cerrarSesion">Cerrar Sesión</string>
+
+    <string name="menu_inicio">Inicio</string>
+    <string name="menu_busqueda">Busqueda</string>
+    <string name="menu_conversaciones">Conversaciones</string>
+    <string name="menu_miperfil">Mi Perfil</string>
+    <string name="menu_share">Share</string>
+    <string name="menu_send">Send</string>
 
 </resources>

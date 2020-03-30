@@ -13,16 +13,20 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".MenuPrincipal"></activity>
+        <activity
+            android:name=".MenuPrincipalApp"
+            android:label="@string/tituloActMenuPrincipalApp"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".MenuPrincipal" />
         <activity
             android:name=".RecordarClave"
-            android:label="Recordar Contraseña" />
+            android:label="@string/tituloActRecordarClave" />
         <activity
             android:name=".CrearUsuario"
-            android:label="Registro de Usuario" />
+            android:label="@string/tituloActCrearUsuario" />
         <activity
             android:name=".Login"
-            android:label="Inicio de Sesión" />
+            android:label="@string/tituloActLogin" />
         <activity
             android:name=".MainActivity"
             android:theme="@style/quitarTitulo">

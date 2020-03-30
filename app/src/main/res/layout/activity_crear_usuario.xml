@@ -58,7 +58,7 @@
         app:layout_constraintHorizontal_bias="0.2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/lblEmailCU"
-        app:layout_constraintVertical_bias="0.06999999" />
+        app:layout_constraintVertical_bias="0.060000002" />
 
     <EditText
         android:id="@+id/txtNombreUsuarioCU"
@@ -123,7 +123,7 @@
         android:id="@+id/btnCrearUsuarioCU"
         style="@style/estiloBotonPrincipal"
         android:layout_width="270dp"
-        android:layout_height="40dp"
+        android:layout_height="45dp"
         android:background="@drawable/botonprincipal"
         android:text="@string/btnCrearUsuarioCU"
         android:textSize="18sp"
@@ -137,7 +137,7 @@
         android:id="@+id/btnLimpiarCU"
         style="@style/estiloBotonSecundario"
         android:layout_width="270dp"
-        android:layout_height="40dp"
+        android:layout_height="45dp"
         android:background="@drawable/botonsecundario"
         android:text="@string/btnLimpiarCU"
         android:textSize="18sp"
@@ -152,7 +152,7 @@
         android:id="@+id/btnCancelarCU"
         style="@style/estiloBotonSecundario"
         android:layout_width="122dp"
-        android:layout_height="40dp"
+        android:layout_height="45dp"
         android:layout_marginBottom="16dp"
         android:background="@drawable/botonsecundario"
         android:text="@string/btnCancelarCU"

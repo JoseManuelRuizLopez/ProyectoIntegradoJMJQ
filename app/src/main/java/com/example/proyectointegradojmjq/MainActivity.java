@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -12,7 +13,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity {
 
     ImageView logoApp;
     TextView txt;
@@ -20,49 +21,42 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     SharedPreferences sharedPref;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         logoApp = findViewById(R.id.logoApp);
-        logoApp.setOnClickListener(this);
 
         txt = findViewById(R.id.lblLogoApp);
-        txt.setOnClickListener(this);
 
         sharedPref = getSharedPreferences("logeado", Context.MODE_PRIVATE);
-    }
 
-    @Override
-    public void onClick(View v)
-    {
-        switch (v.getId())
-        {
-            case R.id.logoApp:
 
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 Boolean logeado = sharedPref.getBoolean("isLogged", false);
 
-                if(logeado == true)
-                {
-                    Intent intentLogin = new Intent(MainActivity.this, MenuPrincipal.class);
+
+                if (logeado == true) {
+
+                    Intent intentLogin = new Intent(MainActivity.this, MenuPrincipalApp.class);
                     startActivity(intentLogin);
                     finish();
-                    break;
-                }
-                else
-                {
+
+                } else {
                     Intent intentLogin = new Intent(MainActivity.this, Login.class);
                     startActivity(intentLogin);
                     finish();
-                    break;
-                }
 
-            case R.id.lblLogoApp:
-                Intent intentNuevo = new Intent(MainActivity.this, CrearUsuario.class);
-                startActivity(intentNuevo);
-                finish();
-                break;
-        }
+                }
+            }
+        });
     }
+
 }
