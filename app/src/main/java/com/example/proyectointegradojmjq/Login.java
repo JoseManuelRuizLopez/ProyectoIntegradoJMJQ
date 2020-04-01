@@ -94,6 +94,8 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Vi
                     @Override
                     public void run() {
                         try {
+
+
                             URL url = new URL("http://192.168.1.42/prueba.php?nombreUsuario=" + usuario + "");
                             HttpURLConnection myConnection = (HttpURLConnection) url.openConnection();
                             myConnection.setRequestMethod("GET");
@@ -134,6 +136,9 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Vi
                                         finish();
                                     }
                                 } else {
+                                   cargaLogin.setVisibility(View.GONE);
+
+
                                     Snackbar.make(v, "El usuario o la contraseña son incorrectas", Snackbar.LENGTH_LONG).setAction("Action", null).show();
                                 }
 
@@ -162,13 +167,18 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Vi
 */
                             } else {
                                 // Error handling code goes here
+                                //cargaLogin.setVisibility(View.GONE);
                                 Snackbar.make(v, "Ha ocurrido un error", Snackbar.LENGTH_LONG).setAction("Action", null).show();
 
                             }
                         } catch (Exception e) {
+                            //cargaLogin.setVisibility(View.GONE);
                             Snackbar.make(v, "Ha ocurrido un error", Snackbar.LENGTH_LONG).setAction("Action", null).show();
                         }
                     }
+
+
+
                 });
 
                 break;

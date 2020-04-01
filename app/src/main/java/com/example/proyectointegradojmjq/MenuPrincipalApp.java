@@ -58,7 +58,7 @@ public class MenuPrincipalApp extends AppCompatActivity {
                 final AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
                 alert.setTitle("¿Estas seguro de cerrar sesión?");
-                alert.setMessage("Se perderan sus datos y conversaciones");
+                //alert.setMessage("Se perderan sus datos y conversaciones");
 
                 alert.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
                     @Override
