@@ -68,4 +68,35 @@
     <string name="menu_share">Share</string>
     <string name="menu_send">Send</string>
 
+
+    <!-- Bienvenida usuario -->
+    <string name="title_activity_bienvenida_usuario">Bienvenida Usuario</string>
+    <string name="tab_text_1"></string>
+    <string name="tab_text_2"></string>
+
+    <!-- Bienvenida usuario -->
+    <string name="msgBienvenidaB">¡¡Bienvenido a Chaterinos!!</string>
+    <string name="btnCalendarioDialogoAceptarB">Aceptar</string>
+    <string name="btnCalendarioDialogoCancelarB">Cancelar</string>
+    <string name="lblRellenarDatosB">Rellene con sus datos personales</string>
+
+    <string name="rBtnSolteroB">Soltero/a</string>
+    <string name="rBtnCasadoaB">Casado/a</string>
+    <string name="rBtnViudoaB">Viudo/a</string>
+
+    <string name="lblAlturaB">Altura</string>
+
+    <string name="genero1B"><b><i>Seleccione su género</i></b></string>
+    <string name="genero2B">Masculino</string>
+    <string name="genero3B">Femenino</string>
+    <string name="genero4B">Altura</string>
+    <string name="genero5B">Altura</string>
+
+    <string name="lblAddFotosGaleriaB">Puedes añadir unas cuantas fotos a tu galería desde la opcion "Mi Perfil"</string>
+
+
+
+
+
+
 </resources>

@@ -45,7 +45,8 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Vi
     SharedPreferences sharedPref;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
@@ -69,8 +70,10 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Vi
     }
 
     @Override
-    public void onClick(final View v) {
-        switch (v.getId()) {
+    public void onClick(final View v)
+    {
+        switch (v.getId())
+        {
             case R.id.btnRegistrarLogin:
                 Intent intentRegistrar = new Intent(Login.this, CrearUsuario.class);
                 startActivity(intentRegistrar);
@@ -96,7 +99,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Vi
                         try {
 
 
-                            URL url = new URL("http://192.168.1.42/prueba.php?nombreUsuario=" + usuario + "");
+                            URL url = new URL("http://192.168.1.66/prueba.php?nombreUsuario=" + usuario + "");
                             HttpURLConnection myConnection = (HttpURLConnection) url.openConnection();
                             myConnection.setRequestMethod("GET");
                             if (myConnection.getResponseCode() == 200) {

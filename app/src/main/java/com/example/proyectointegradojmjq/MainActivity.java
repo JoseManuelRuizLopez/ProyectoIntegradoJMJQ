@@ -13,7 +13,8 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity
+{
 
     ImageView logoApp;
     TextView txt;
@@ -21,7 +22,8 @@ public class MainActivity extends AppCompatActivity {
     SharedPreferences sharedPref;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -32,7 +34,8 @@ public class MainActivity extends AppCompatActivity {
         sharedPref = getSharedPreferences("logeado", Context.MODE_PRIVATE);
 
 
-        AsyncTask.execute(new Runnable() {
+        AsyncTask.execute(new Runnable()
+        {
             @Override
             public void run() {
                 try {
@@ -45,12 +48,21 @@ public class MainActivity extends AppCompatActivity {
 
                 if (logeado == true) {
 
-                    Intent intentLogin = new Intent(MainActivity.this, MenuPrincipalApp.class);
+                    /*Intent intentLogin = new Intent(MainActivity.this, MenuPrincipalApp.class);
+                    startActivity(intentLogin);
+                    finish();*/
+
+                    Intent intentLogin = new Intent(MainActivity.this, BienvenidaUsuario.class);
                     startActivity(intentLogin);
                     finish();
 
-                } else {
-                    Intent intentLogin = new Intent(MainActivity.this, Login.class);
+                } else
+                    {
+                    /*Intent intentLogin = new Intent(MainActivity.this, Login.class);
+                    startActivity(intentLogin);
+                    finish();*/
+
+                    Intent intentLogin = new Intent(MainActivity.this, BienvenidaUsuario.class);
                     startActivity(intentLogin);
                     finish();
 

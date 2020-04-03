@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Bienvenida_fragment3">
+
+    <Spinner
+        android:id="@+id/spnGeneroF3"
+        style="@android:style/Widget.Holo.Spinner"
+        android:layout_width="262dp"
+        android:layout_height="37dp"
+        android:layout_marginTop="188dp"
+        android:popupBackground="@drawable/fondappac"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btnAtrasWelcomeF4"
+        android:layout_width="60dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/botonsecundario"
+        android:drawableTop="@drawable/flechaatras2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btnSiguienteWelcomeF3"
+        app:layout_constraintHorizontal_bias="0.065"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btnSiguienteWelcomeF3"
+        android:layout_width="60dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/botonsecundario"
+        android:drawableTop="@drawable/flechaadelante2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.954"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <RadioGroup
+        android:id="@+id/rGroupWelcomeF3"
+        android:layout_width="201dp"
+        android:layout_height="110dp"
+        android:layout_marginTop="80dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spnGeneroF3">
+
+        <RadioButton
+            android:id="@+id/rBoton1WelcomeF3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/rBtnSolteroB" />
+
+        <RadioButton
+            android:id="@+id/rBoton2WelcomeF3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/rBtnCasadoaB" />
+
+        <RadioButton
+            android:id="@+id/rBoton3WelcomeF3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/rBtnViudoaB" />
+
+    </RadioGroup>
+
+    <SeekBar
+        android:id="@+id/seekBarWelcomeB"
+        android:layout_width="265dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="64dp"
+        android:scrollbarSize="6dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtAlturaB" />
+
+    <TextView
+        android:id="@+id/txtAlturaB"
+        android:layout_width="74dp"
+        android:layout_height="28dp"
+        android:layout_marginTop="44dp"
+        android:text="@string/lblAlturaB"
+        android:textSize="22dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rGroupWelcomeF3" />
+
+    <TextView
+        android:id="@+id/txtSeekBarAlturaB"
+        android:layout_width="60dp"
+        android:layout_height="21dp"
+        app:layout_constraintBottom_toTopOf="@+id/seekBarWelcomeB"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.207"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtAlturaB"
+        app:layout_constraintVertical_bias="0.795" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

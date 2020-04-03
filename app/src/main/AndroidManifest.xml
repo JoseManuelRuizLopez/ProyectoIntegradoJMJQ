@@ -14,9 +14,13 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".BienvenidaUsuario"
+            android:label="@string/title_activity_bienvenida_usuario"
+            android:theme="@style/quitarTitulo"></activity>
+        <activity
             android:name=".MenuPrincipalApp"
             android:label="@string/tituloActMenuPrincipalApp"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".MenuPrincipal" />
         <activity
             android:name=".RecordarClave"
