@@ -7,153 +7,91 @@
     android:background="@drawable/fondappac"
     tools:context=".CrearUsuario">
 
-    <TextView
-        android:id="@+id/lblNombreUsuarioCU"
-        android:layout_width="70dp"
-        android:layout_height="27dp"
-        android:text="@string/lblNombreUsuarioCU"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.053"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.105" />
-
-    <TextView
-        android:id="@+id/lblClaveUsuarioCU"
-        android:layout_width="104dp"
-        android:layout_height="28dp"
-        android:text="@string/lblClaveUsuarioCU"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/txtClaveUsuarioCU"
-        app:layout_constraintHorizontal_bias="0.266"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lblNombreUsuarioCU"
-        app:layout_constraintVertical_bias="0.06999999" />
-
-    <TextView
-        android:id="@+id/lblEmailCU"
-        android:layout_width="114dp"
-        android:layout_height="49dp"
-        android:layout_marginTop="20dp"
-        android:text="@string/lblRepetirClaveCU"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/txtRepetirClaveUsuarioCU"
-        app:layout_constraintHorizontal_bias="0.34"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lblClaveUsuarioCU"
-        app:layout_constraintVertical_bias="0.04000002" />
-
-    <TextView
-        android:id="@+id/lblEmailCU2"
-        android:layout_width="71dp"
-        android:layout_height="26dp"
-        android:text="@string/lblEmailCU"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/txtEmailUsuarioCU"
-        app:layout_constraintHorizontal_bias="0.2"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lblEmailCU"
-        app:layout_constraintVertical_bias="0.060000002" />
-
     <EditText
         android:id="@+id/txtNombreUsuarioCU"
-        android:layout_width="216dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="32dp"
+        android:layout_width="290dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:ems="10"
         android:hint="@string/txtNombreUsuarioCU"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.573"
-        app:layout_constraintStart_toEndOf="@+id/lblNombreUsuarioCU"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.087" />
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/txtClaveUsuarioCU"
-        android:layout_width="216dp"
-        android:layout_height="41dp"
+        android:layout_width="290dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:ems="10"
         android:hint="@string/txtClaveUsuarioCU"
         android:inputType="textPassword"
-        app:layout_constraintBottom_toBottomOf="@+id/lblClaveUsuarioCU"
-        app:layout_constraintEnd_toEndOf="@+id/txtNombreUsuarioCU"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/txtNombreUsuarioCU"
-        app:layout_constraintTop_toTopOf="@+id/lblClaveUsuarioCU"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtNombreUsuarioCU" />
 
     <EditText
         android:id="@+id/txtRepetirClaveUsuarioCU"
-        android:layout_width="216dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="32dp"
+        android:layout_width="290dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:ems="10"
         android:hint="@string/txtRepetirClaveCU"
         android:inputType="textPassword"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/txtClaveUsuarioCU"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/txtClaveUsuarioCU"
-        app:layout_constraintTop_toBottomOf="@+id/txtClaveUsuarioCU"
-        app:layout_constraintVertical_bias="0.016" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtClaveUsuarioCU" />
 
     <EditText
         android:id="@+id/txtEmailUsuarioCU"
-        android:layout_width="216dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="12dp"
+        android:layout_width="290dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:ems="10"
         android:hint="@string/txtEmailCU"
         android:inputType="textEmailAddress"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/txtRepetirClaveUsuarioCU"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/txtRepetirClaveUsuarioCU"
-        app:layout_constraintTop_toBottomOf="@+id/txtRepetirClaveUsuarioCU"
-        app:layout_constraintVertical_bias="0.012" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtRepetirClaveUsuarioCU" />
 
     <Button
         android:id="@+id/btnCrearUsuarioCU"
         style="@style/estiloBotonPrincipal"
         android:layout_width="270dp"
-        android:layout_height="45dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:background="@drawable/botonprincipal"
         android:text="@string/btnCrearUsuarioCU"
         android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtEmailUsuarioCU"
-        app:layout_constraintVertical_bias="0.116" />
+        app:layout_constraintTop_toBottomOf="@+id/txtEmailUsuarioCU" />
 
     <Button
         android:id="@+id/btnLimpiarCU"
         style="@style/estiloBotonSecundario"
         android:layout_width="270dp"
-        android:layout_height="45dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:background="@drawable/botonsecundario"
         android:text="@string/btnLimpiarCU"
         android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnCrearUsuarioCU"
-        app:layout_constraintVertical_bias="0.071" />
+        app:layout_constraintTop_toBottomOf="@+id/btnCrearUsuarioCU" />
 
     <Button
         android:id="@+id/btnCancelarCU"
         style="@style/estiloBotonSecundario"
-        android:layout_width="122dp"
-        android:layout_height="45dp"
-        android:layout_marginBottom="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:background="@drawable/botonsecundario"
         android:text="@string/btnCancelarCU"
         android:textSize="18sp"
@@ -162,18 +100,17 @@
         app:layout_constraintHorizontal_bias="0.944"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnLimpiarCU"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.945" />
 
     <ProgressBar
         android:id="@+id/cargaCU"
         style="?android:attr/progressBarStyle"
-        android:layout_width="139dp"
-        android:layout_height="136dp"
+        android:layout_width="73dp"
+        android:layout_height="75dp"
         android:indeterminateTint="@color/azulC"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnLimpiarCU"
-        app:layout_constraintVertical_bias="0.192" />
+        app:layout_constraintTop_toBottomOf="@+id/btnLimpiarCU" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

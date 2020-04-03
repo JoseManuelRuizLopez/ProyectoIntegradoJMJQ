@@ -136,10 +136,10 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Vi
                                         finish();
                                     }
                                 } else {
-                                   cargaLogin.setVisibility(View.GONE);
+                                   //cargaLogin.setVisibility(View.GONE);
 
 
-                                    Snackbar.make(v, "El usuario o la contraseña son incorrectas", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                                    Snackbar.make(v, getString(R.string.snkBarClaveIncorrecta), Snackbar.LENGTH_LONG).setAction("Action", null).show();
                                 }
 
 /*
@@ -168,12 +168,12 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Vi
                             } else {
                                 // Error handling code goes here
                                 //cargaLogin.setVisibility(View.GONE);
-                                Snackbar.make(v, "Ha ocurrido un error", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                                Snackbar.make(v, getString(R.string.snkBarError), Snackbar.LENGTH_LONG).setAction("Action", null).show();
 
                             }
                         } catch (Exception e) {
                             //cargaLogin.setVisibility(View.GONE);
-                            Snackbar.make(v, "Ha ocurrido un error", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                            Snackbar.make(v, getString(R.string.snkBarError), Snackbar.LENGTH_LONG).setAction("Action", null).show();
                         }
                     }
 

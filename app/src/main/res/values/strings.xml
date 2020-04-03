@@ -36,6 +36,8 @@
     <string name="btnEntrarLogin">Entrar</string>
     <string name="btnRecordarClaveLogin">¿Has olvidado la contraseña?</string>
     <string name="btnRegistrarLogin">¿Eres Nuevo?</string>
+    <string name="snkBarClaveIncorrecta">El usuario o la contraseña son incorrectas</string>
+    <string name="snkBarError">Ha ocurrido un error</string>
 
 
     <!-- Recordar contraseña -->
@@ -55,6 +57,9 @@
     <string name="nav_nombrecompletousuario">Nombre Completo Usuario</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="mn_cerrarSesion">Cerrar Sesión</string>
+    <string name="mn_cerrarsesion_mensaje">¿Estas seguro de querer cerrar sesión?</string>
+    <string name="mn_cerrarsesion_aceptar">Aceptar</string>
+    <string name="mn_cerrarsesion_cancelar">Cancelar</string>
 
     <string name="menu_inicio">Inicio</string>
     <string name="menu_busqueda">Busqueda</string>

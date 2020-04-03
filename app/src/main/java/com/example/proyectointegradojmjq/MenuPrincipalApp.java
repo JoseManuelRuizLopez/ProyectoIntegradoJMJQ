@@ -57,10 +57,10 @@ public class MenuPrincipalApp extends AppCompatActivity {
 
                 final AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
-                alert.setTitle("¿Estas seguro de cerrar sesión?");
+                alert.setTitle(getString(R.string.mn_cerrarsesion_mensaje));
                 //alert.setMessage("Se perderan sus datos y conversaciones");
 
-                alert.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                alert.setPositiveButton(getString(R.string.mn_cerrarsesion_aceptar), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
@@ -74,7 +74,7 @@ public class MenuPrincipalApp extends AppCompatActivity {
                         finish();
                     }
                 });
-                alert.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                alert.setNegativeButton(getString(R.string.mn_cerrarsesion_cancelar), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
