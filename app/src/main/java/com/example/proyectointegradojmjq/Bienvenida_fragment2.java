@@ -82,11 +82,16 @@ public class Bienvenida_fragment2 extends Fragment implements View.OnClickListen
             }
         });
 
-        dialogoCalendario.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-        dialogoCalendario.getDatePicker().setMaxDate(System.currentTimeMillis());
-
-        datePicker = view.findViewById(R.id.dp);
+        dialogoCalendario.setButton(DialogInterface.BUTTON_POSITIVE, getString(R.string.btnCalendarioDialogoAceptarB), new DialogInterface.OnClickListener()
+        {
+            public void onClick(DialogInterface dialog, int which)
+            {
+                if (which == DialogInterface.BUTTON_POSITIVE)
+                {
+                    txtFechaNacimientoB.setText(fechaEspañola);
+                }
+            }
+        });
 
         dialogoCalendario.setButton(DialogInterface.BUTTON_NEGATIVE, getString(R.string.btnCalendarioDialogoCancelarB), new DialogInterface.OnClickListener()
         {
@@ -99,16 +104,10 @@ public class Bienvenida_fragment2 extends Fragment implements View.OnClickListen
             }
         });
 
-        dialogoCalendario.setButton(DialogInterface.BUTTON_POSITIVE, getString(R.string.btnCalendarioDialogoAceptarB), new DialogInterface.OnClickListener()
-        {
-            public void onClick(DialogInterface dialog, int which)
-            {
-                if (which == DialogInterface.BUTTON_POSITIVE)
-                {
-                    txtFechaNacimientoB.setText(fechaEspañola);
-                }
-            }
-        });
+        dialogoCalendario.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialogoCalendario.getDatePicker().setMaxDate(System.currentTimeMillis());
+
+        datePicker = view.findViewById(R.id.dp);
 
         return view;
     }

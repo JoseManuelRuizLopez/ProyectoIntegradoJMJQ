@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity
                     startActivity(intentLogin);
                     finish();*/
 
-                    Intent intentLogin = new Intent(MainActivity.this, BienvenidaUsuario.class);
+                    Intent intentLogin = new Intent(MainActivity.this, CrearUsuario.class);
                     startActivity(intentLogin);
                     finish();
 
@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity
                     startActivity(intentLogin);
                     finish();*/
 
-                    Intent intentLogin = new Intent(MainActivity.this, BienvenidaUsuario.class);
+                    Intent intentLogin = new Intent(MainActivity.this, CrearUsuario.class);
                     startActivity(intentLogin);
                     finish();
 

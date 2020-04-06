@@ -5,15 +5,19 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -28,7 +32,16 @@ public class Bienvenida_fragment3 extends Fragment implements View.OnClickListen
     Spinner spnGeneroF3;
     SeekBar seekBar;
 
+    RadioGroup rGroup;
+    RadioButton rButtonSoltero;
+    RadioButton rButtonCasado;
+    RadioButton rButtonViudo;
+
     TextView txtAlturaF3;
+
+    String generoUsuario;
+    String estadoCivilUsuario;
+    int alturaUsuario;
 
 
     final int VALOR_MAXIMO = 220;
@@ -59,9 +72,15 @@ public class Bienvenida_fragment3 extends Fragment implements View.OnClickListen
         arraySpinner.add(getResources().getString(R.string.genero4B));
         arraySpinner.add(getResources().getString(R.string.genero5B));
 
-        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, arraySpinner);
+        final ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, arraySpinner);
         spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); // The drop down vieww
         spnGeneroF3.setAdapter(spinnerArrayAdapter);
+
+
+        rGroup = view.findViewById(R.id.rGroupWelcomeF3);
+        rButtonSoltero = view.findViewById(R.id.rBoton1WelcomeF3);
+        rButtonCasado = view.findViewById(R.id.rBoton2WelcomeF3);
+        rButtonViudo = view.findViewById(R.id.rBoton3WelcomeF3);
 
 
         seekBar.setMax(VALOR_MAXIMO);
@@ -96,20 +115,6 @@ public class Bienvenida_fragment3 extends Fragment implements View.OnClickListen
             }
         });
 
-        spnGeneroF3.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
-        {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
-            {
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
         return view;
     }
 
@@ -120,12 +125,45 @@ public class Bienvenida_fragment3 extends Fragment implements View.OnClickListen
         {
             case R.id.btnSiguienteWelcomeF3:
 
-                String value1 = getActivity().getIntent().getExtras().getString("nombreReal");
-                String value2 = getActivity().getIntent().getExtras().getString("fechaAmericana");
-                String value3 = getActivity().getIntent().getExtras().getString("descripcion");
 
-                ((BienvenidaUsuario)getActivity()).selectTab(3);
+                if (spnGeneroF3.getSelectedItem().toString().equals(getResources().getString(R.string.genero1B)))
+                {
+                    Toast.makeText(getContext(), "Por favor, selecciona un género", Toast.LENGTH_SHORT).show();
+                }
+                else
+                    {
+
+                        if (rButtonSoltero.isChecked())
+                        {
+                            estadoCivilUsuario = getResources().getString(R.string.rBtnSolteroB);
+                        }
+                        else if (rButtonCasado.isChecked())
+                        {
+                            estadoCivilUsuario = getResources().getString(R.string.rBtnCasadoaB);
+                        }
+                        else if (rButtonViudo.isChecked())
+                        {
+                            estadoCivilUsuario = getResources().getString(R.string.rBtnViudoaB);
+                        }
+
+                        generoUsuario = spnGeneroF3.getSelectedItem().toString();
+                        alturaUsuario = seekBar.getProgress() + 140;
+
+                        Log.println(Log.ASSERT,"Resultado", "EstadoCivil: " + estadoCivilUsuario + " // Genero: " + generoUsuario + " // Altura: " + alturaUsuario);
+
+
+                        getActivity().getIntent().putExtra("generoUsuario", generoUsuario);
+                        getActivity().getIntent().putExtra("estadoCivilUsuario", estadoCivilUsuario);
+                        getActivity().getIntent().putExtra("alturaUsuario", alturaUsuario);
+
+                        ((BienvenidaUsuario)getActivity()).selectTab(3);
+                        break;
+                    }
+
                 break;
+
+
+
 
             case R.id.btnAtrasWelcomeF4:
 

@@ -17,6 +17,7 @@ import org.apache.commons.codec.digest.DigestUtils;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
@@ -93,7 +94,57 @@ public class CrearUsuario extends AppCompatActivity implements View.OnClickListe
                 emailUsuario = txtEmailUsuario.getText().toString();
 
 
-                if (nombreUsuario.length() <= 3)
+                AsyncTask.execute(new Runnable()
+                {
+                    @Override
+                    public void run()
+                    {
+                        try
+                        {
+                            URL url = new URL("http://192.168.1.66/prueba.php?emailUsuario=" + emailUsuario);
+
+                            //Create connection
+                            HttpURLConnection myConnection = (HttpURLConnection) url.openConnection();
+
+                            //Establecer método por defecto GET
+                            myConnection.setRequestMethod("GET");
+
+                            if (myConnection.getResponseCode() == 200)
+                            {
+                                InputStream responseBody = myConnection.getInputStream();
+                                InputStreamReader responseBodyReader =new InputStreamReader(responseBody, "UTF-8");
+
+                                BufferedReader bR = new BufferedReader(responseBodyReader);
+                                String line = "";
+
+                                StringBuilder responseStrBuilder = new StringBuilder();
+
+                                while((line =  bR.readLine()) != null)
+                                {
+                                    responseStrBuilder.append(line);
+                                }
+
+                                responseBody.close();
+                                responseBodyReader.close();
+                                myConnection.disconnect();
+
+
+
+                            }
+                            else
+                                {
+                                    Log.println(Log.ASSERT,"Error", "Error");
+                                }
+                        }
+                        catch (Exception e)
+                        {
+                            Log.println(Log.ASSERT,"Excepción", e.getMessage());
+                        }
+                    }
+                });
+
+
+                /*if (nombreUsuario.length() <= 3)
                 {
                     txtNombreUsuario.setError(getString(R.string.errorNombreUsuarioCU));
                 }
@@ -124,7 +175,7 @@ public class CrearUsuario extends AppCompatActivity implements View.OnClickListe
                                 postDataParams.put("claveUsuario", claveEncriptada);
                                 postDataParams.put("emailUsuario", emailUsuario);
 
-                                URL url = new URL("http://192.168.1.42/prueba.php");
+                                URL url = new URL("http://192.168.1.66/prueba.php");
                                 HttpURLConnection connection = (HttpURLConnection)url.openConnection();
                                 connection.setReadTimeout(15000);
                                 connection.setConnectTimeout(15000);
@@ -181,7 +232,7 @@ public class CrearUsuario extends AppCompatActivity implements View.OnClickListe
                             //finish();
                         }
                     });
-                }
+                }*/
 
                 break;
 

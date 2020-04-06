@@ -18,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/lblAddFotosF3"
+        android:id="@+id/lblAddFotosF4"
         android:layout_width="371dp"
         android:layout_height="53dp"
         android:layout_marginTop="96dp"
@@ -26,10 +26,10 @@
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imgDefectoF3" />
+        app:layout_constraintTop_toBottomOf="@+id/imgDefectoF4" />
 
     <ImageView
-        android:id="@+id/imgDefectoF3"
+        android:id="@+id/imgDefectoF4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="52dp"
@@ -48,7 +48,7 @@
         android:drawableTop="@drawable/iconook"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lblAddFotosF3"
+        app:layout_constraintTop_toBottomOf="@+id/lblAddFotosF4"
         app:layout_constraintVertical_bias="0.771" />
 
     <Button
@@ -62,7 +62,7 @@
         app:layout_constraintEnd_toStartOf="@+id/btnSiguienteWelcomeF4"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lblAddFotosF3"
+        app:layout_constraintTop_toBottomOf="@+id/lblAddFotosF4"
         app:layout_constraintVertical_bias="0.771" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
