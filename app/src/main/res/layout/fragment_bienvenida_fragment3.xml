@@ -7,14 +7,14 @@
     tools:context=".Bienvenida_fragment3">
 
     <Spinner
-        android:id="@+id/spnGeneroF3"
+        android:id="@+id/spnGeneroMiP"
         style="@android:style/Widget.Holo.Spinner"
         android:layout_width="262dp"
         android:layout_height="37dp"
-        android:layout_marginTop="188dp"
+        android:layout_marginTop="160dp"
         android:popupBackground="@drawable/fondappac"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintHorizontal_bias="0.489"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -49,7 +49,7 @@
         android:layout_marginTop="80dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spnGeneroF3">
+        app:layout_constraintTop_toBottomOf="@+id/spnGeneroMiP">
 
         <RadioButton
             android:id="@+id/rBoton1WelcomeF3"
@@ -72,7 +72,7 @@
     </RadioGroup>
 
     <SeekBar
-        android:id="@+id/seekBarWelcomeB"
+        android:id="@+id/seekBarMiPerfil"
         android:layout_width="265dp"
         android:layout_height="24dp"
         android:layout_marginTop="64dp"
@@ -94,10 +94,10 @@
         app:layout_constraintTop_toBottomOf="@+id/rGroupWelcomeF3" />
 
     <TextView
-        android:id="@+id/txtSeekBarAlturaB"
+        android:id="@+id/txtSeekBarAlturaMiP"
         android:layout_width="60dp"
         android:layout_height="21dp"
-        app:layout_constraintBottom_toTopOf="@+id/seekBarWelcomeB"
+        app:layout_constraintBottom_toTopOf="@+id/seekBarMiPerfil"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.207"
         app:layout_constraintStart_toStartOf="parent"

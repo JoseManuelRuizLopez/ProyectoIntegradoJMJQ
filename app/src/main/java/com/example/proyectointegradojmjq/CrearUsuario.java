@@ -1,6 +1,7 @@
 package com.example.proyectointegradojmjq;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -12,8 +13,11 @@ import android.widget.ProgressBar;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.textfield.TextInputLayout;
+
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -30,8 +34,13 @@ import java.util.Map;
 
 import javax.net.ssl.HttpsURLConnection;
 
-public class CrearUsuario extends AppCompatActivity implements View.OnClickListener
-{
+public class CrearUsuario extends AppCompatActivity implements View.OnClickListener {
+
+
+    TextInputLayout til1;
+    TextInputLayout til2;
+    TextInputLayout til3;
+    TextInputLayout til4;
 
     EditText txtNombreUsuario;
     EditText txtClaveUsuario;
@@ -51,14 +60,23 @@ public class CrearUsuario extends AppCompatActivity implements View.OnClickListe
 
     String claveEncriptada;
 
+    String respuestaMensaje;
+
+    boolean todoOk = true;
+
     SharedPreferences sharedPref;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crear_usuario);
+
+
+        til1 = findViewById(R.id.textInputLayout1F2);
+        til2 = findViewById(R.id.textInputLayout2F2);
+        til3 = findViewById(R.id.textInputLayoutMiP);
+        til4 = findViewById(R.id.textInputLayout4);
 
         txtNombreUsuario = findViewById(R.id.txtNombreUsuarioCU);
         txtClaveUsuario = findViewById(R.id.txtClaveUsuarioCU);
@@ -81,26 +99,21 @@ public class CrearUsuario extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
-    public void onClick(View v)
-    {
-        switch(v.getId())
-        {
+    public void onClick(View v) {
+        switch (v.getId()) {
 
             case R.id.btnCrearUsuarioCU:
 
                 nombreUsuario = txtNombreUsuario.getText().toString();
-                claveUsuario =  txtClaveUsuario.getText().toString();
+                claveUsuario = txtClaveUsuario.getText().toString();
                 repetirClaveUsuario = txtRepetirClaveUsuario.getText().toString();
                 emailUsuario = txtEmailUsuario.getText().toString();
 
 
-                AsyncTask.execute(new Runnable()
-                {
+                AsyncTask.execute(new Runnable() {
                     @Override
-                    public void run()
-                    {
-                        try
-                        {
+                    public void run() {
+                        try {
                             URL url = new URL("http://192.168.1.66/prueba.php?emailUsuario=" + emailUsuario);
 
                             //Create connection
@@ -109,130 +122,151 @@ public class CrearUsuario extends AppCompatActivity implements View.OnClickListe
                             //Establecer método por defecto GET
                             myConnection.setRequestMethod("GET");
 
-                            if (myConnection.getResponseCode() == 200)
-                            {
+                            if (myConnection.getResponseCode() == 200) {
                                 InputStream responseBody = myConnection.getInputStream();
-                                InputStreamReader responseBodyReader =new InputStreamReader(responseBody, "UTF-8");
+                                InputStreamReader responseBodyReader = new InputStreamReader(responseBody, "UTF-8");
 
                                 BufferedReader bR = new BufferedReader(responseBodyReader);
                                 String line = "";
 
                                 StringBuilder responseStrBuilder = new StringBuilder();
 
-                                while((line =  bR.readLine()) != null)
-                                {
+                                while ((line = bR.readLine()) != null) {
                                     responseStrBuilder.append(line);
                                 }
+
+                                JSONObject jsonobject = new JSONObject(responseStrBuilder.toString());
+                                respuestaMensaje = jsonobject.getString("mensaje");
+
+                                Log.println(Log.ASSERT, "Error", respuestaMensaje);
 
                                 responseBody.close();
                                 responseBodyReader.close();
                                 myConnection.disconnect();
 
-
-
+                            } else {
+                                Log.println(Log.ASSERT, "Error", "Error");
                             }
-                            else
+
+
+                            if (respuestaMensaje.equals("1")) {
+                                runOnUiThread(new Runnable() {
+                                    public void run()
+                                    {
+                                        til4.setError(getResources().getString(R.string.errorEmailUsuarioCU));
+                                    }
+                                });
+                                todoOk = false;
+                            }
+
+                            if (nombreUsuario.length() <= 3) {
+                                runOnUiThread(new Runnable() {
+                                    public void run() {
+                                        til1.setError(getString(R.string.errorNombreUsuarioCU));
+                                    }
+                                });
+                                todoOk = false;
+                            }
+
+                            if (!claveUsuario.equals(repetirClaveUsuario)) {
+                                runOnUiThread(new Runnable() {
+                                    public void run() {
+                                        til3.setError(getString(R.string.errorClaveUsuarioRepetidaCU));
+                                    }
+                                });
+                                todoOk = false;
+                            }
+
+
+                            if (!emailUsuario.contains("@")) {
+                                runOnUiThread(new Runnable() {
+                                    public void run() {
+
+                                        til4.setError(getString(R.string.errorEmailUsuarioCU));
+                                    }
+                                });
+                                todoOk = false;
+                            }
+
+                            Log.println(Log.ASSERT, "Registro exitoso", "Registrado con éxito: " + todoOk);
+                                //cargaCU.setVisibility(View.VISIBLE);
+                            if (todoOk)
+                            {
+                                try
                                 {
-                                    Log.println(Log.ASSERT,"Error", "Error");
+
+                                    claveEncriptada = new String(Hex.encodeHex(DigestUtils.md5(claveUsuario)));
+
+                                    String respuesta = "";
+                                    HashMap<String, String> postDataParams = new HashMap<String, String>();
+                                    postDataParams.put("nombreUsuario", nombreUsuario);
+                                    postDataParams.put("claveUsuario", claveEncriptada);
+                                    postDataParams.put("emailUsuario", emailUsuario);
+
+                                    URL url2 = new URL("http://192.168.1.66/prueba.php");
+                                    HttpURLConnection connection = (HttpURLConnection) url2.openConnection();
+                                    connection.setReadTimeout(15000);
+                                    connection.setConnectTimeout(15000);
+                                    connection.setRequestMethod("POST");
+                                    connection.setDoInput(true);
+                                    connection.setDoOutput(true);
+
+                                    OutputStream os = connection.getOutputStream();
+                                    BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
+                                    writer.write(getPostDataString(postDataParams));
+
+                                    writer.flush();
+                                    writer.close();
+                                    os.close();
+
+                                    int responseCode = connection.getResponseCode();
+
+                                    if (responseCode == HttpsURLConnection.HTTP_OK) {
+                                        String line;
+                                        BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+
+                                        while ((line = br.readLine()) != null) {
+                                            respuesta += line;
+                                        }
+                                    } else {
+                                        respuesta = "";
+                                    }
+                                    connection.getResponseCode();
+
+                                    if (connection.getResponseCode() == 200) {
+                                        Log.println(Log.ASSERT, "Registro exitoso", "Registrado con éxito: " + respuesta);
+                                        //cargaCU.setVisibility(View.GONE);
+                                        connection.disconnect();
+
+                                        SharedPreferences.Editor editor = sharedPref.edit();
+                                        editor.putBoolean("isLogged", true);
+
+                                        editor.commit();
+
+                                        Intent intentBienvenida = new Intent(CrearUsuario.this, BienvenidaUsuario.class);
+                                        startActivity(intentBienvenida);
+                                        finish();
+
+                                    } else {
+                                        Log.println(Log.ASSERT, "Error", "Error");
+                                    }
+                                } catch (Exception e) {
+                                    Log.println(Log.ASSERT, "Excepción", e.getMessage());
                                 }
-                        }
-                        catch (Exception e)
-                        {
-                            Log.println(Log.ASSERT,"Excepción", e.getMessage());
+                            }
+
+                        } catch (Exception e) {
+                            Log.println(Log.ASSERT, "Excepción", e.getMessage());
                         }
                     }
                 });
 
+                til1.setError(null);
+                til2.setError(null);
+                til3.setError(null);
+                til4.setError(null);
 
-                /*if (nombreUsuario.length() <= 3)
-                {
-                    txtNombreUsuario.setError(getString(R.string.errorNombreUsuarioCU));
-                }
-                else if (!claveUsuario.equals(repetirClaveUsuario))
-                {
-                    txtRepetirClaveUsuario.setError(getString(R.string.errorClaveUsuarioRepetidaCU));
-                }
-                else if (!emailUsuario.contains("@"))
-                {
-                    txtEmailUsuario.setError(getString(R.string.errorEmailUsuarioCU));
-                }
-                else
-                {
-                    //cargaCU.setVisibility(View.VISIBLE);
-
-                    AsyncTask.execute(new Runnable()
-                    {
-                        @Override
-                        public void run()
-                        {
-                            try
-                            {
-                                claveEncriptada = new String(Hex.encodeHex(DigestUtils.md5(claveUsuario)));
-
-                                String respuesta = "";
-                                HashMap<String, String> postDataParams = new HashMap<String, String>();
-                                postDataParams.put("nombreUsuario", nombreUsuario);
-                                postDataParams.put("claveUsuario", claveEncriptada);
-                                postDataParams.put("emailUsuario", emailUsuario);
-
-                                URL url = new URL("http://192.168.1.66/prueba.php");
-                                HttpURLConnection connection = (HttpURLConnection)url.openConnection();
-                                connection.setReadTimeout(15000);
-                                connection.setConnectTimeout(15000);
-                                connection.setRequestMethod("POST");
-                                connection.setDoInput(true);
-                                connection.setDoOutput(true);
-
-                                OutputStream os = connection.getOutputStream();
-                                BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
-                                writer.write(getPostDataString(postDataParams));
-
-                                writer.flush();
-                                writer.close();
-                                os.close();
-
-                                int responseCode = connection.getResponseCode();
-
-                                if (responseCode == HttpsURLConnection.HTTP_OK)
-                                {
-                                    String line;
-                                    BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-
-                                    while ((line=br.readLine()) != null)
-                                    {
-                                        respuesta += line;
-                                    }
-                                }
-                                else
-                                {
-                                    respuesta = "";
-                                }
-                                connection.getResponseCode();
-
-                                if (connection.getResponseCode() == 200)
-                                {
-                                    Log.println(Log.ASSERT,"Registro exitoso", "Registrado con éxito: " + respuesta);
-                                    //cargaCU.setVisibility(View.GONE);
-                                    connection.disconnect();
-
-                                    SharedPreferences.Editor editor = sharedPref.edit();
-                                    editor.putBoolean("isLogged", true);
-
-                                    editor.commit();
-                                }
-                                else
-                                {
-                                    Log.println(Log.ASSERT,"Error", "Error");
-                                }
-                            }
-                            catch(Exception e)
-                            {
-                                Log.println(Log.ASSERT,"Excepción", e.getMessage());
-                            }
-                            //finish();
-                        }
-                    });
-                }*/
+                todoOk = true;
 
                 break;
 
@@ -252,19 +286,14 @@ public class CrearUsuario extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    private String getPostDataString(HashMap<String, String> params) throws UnsupportedEncodingException
-    {
+    private String getPostDataString(HashMap<String, String> params) throws UnsupportedEncodingException {
         StringBuilder result = new StringBuilder();
         boolean first = true;
 
-        for(Map.Entry<String, String> entry : params.entrySet())
-        {
-            if (first)
-            {
+        for (Map.Entry<String, String> entry : params.entrySet()) {
+            if (first) {
                 first = false;
-            }
-            else
-            {
+            } else {
                 result.append("&");
             }
 

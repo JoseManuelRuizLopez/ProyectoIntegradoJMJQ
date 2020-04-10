@@ -9,7 +9,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.RadioButton;
@@ -59,10 +58,10 @@ public class Bienvenida_fragment3 extends Fragment implements View.OnClickListen
 
         btnSiguienteF3 = view.findViewById(R.id.btnSiguienteWelcomeF3);
         btnAtrasF3 = view.findViewById(R.id.btnAtrasWelcomeF4);
-        seekBar = view.findViewById(R.id.seekBarWelcomeB);
-        txtAlturaF3 = view.findViewById(R.id.txtSeekBarAlturaB);
+        seekBar = view.findViewById(R.id.seekBarMiPerfil);
+        txtAlturaF3 = view.findViewById(R.id.txtSeekBarAlturaMiP);
 
-        spnGeneroF3 = view.findViewById(R.id.spnGeneroF3);
+        spnGeneroF3 = view.findViewById(R.id.spnGeneroMiP);
 
         ArrayList<String> arraySpinner = new ArrayList<String>();
 
@@ -70,10 +69,9 @@ public class Bienvenida_fragment3 extends Fragment implements View.OnClickListen
         arraySpinner.add(getResources().getString(R.string.genero2B));
         arraySpinner.add(getResources().getString(R.string.genero3B));
         arraySpinner.add(getResources().getString(R.string.genero4B));
-        arraySpinner.add(getResources().getString(R.string.genero5B));
 
         final ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, arraySpinner);
-        spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); // The drop down vieww
+        spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); // The drop down view
         spnGeneroF3.setAdapter(spinnerArrayAdapter);
 
 
@@ -130,8 +128,11 @@ public class Bienvenida_fragment3 extends Fragment implements View.OnClickListen
                 {
                     Toast.makeText(getContext(), "Por favor, selecciona un género", Toast.LENGTH_SHORT).show();
                 }
-                else
-                    {
+                else if (!rButtonSoltero.isChecked() && !rButtonCasado.isChecked() && !rButtonViudo.isChecked())
+                {
+                    Toast.makeText(getContext(), "Por favor, selecciona un estado civil", Toast.LENGTH_SHORT).show();
+                }
+                else {
 
                         if (rButtonSoltero.isChecked())
                         {

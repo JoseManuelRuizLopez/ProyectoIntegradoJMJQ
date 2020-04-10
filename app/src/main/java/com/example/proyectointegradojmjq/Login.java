@@ -95,7 +95,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                     public void run() {
                         try {
 
-                            URL url = new URL("http://192.168.1.42/prueba.php?nombreUsuario=" + usuario + "&claveUsuario=" + claveEncriptada + "");
+                            URL url = new URL("http://192.168.1.66/prueba.php?nombreUsuario=" + usuario + "&claveUsuario=" + claveEncriptada + "");
                             HttpURLConnection myConnection = (HttpURLConnection) url.openConnection();
                             myConnection.setRequestMethod("GET");
                             if (myConnection.getResponseCode() == 200) {

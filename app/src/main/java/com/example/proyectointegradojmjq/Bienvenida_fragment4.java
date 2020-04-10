@@ -79,7 +79,8 @@ public class Bienvenida_fragment4 extends Fragment implements View.OnClickListen
                 String estadoCivilUsuario = getActivity().getIntent().getExtras().getString("estadoCivilUsuario");
                 int alturaUsuario = getActivity().getIntent().getExtras().getInt("alturaUsuario");
 
-                AsyncTask.execute(new Runnable() {
+                AsyncTask.execute(new Runnable()
+                {
                                       @Override
                                       public void run()
                                       {

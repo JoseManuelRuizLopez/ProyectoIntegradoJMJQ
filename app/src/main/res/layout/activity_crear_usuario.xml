@@ -7,83 +7,110 @@
     android:background="@drawable/fondappac"
     tools:context=".CrearUsuario">
 
-    <EditText
-        android:id="@+id/txtNombreUsuarioCU"
-        android:layout_width="290dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:ems="10"
-        android:hint="@string/txtNombreUsuarioCU"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/txtClaveUsuarioCU"
-        android:layout_width="290dp"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout1F2"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="330dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:ems="10"
-        android:hint="@string/txtClaveUsuarioCU"
-        android:inputType="textPassword"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="32dp"
+        app:errorEnabled="true"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtNombreUsuarioCU" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <EditText
-        android:id="@+id/txtRepetirClaveUsuarioCU"
-        android:layout_width="290dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:ems="10"
-        android:hint="@string/txtRepetirClaveCU"
-        android:inputType="textPassword"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtClaveUsuarioCU" />
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/txtNombreUsuarioCU"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nombre de Usuario" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-    <EditText
-        android:id="@+id/txtEmailUsuarioCU"
-        android:layout_width="290dp"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout2F2"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="330dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:ems="10"
-        android:hint="@string/txtEmailCU"
-        android:inputType="textEmailAddress"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="24dp"
+        app:passwordToggleEnabled="true"
+        app:errorEnabled="true"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtRepetirClaveUsuarioCU" />
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout1F2">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/txtClaveUsuarioCU"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Contraseña"
+            android:inputType="textPassword" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayoutMiP"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="330dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="24dp"
+        app:errorEnabled="true"
+        app:passwordToggleEnabled="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout2F2">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/txtRepetirClaveUsuarioCU"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Repetir contraseña"
+            android:inputType="textPassword" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout4"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="330dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="24dp"
+        app:errorEnabled="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutMiP">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/txtEmailUsuarioCU"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Email"
+            android:inputType="textEmailAddress" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/btnCrearUsuarioCU"
         style="@style/estiloBotonPrincipal"
         android:layout_width="270dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="60dp"
         android:background="@drawable/botonprincipal"
         android:text="@string/btnCrearUsuarioCU"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtEmailUsuarioCU" />
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout4" />
 
     <Button
         android:id="@+id/btnLimpiarCU"
         style="@style/estiloBotonSecundario"
         android:layout_width="270dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="28dp"
         android:background="@drawable/botonsecundario"
         android:text="@string/btnLimpiarCU"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnCrearUsuarioCU" />
 
@@ -107,9 +134,9 @@
         style="?android:attr/progressBarStyle"
         android:layout_width="73dp"
         android:layout_height="75dp"
+        android:layout_marginTop="44dp"
         android:indeterminateTint="@color/azulC"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnLimpiarCU" />
 

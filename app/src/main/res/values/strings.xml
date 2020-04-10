@@ -80,19 +80,20 @@
     <string name="btnCalendarioDialogoCancelarB">Cancelar</string>
     <string name="lblRellenarDatosB">Rellene con sus datos personales</string>
 
+    <string name="seleccioneEstadoCivil">Seleccione su estado civil</string>
     <string name="rBtnSolteroB">Soltero/a</string>
     <string name="rBtnCasadoaB">Casado/a</string>
     <string name="rBtnViudoaB">Viudo/a</string>
 
     <string name="lblAlturaB">Altura</string>
 
-    <string name="genero1B"><b><i>Seleccione su género</i></b></string>
+    <string name="genero1B">Seleccione su género</string>
     <string name="genero2B">Masculino</string>
     <string name="genero3B">Femenino</string>
-    <string name="genero4B">Altura</string>
-    <string name="genero5B">Altura</string>
+    <string name="genero4B">Otro</string>
 
     <string name="lblAddFotosGaleriaB">Puedes añadir unas cuantas fotos a tu galería desde la opcion "Mi Perfil"</string>
+    <string name="lblAddFotosGaleriaMiP">Editar Galería de Fotos</string>
 
 
     <!-- Busqueda de parametros -->

@@ -19,70 +19,95 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/txtNombreRealB"
-        android:layout_width="255dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="100dp"
-        android:drawableRight="@drawable/iconopersona"
-        android:ems="10"
-        android:hint="Nombre Real"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtRelleneCampos" />
 
-    <EditText
-        android:id="@+id/txtFechaNacimientoB"
-        android:layout_width="255dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="60dp"
-        android:drawableRight="@drawable/tartaicono"
-        android:ems="10"
-        android:focusable="false"
-        android:hint="Dia/Mes/Año"
-        android:inputType="textPersonName"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout1F2"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="330dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="52dp"
+        app:errorEnabled="true"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.641"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtNombreRealB" />
+        app:layout_constraintTop_toBottomOf="@+id/txtRelleneCampos">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/txtNombreRealB"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableRight="@drawable/iconopersona"
+            android:hint="Nombre real" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout2F2"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="330dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:drawableRight="@drawable/tartaicono"
+        app:errorEnabled="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.641"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout1F2">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/txtFechaNacimientoB"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableRight="@drawable/tartaicono"
+            android:hint="Dia/Mes/Año" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayoutMiP"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="330dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="176dp"
+        app:errorEnabled="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.641"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout1F2">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/txtDescripcionMiP"
+            android:layout_width="match_parent"
+            android:layout_height="107dp"
+            android:drawableRight="@drawable/iconobloc"
+            android:hint="Descripción"
+            android:inputType="text|textMultiLine" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <DatePicker
         android:id="@+id/dp"
         android:layout_width="242dp"
         android:layout_height="26dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="32dp"
         android:calendarViewShown="false"
         android:datePickerMode="spinner"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.444"
+        app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtFechaNacimientoB" />
-
-    <EditText
-        android:id="@+id/txtDescripcionB"
-        android:layout_width="333dp"
-        android:layout_height="66dp"
-        android:layout_marginTop="108dp"
-        android:drawableRight="@drawable/iconobloc"
-        android:ems="10"
-        android:hint="Descripción"
-        android:inputType="text|textMultiLine"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtFechaNacimientoB" />
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout2F2" />
 
     <Button
         android:id="@+id/btnSiguienteWelcomeF2"
         android:layout_width="60dp"
         android:layout_height="40dp"
+        android:layout_marginBottom="16dp"
         android:background="@drawable/botonsecundario"
         android:drawableTop="@drawable/flechaadelante2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.954"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtDescripcionB"
-        app:layout_constraintVertical_bias="0.891" />
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutMiP"
+        app:layout_constraintVertical_bias="1.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

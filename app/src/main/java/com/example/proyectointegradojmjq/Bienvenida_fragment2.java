@@ -15,6 +15,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.Calendar;
 
@@ -31,9 +34,15 @@ public class Bienvenida_fragment2 extends Fragment implements View.OnClickListen
     String fechaAmericana;
     String descripcion;
 
+    TextInputLayout til1;
+    TextInputLayout til2;
+    TextInputLayout til3;
+
     EditText txtNombreRealB;
     EditText txtFechaNacimientoB;
     EditText txtDescripcionB;
+
+    boolean todoRelleno = true;
 
     Button btnSiguienteF2;
 
@@ -48,9 +57,17 @@ public class Bienvenida_fragment2 extends Fragment implements View.OnClickListen
     {
         View view = inflater.inflate(R.layout.fragment_bienvenida_fragment2, container, false);;
 
+
+        til1 = view.findViewById(R.id.textInputLayout1F2);
+        til2 = view.findViewById(R.id.textInputLayout2F2);
+        til3 = view.findViewById(R.id.textInputLayoutMiP);
+
         txtNombreRealB = view.findViewById(R.id.txtNombreRealB);
         txtFechaNacimientoB = view.findViewById(R.id.txtFechaNacimientoB);
-        txtDescripcionB = view.findViewById(R.id.txtDescripcionB);
+        txtDescripcionB = view.findViewById(R.id.txtDescripcionMiP);
+
+        txtFechaNacimientoB.setFocusable(false);
+
         btnSiguienteF2 = view.findViewById(R.id.btnSiguienteWelcomeF2);
 
         txtFechaNacimientoB.setOnClickListener(this);
@@ -118,21 +135,60 @@ public class Bienvenida_fragment2 extends Fragment implements View.OnClickListen
         switch(v.getId())
         {
             case R.id.txtFechaNacimientoB:
+
                 dialogoCalendario.show();
                 break;
 
             case R.id.btnSiguienteWelcomeF2:
 
-                nombreReal = txtNombreRealB.getText().toString();
-                descripcion = txtDescripcionB.getText().toString();
+                if (txtNombreRealB.getText().toString().equals(""))
+                {
+                    Toast.makeText(getContext(), "Rellene todos los campos, por favor", Toast.LENGTH_SHORT).show();
+                    til1.setError("Rellene todos los campos, por favor");
+                    todoRelleno = false;
+                }
+                else
+                    {
+                        til1.setError(null);
+                    }
 
-                getActivity().getIntent().putExtra("nombreReal", nombreReal);
-                getActivity().getIntent().putExtra("fechaAmericana", fechaAmericana);
-                getActivity().getIntent().putExtra("descripcion", descripcion);
+                if (txtFechaNacimientoB.getText().toString().equals(""))
+                {
+                    Toast.makeText(getContext(), "Rellene todos los campos, por favor", Toast.LENGTH_SHORT).show();
+                    til2.setError("Rellene todos los campos, por favor");
+                    todoRelleno = false;
+                }
+                else
+                    {
+                        til2.setError(null);
+                    }
 
-                ((BienvenidaUsuario)getActivity()).selectTab(2);
+                if (txtDescripcionB.getText().toString().equals(""))
+                {
+                    Toast.makeText(getContext(), "Rellene todos los campos, por favor", Toast.LENGTH_SHORT).show();
+                    til3.setError("Rellene todos los campos, por favor");
+                    todoRelleno = false;
+                }
+                else
+                    {
+                        til3.setError(null);
+                    }
 
-                break;
+                if (todoRelleno)
+                    {
+                        nombreReal = txtNombreRealB.getText().toString();
+                        descripcion = txtDescripcionB.getText().toString();
+
+                        getActivity().getIntent().putExtra("nombreReal", nombreReal);
+                        getActivity().getIntent().putExtra("fechaAmericana", fechaAmericana);
+                        getActivity().getIntent().putExtra("descripcion", descripcion);
+
+                        ((BienvenidaUsuario)getActivity()).selectTab(2);
+
+                        break;
+                    }
+                todoRelleno = true;
+
         }
     }
 }
