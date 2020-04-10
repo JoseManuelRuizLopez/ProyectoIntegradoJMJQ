@@ -11,7 +11,7 @@
         android:id="@+id/txtMensajeRC"
         android:layout_width="350dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="52dp"
+        android:layout_marginTop="50dp"
         android:text="@string/lblRecordarClaveRC"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -19,17 +19,24 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/txtCorreoRC"
-        android:layout_width="300dp"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayoutCorreoRC"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="330dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:ems="10"
-        android:hint="@string/txtCorreoRC"
-        android:inputType="textEmailAddress"
+        android:layout_marginTop="10dp"
+        app:errorEnabled="true"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtMensajeRC" />
+        app:layout_constraintTop_toBottomOf="@+id/txtMensajeRC">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/txtCorreoRC"
+            android:layout_width="match_parent"
+            android:layout_height="61dp"
+            android:hint="@string/txtCorreoRC" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/btnEnviarRC"
@@ -41,8 +48,9 @@
         android:text="@string/btnEnviarRC"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtCorreoRC" />
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutCorreoRC" />
 
     <Button
         android:id="@+id/btnCancelarRC"

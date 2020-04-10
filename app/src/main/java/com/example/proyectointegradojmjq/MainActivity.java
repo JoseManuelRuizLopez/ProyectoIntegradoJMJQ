@@ -48,21 +48,13 @@ public class MainActivity extends AppCompatActivity
 
                 if (logeado == true) {
 
-                    /*Intent intentLogin = new Intent(MainActivity.this, MenuPrincipalApp.class);
-                    startActivity(intentLogin);
-                    finish();*/
-
-                    Intent intentLogin = new Intent(MainActivity.this, CrearUsuario.class);
-                    startActivity(intentLogin);
+                    Intent intentMenuPrincipal = new Intent(MainActivity.this, MenuPrincipalApp.class);
+                    startActivity(intentMenuPrincipal);
                     finish();
 
                 } else
                     {
-                    /*Intent intentLogin = new Intent(MainActivity.this, Login.class);
-                    startActivity(intentLogin);
-                    finish();*/
-
-                    Intent intentLogin = new Intent(MainActivity.this, CrearUsuario.class);
+                    Intent intentLogin = new Intent(MainActivity.this, Login.class);
                     startActivity(intentLogin);
                     finish();
 

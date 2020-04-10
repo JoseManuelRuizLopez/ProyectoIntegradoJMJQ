@@ -19,6 +19,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.textfield.TextInputLayout;
 
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -30,7 +31,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class Login extends AppCompatActivity implements View.OnClickListener, View.OnTouchListener {
+public class Login extends AppCompatActivity implements View.OnClickListener {
 
     Button btnRegistrarLogin, btnEntrarLogin;
     TextView lblRecordarClave;
@@ -39,8 +40,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Vi
     EditText txtUsuarioLogin, txtClaveLogin;
 
     Switch swMantenerSesion;
-
-    ImageView imgOjo;
 
     SharedPreferences sharedPref;
 
@@ -57,12 +56,10 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Vi
         txtUsuarioLogin = findViewById(R.id.txtUsuarioLogin);
         txtClaveLogin = findViewById(R.id.txtClaveLogin);
         swMantenerSesion = findViewById(R.id.swMantenerSesion);
-        imgOjo = findViewById(R.id.imgOjoLogin);
 
         btnRegistrarLogin.setOnClickListener(this);
         lblRecordarClave.setOnClickListener(this);
         btnEntrarLogin.setOnClickListener(this);
-        imgOjo.setOnTouchListener(this);
 
         cargaLogin.setVisibility(View.GONE);
 
@@ -98,8 +95,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Vi
                     public void run() {
                         try {
 
-
-                            URL url = new URL("http://192.168.1.66/prueba.php?nombreUsuario=" + usuario + "");
+                            URL url = new URL("http://192.168.1.42/prueba.php?nombreUsuario=" + usuario + "&claveUsuario=" + claveEncriptada + "");
                             HttpURLConnection myConnection = (HttpURLConnection) url.openConnection();
                             myConnection.setRequestMethod("GET");
                             if (myConnection.getResponseCode() == 200) {
@@ -114,14 +110,14 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Vi
 
                                 JSONObject jsonobject = new JSONObject(responseStrBuilder.toString());
 
-                                String respuesta = jsonobject.getString("claveUsuario");
+                                String respuesta = jsonobject.getString("mensaje");
                                 responseBody.close();
                                 responseBodyReader.close();
                                 myConnection.disconnect();
 
                                 Log.println(Log.ASSERT, "Resultado", respuesta);
 
-                                if (respuesta.equals(claveEncriptada)) {
+                                if (respuesta.equals("1")) {
                                     if (swMantenerSesion.isChecked()) {
                                         SharedPreferences.Editor editor = sharedPref.edit();
                                         editor.putBoolean("isLogged", true);
@@ -141,33 +137,10 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Vi
                                 } else {
                                    //cargaLogin.setVisibility(View.GONE);
 
-
                                     Snackbar.make(v, getString(R.string.snkBarClaveIncorrecta), Snackbar.LENGTH_LONG).setAction("Action", null).show();
-                                }
-
-/*
-                                if (respuesta.equals("0")) {
-                                    if (switch1.isChecked()) {
-                                        SharedPreferences.Editor editor = sharedPref.edit();
-                                        editor.putString("user", user);
-                                        editor.putBoolean("isLogin", true);
-                                        editor.commit();
-                                    }
-
-                                    //Toast.makeText(LoginActivity.this, "Primera Vez", Toast.LENGTH_SHORT).show();
-                                    // Arrancamos Activity
-                                    Intent i = new Intent(LoginActivity.this, MainActivity.class);
-                                    startActivity(i);
-                                } else {
-                                    respuesta = "Credenciales incorrectas";
-                                    Log.println(Log.ASSERT, "Error", respuesta);
-                                    Snackbar.make(view, respuesta,
-                                            Snackbar.LENGTH_LONG)
-                                            .setAction("Action", null).show();
-                                    loadingProgressBar.setVisibility(View.INVISIBLE);
 
                                 }
-*/
+
                             } else {
                                 // Error handling code goes here
                                 //cargaLogin.setVisibility(View.GONE);
@@ -186,18 +159,5 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Vi
 
                 break;
         }
-    }
-
-    @Override
-    public boolean onTouch(View v, MotionEvent event) {
-        switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                txtClaveLogin.setInputType(InputType.TYPE_CLASS_TEXT);
-                break;
-            case MotionEvent.ACTION_UP:
-                txtClaveLogin.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-                break;
-        }
-        return true;
     }
 }

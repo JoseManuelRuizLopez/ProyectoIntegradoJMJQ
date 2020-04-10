@@ -95,8 +95,22 @@
     <string name="lblAddFotosGaleriaB">Puedes añadir unas cuantas fotos a tu galería desde la opcion "Mi Perfil"</string>
 
 
+    <!-- Busqueda de parametros -->
+    <string name="lblRangeEdadBusqueda">Rango de Edad</string>
+    <string name="btnBuscarBusqueda">Buscar</string>
 
+    <string name="rBtnSolteroBusqueda">Soltero/a</string>
+    <string name="rBtnCasadoaBusqueda">Casado/a</string>
+    <string name="rBtnViudoaBusqueda">Viudo/a</string>
 
+    <string name="genero1Busqueda"><b><i>Seleccione su género</i></b></string>
+    <string name="genero2Busqueda">Masculino</string>
+    <string name="genero3Busqueda">Femenino</string>
+    <string name="genero4Busqueda">Otro</string>
+
+    <string name="toastGenroBusqueda">No has seleccionado un género</string>
+    <string name="toastNoEstadoCivilBusqueda">No has seleccionado un estado civil</string>
+    <string name="toastPrefCambiadas">Preferencias de busqueda actualizadas</string>
 
 
 </resources>
