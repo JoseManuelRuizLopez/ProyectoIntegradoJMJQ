@@ -137,6 +137,7 @@ public class Bienvenida_fragment2 extends Fragment implements View.OnClickListen
             case R.id.txtFechaNacimientoB:
 
                 dialogoCalendario.show();
+                txtNombreRealB.clearFocus();
                 break;
 
             case R.id.btnSiguienteWelcomeF2:

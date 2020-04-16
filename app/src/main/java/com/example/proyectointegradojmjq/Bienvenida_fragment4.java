@@ -1,7 +1,9 @@
 package com.example.proyectointegradojmjq;
 
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -34,6 +36,10 @@ public class Bienvenida_fragment4 extends Fragment implements View.OnClickListen
     Button btnSiguienteF4;
     Button btnAtrasF4;
 
+    String nombreUsuario;
+
+    SharedPreferences sharedPref;
+
     public Bienvenida_fragment4()
     {
 
@@ -53,7 +59,13 @@ public class Bienvenida_fragment4 extends Fragment implements View.OnClickListen
         btnSiguienteF4.setOnClickListener(this);
         btnAtrasF4.setOnClickListener(this);
 
+        sharedPref = getActivity().getSharedPreferences("logeado", Context.MODE_PRIVATE);
+
         lbl = view.findViewById(R.id.lblAddFotosF4);
+
+        nombreUsuario = sharedPref.getString("nombreUsuario", "YUSEP");
+
+        lbl.setText(nombreUsuario);
 
 
         return view;
@@ -75,9 +87,9 @@ public class Bienvenida_fragment4 extends Fragment implements View.OnClickListen
                 final String fechaAmericana = getActivity().getIntent().getExtras().getString("fechaAmericana");
                 final String descripcionUsuario = getActivity().getIntent().getExtras().getString("descripcion");
 
-                String generoUsuario = getActivity().getIntent().getExtras().getString("generoUsuario");
-                String estadoCivilUsuario = getActivity().getIntent().getExtras().getString("estadoCivilUsuario");
-                int alturaUsuario = getActivity().getIntent().getExtras().getInt("alturaUsuario");
+                final String generoUsuario = getActivity().getIntent().getExtras().getString("generoUsuario");
+                final String estadoCivilUsuario = getActivity().getIntent().getExtras().getString("estadoCivilUsuario");
+                final String alturaUsuario = getActivity().getIntent().getExtras().getString("alturaUsuario");
 
                 AsyncTask.execute(new Runnable()
                 {
@@ -88,26 +100,19 @@ public class Bienvenida_fragment4 extends Fragment implements View.OnClickListen
                                           {
                                               String response = "";
 
-
-
-                                               /*
-                                              HashMap<String, String> postDataParams = new HashMap<String, String>();
-                                              postDataParams.put("nombreUsuario", nombreReal);
-                                              postDataParams.put("idUsuario", "1");
-                                              postDataParams.put("emailUsuario", descripcionUsuario);
-                                              URL url = new URL("http://192.168.1.66/prueba.php");*/
-
-
+                                              String idUser = sharedPref.getString("idUsuario", "");
 
                                               Uri uri = new Uri.Builder()
                                                       .scheme("http").authority("192.168.1.66")
                                                       .path("prueba.php")
-                                                      .appendQueryParameter("nombreUsuario", nombreReal)
-                                                      .appendQueryParameter("emailUsuario", descripcionUsuario)
-                                                      .appendQueryParameter("idUsuario", "1")
-                                                      //.appendQueryParameter("telefonoContacto", "95487485")
-                                                      // .appendQueryParameter("correoContacto", "95487485")
-                                                      // .appendQueryParameter("idUsuario", "95487485")
+                                                      .appendQueryParameter("nombreRealUsuario", nombreReal)
+                                                      .appendQueryParameter("generoUsuario", generoUsuario)
+                                                      .appendQueryParameter("estadoCivilUsuario", estadoCivilUsuario)
+                                                      .appendQueryParameter("alturaUsuario", alturaUsuario)
+                                                      .appendQueryParameter("fechaNacimientoUsuario", fechaAmericana)
+                                                      .appendQueryParameter("descripcionUsuario", descripcionUsuario)
+                                                      .appendQueryParameter("idUsuario", idUser)
+                                                      //.appendQueryParameter("fotoPerfilusuario", "    ")
                                                       .build();//
                                               // Create connection
                                               URL url = new URL(uri.toString());
@@ -145,8 +150,11 @@ public class Bienvenida_fragment4 extends Fragment implements View.OnClickListen
                                                       public void run()
                                                       {
                                                           Toast.makeText(getContext(), "¡Perfil Creado, Bienvenido¡", Toast.LENGTH_SHORT).show();
+                                                          SharedPreferences.Editor editor = sharedPref.edit();
+                                                          editor.putBoolean("isLogged", true);
                                                           Intent intencion = new Intent(getActivity(), MenuPrincipalApp.class);
                                                           startActivity(intencion);
+                                                          getActivity().finish();
                                                       }
                                                   });
 

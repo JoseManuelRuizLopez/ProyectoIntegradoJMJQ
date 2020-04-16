@@ -57,5 +57,6 @@ public class BienvenidaUsuario extends AppCompatActivity
     public void selectTab(int position)
     {
         viewPager.setCurrentItem(position);
+        viewPager.setCurrentItem(position);
     }
 }

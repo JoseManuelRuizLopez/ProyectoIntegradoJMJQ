@@ -25,6 +25,10 @@
     <string name="errorClaveUsuarioRepetidaCU">Las claves no coinciden</string>
     <string name="errorEmailUsuarioCU">Escriba un email válido</string>
 
+    <string name="errorEmailUsuarioExisteCU">La dirección de correo ya existe</string>
+    <string name="errorNombreUsuarioExisteCU">El nombre de usuario ya existe</string>
+    <string name="errorNombreUsuarioLargoVacioCU">El nombre de usuario ya existe</string>
+
 
     <!-- Login -->
     <string name="tituloActLogin">Inicio de Sesión</string>
@@ -94,6 +98,7 @@
 
     <string name="lblAddFotosGaleriaB">Puedes añadir unas cuantas fotos a tu galería desde la opcion "Mi Perfil"</string>
     <string name="lblAddFotosGaleriaMiP">Editar Galería de Fotos</string>
+    <string name="lblGuardarCambios">Guardar cambios</string>
 
 
     <!-- Busqueda de parametros -->

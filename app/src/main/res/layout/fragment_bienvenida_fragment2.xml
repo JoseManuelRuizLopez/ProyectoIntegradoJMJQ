@@ -36,6 +36,8 @@
             android:id="@+id/txtNombreRealB"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:nextFocusDown="@+id/txtDescripcionMiP"
+            android:inputType="text"
             android:drawableRight="@drawable/iconopersona"
             android:hint="Nombre real" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -69,6 +71,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="176dp"
         app:errorEnabled="true"
+        app:counterMaxLength="250"
+        app:counterEnabled="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.641"
         app:layout_constraintStart_toStartOf="parent"
@@ -78,6 +82,7 @@
             android:id="@+id/txtDescripcionMiP"
             android:layout_width="match_parent"
             android:layout_height="107dp"
+            android:maxLength="250"
             android:drawableRight="@drawable/iconobloc"
             android:hint="Descripción"
             android:inputType="text|textMultiLine" />

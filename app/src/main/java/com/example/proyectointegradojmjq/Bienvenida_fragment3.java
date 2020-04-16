@@ -40,7 +40,7 @@ public class Bienvenida_fragment3 extends Fragment implements View.OnClickListen
 
     String generoUsuario;
     String estadoCivilUsuario;
-    int alturaUsuario;
+    String alturaUsuario;
 
 
     final int VALOR_MAXIMO = 220;
@@ -85,6 +85,8 @@ public class Bienvenida_fragment3 extends Fragment implements View.OnClickListen
 
         btnSiguienteF3.setOnClickListener(this);
         btnAtrasF3.setOnClickListener(this);
+
+        txtAlturaF3.setText("140cm");
 
         seekBar.setMax(220-140);
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener()
@@ -148,7 +150,7 @@ public class Bienvenida_fragment3 extends Fragment implements View.OnClickListen
                         }
 
                         generoUsuario = spnGeneroF3.getSelectedItem().toString();
-                        alturaUsuario = seekBar.getProgress() + 140;
+                        alturaUsuario = String.valueOf(seekBar.getProgress() + 140);
 
                         Log.println(Log.ASSERT,"Resultado", "EstadoCivil: " + estadoCivilUsuario + " // Genero: " + generoUsuario + " // Altura: " + alturaUsuario);
 
