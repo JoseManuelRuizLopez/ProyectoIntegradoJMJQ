@@ -99,6 +99,10 @@
     <string name="lblAddFotosGaleriaB">Puedes añadir unas cuantas fotos a tu galería desde la opcion "Mi Perfil"</string>
     <string name="lblAddFotosGaleriaMiP">Editar Galería de Fotos</string>
     <string name="lblGuardarCambios">Guardar cambios</string>
+    <string name="perfilCreadoExito">¡Perfil creado, Bienvenido!</string>
+    <string name="relleneDatos">Rellene todos los campos, por favor</string>
+    <string name="seleccioneEstadoCivilError">Seleccione su estado civil</string>
+    <string name="seleccioneGeneroError">Seleccione su género</string>
 
 
     <!-- Busqueda de parametros -->
@@ -123,6 +127,11 @@
     <string name="tituloVistaPerfilUsuario">Perfil del Usuario</string>
     <string name="btnChatearVP">Mandar Mensaje</string>
     <string name="btnCancelarVP">Cancelar</string>
+
+
+
+    <string name="errorConexion">Error de conexión</string>
+    <string name="cambiosGuardados">Error de conexión</string>
 
 
 </resources>

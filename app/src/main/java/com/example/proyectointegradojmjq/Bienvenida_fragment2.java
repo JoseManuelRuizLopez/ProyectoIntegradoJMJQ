@@ -144,8 +144,8 @@ public class Bienvenida_fragment2 extends Fragment implements View.OnClickListen
 
                 if (txtNombreRealB.getText().toString().equals(""))
                 {
-                    Toast.makeText(getContext(), "Rellene todos los campos, por favor", Toast.LENGTH_SHORT).show();
-                    til1.setError("Rellene todos los campos, por favor");
+                    Toast.makeText(getContext(), R.string.relleneDatos, Toast.LENGTH_SHORT).show();
+                    til1.setError(getString(R.string.relleneDatos));
                     todoRelleno = false;
                 }
                 else
@@ -155,8 +155,8 @@ public class Bienvenida_fragment2 extends Fragment implements View.OnClickListen
 
                 if (txtFechaNacimientoB.getText().toString().equals(""))
                 {
-                    Toast.makeText(getContext(), "Rellene todos los campos, por favor", Toast.LENGTH_SHORT).show();
-                    til2.setError("Rellene todos los campos, por favor");
+                    Toast.makeText(getContext(), R.string.relleneDatos, Toast.LENGTH_SHORT).show();
+                    til2.setError(getString(R.string.relleneDatos));
                     todoRelleno = false;
                 }
                 else
@@ -166,8 +166,8 @@ public class Bienvenida_fragment2 extends Fragment implements View.OnClickListen
 
                 if (txtDescripcionB.getText().toString().equals(""))
                 {
-                    Toast.makeText(getContext(), "Rellene todos los campos, por favor", Toast.LENGTH_SHORT).show();
-                    til3.setError("Rellene todos los campos, por favor");
+                    Toast.makeText(getContext(), R.string.relleneDatos, Toast.LENGTH_SHORT).show();
+                    til3.setError(getString(R.string.relleneDatos));
                     todoRelleno = false;
                 }
                 else

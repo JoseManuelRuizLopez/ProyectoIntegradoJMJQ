@@ -50,7 +50,8 @@ public class FragmentoInicio extends Fragment {
     //String[] edades;
     //int[] fotosPerfil = {R.drawable.senora, R.drawable.senior, R.drawable.senora, R.drawable.senora, R.drawable.senora, R.drawable.senora, R.drawable.senora};
 
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    {
         inicioViewModel = ViewModelProviders.of(this).get(InicioViewModel.class);
         root = inflater.inflate(R.layout.fragment_inicio, container, false);
 /*
@@ -68,7 +69,8 @@ public class FragmentoInicio extends Fragment {
                 try {
                     URL url = null;
                     try {
-                        url = new URL("http://192.168.1.42/prueba.php");
+
+                        url = new URL("http://192.168.1.66/prueba.php");
 
                         //Create connection
                         HttpURLConnection myConnection = (HttpURLConnection) url.openConnection();

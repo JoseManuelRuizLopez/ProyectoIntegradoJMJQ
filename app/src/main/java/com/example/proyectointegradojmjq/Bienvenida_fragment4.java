@@ -101,7 +101,7 @@ public class Bienvenida_fragment4 extends Fragment implements View.OnClickListen
                                               String idUser = sharedPref.getString("idUsuario", "");
 
                                               Uri uri = new Uri.Builder()
-                                                      .scheme("http").authority("192.168.1.42")
+                                                      .scheme("http").authority("192.168.1.66")
                                                       .path("prueba.php")
                                                       .appendQueryParameter("nombreRealUsuario", nombreReal)
                                                       .appendQueryParameter("generoUsuario", generoUsuario)
@@ -147,9 +147,12 @@ public class Bienvenida_fragment4 extends Fragment implements View.OnClickListen
                                                   {
                                                       public void run()
                                                       {
-                                                          Toast.makeText(getContext(), "¡Perfil Creado, Bienvenido¡", Toast.LENGTH_SHORT).show();
+                                                          Toast.makeText(getContext(), R.string.perfilCreadoExito, Toast.LENGTH_SHORT).show();
+
                                                           SharedPreferences.Editor editor = sharedPref.edit();
                                                           editor.putBoolean("isLogged", true);
+                                                          editor.commit();
+
                                                           Intent intencion = new Intent(getActivity(), MenuPrincipalApp.class);
                                                           startActivity(intencion);
                                                           getActivity().finish();

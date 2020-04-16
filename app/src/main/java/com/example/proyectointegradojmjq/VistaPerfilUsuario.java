@@ -74,7 +74,7 @@ public class VistaPerfilUsuario extends AppCompatActivity implements View.OnClic
                 try {
                     URL url = null;
                     try {
-                        url = new URL("http://192.168.1.42/prueba.php?nombreUsuario=" + nombreUsuario + "&nombreRealUsuario=" + nombreRecibido + "");
+                        url = new URL("http://192.168.1.66/prueba.php?nombreUsuario=" + nombreUsuario + "&nombreRealUsuario=" + nombreRecibido + "");
                         HttpURLConnection myConnection = (HttpURLConnection) url.openConnection();
                         myConnection.setRequestMethod("GET");
                         if (myConnection.getResponseCode() == 200) {

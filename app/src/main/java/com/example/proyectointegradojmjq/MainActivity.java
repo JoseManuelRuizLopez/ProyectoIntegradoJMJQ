@@ -38,10 +38,15 @@ public class MainActivity extends AppCompatActivity
         AsyncTask.execute(new Runnable()
         {
             @Override
-            public void run() {
-                try {
+            public void run()
+            {
+                try
+                {
                     Thread.sleep(2000);
-                } catch (InterruptedException e) {
+
+                }
+                catch (InterruptedException e)
+                {
                     e.printStackTrace();
                 }
                 Boolean logeado = sharedPref.getBoolean("isLogged", false);

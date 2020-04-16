@@ -51,8 +51,10 @@ public class MenuPrincipalApp extends AppCompatActivity {
         sharedPref = getSharedPreferences("logeado", Context.MODE_PRIVATE);
     }
 
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch (item.getItemId())
+        {
             case R.id.action_settings:
 
                 final AlertDialog.Builder alert = new AlertDialog.Builder(this);

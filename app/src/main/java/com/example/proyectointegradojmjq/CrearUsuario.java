@@ -117,7 +117,7 @@ public class CrearUsuario extends AppCompatActivity implements View.OnClickListe
                     @Override
                     public void run() {
                         try {
-                            URL url = new URL("http://192.168.1.42/prueba.php?emailUsuario=" + emailUsuario);
+                            URL url = new URL("http://192.168.1.66/prueba.php?emailUsuario=" + emailUsuario);
 
                             //Create connection
                             HttpURLConnection myConnection = (HttpURLConnection) url.openConnection();
@@ -153,7 +153,7 @@ public class CrearUsuario extends AppCompatActivity implements View.OnClickListe
                             }
 
 
-                            URL url2 = new URL("http://192.168.1.42/prueba.php?nombreUsuario=" + nombreUsuario);
+                            URL url2 = new URL("http://192.168.1.66/prueba.php?nombreUsuario=" + nombreUsuario);
 
                             //Create connection
                             HttpURLConnection myConnection2 = (HttpURLConnection) url2.openConnection();
@@ -252,7 +252,7 @@ public class CrearUsuario extends AppCompatActivity implements View.OnClickListe
                                     postDataParams.put("claveUsuario", claveEncriptada);
                                     postDataParams.put("emailUsuario", emailUsuario);
 
-                                    URL url3 = new URL("http://192.168.1.42/prueba.php");
+                                    URL url3 = new URL("http://192.168.1.66/prueba.php");
                                     HttpURLConnection connection = (HttpURLConnection) url3.openConnection();
                                     connection.setReadTimeout(15000);
                                     connection.setConnectTimeout(15000);
@@ -320,7 +320,7 @@ public class CrearUsuario extends AppCompatActivity implements View.OnClickListe
 
                         } catch (Exception e)
                         {
-                            Toast.makeText(CrearUsuario.this, "Error de conexión, perdona", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(CrearUsuario.this, R.string.errorConexion, Toast.LENGTH_SHORT).show();
                             Log.println(Log.ASSERT, "Excepción", "Error de conexión, perdona");
                         }
                     }

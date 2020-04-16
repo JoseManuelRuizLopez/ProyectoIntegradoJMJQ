@@ -128,11 +128,11 @@ public class Bienvenida_fragment3 extends Fragment implements View.OnClickListen
 
                 if (spnGeneroF3.getSelectedItem().toString().equals(getResources().getString(R.string.genero1B)))
                 {
-                    Toast.makeText(getContext(), "Por favor, selecciona un género", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), R.string.seleccioneGeneroError, Toast.LENGTH_SHORT).show();
                 }
                 else if (!rButtonSoltero.isChecked() && !rButtonCasado.isChecked() && !rButtonViudo.isChecked())
                 {
-                    Toast.makeText(getContext(), "Por favor, selecciona un estado civil", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), R.string.seleccioneEstadoCivilError, Toast.LENGTH_SHORT).show();
                 }
                 else {
 
