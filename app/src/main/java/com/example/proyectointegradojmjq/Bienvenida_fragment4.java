@@ -63,8 +63,6 @@ public class Bienvenida_fragment4 extends Fragment implements View.OnClickListen
 
         lbl = view.findViewById(R.id.lblAddFotosF4);
 
-        nombreUsuario = sharedPref.getString("nombreUsuario", "YUSEP");
-
         lbl.setText(nombreUsuario);
 
 
@@ -103,7 +101,7 @@ public class Bienvenida_fragment4 extends Fragment implements View.OnClickListen
                                               String idUser = sharedPref.getString("idUsuario", "");
 
                                               Uri uri = new Uri.Builder()
-                                                      .scheme("http").authority("192.168.1.66")
+                                                      .scheme("http").authority("192.168.1.42")
                                                       .path("prueba.php")
                                                       .appendQueryParameter("nombreRealUsuario", nombreReal)
                                                       .appendQueryParameter("generoUsuario", generoUsuario)

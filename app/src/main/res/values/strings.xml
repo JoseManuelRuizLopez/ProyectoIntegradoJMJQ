@@ -119,4 +119,10 @@
     <string name="toastPrefCambiadas">Preferencias de busqueda actualizadas</string>
 
 
+    <!-- Vista de Perfil Usuario -->
+    <string name="tituloVistaPerfilUsuario">Perfil del Usuario</string>
+    <string name="btnChatearVP">Mandar Mensaje</string>
+    <string name="btnCancelarVP">Cancelar</string>
+
+
 </resources>

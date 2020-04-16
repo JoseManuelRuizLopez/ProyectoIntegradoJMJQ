@@ -141,7 +141,7 @@ public class FragmentoMiPerfil extends Fragment implements View.OnClickListener
             @Override
             public void run() {
                 try {
-                    URL url = new URL("http://192.168.1.66/prueba.php?idUsuario=" + idUser);
+                    URL url = new URL("http://192.168.1.42/prueba.php?idUsuario=" + idUser);
 
                     //Create connection
                     HttpURLConnection myConnection = (HttpURLConnection) url.openConnection();
@@ -243,7 +243,7 @@ public class FragmentoMiPerfil extends Fragment implements View.OnClickListener
                             String nuevaAltura = String.valueOf(seekBarMiPerfil.getProgress() + 140);
 
                             Uri uri = new Uri.Builder()
-                                    .scheme("http").authority("192.168.1.66")
+                                    .scheme("http").authority("192.168.1.42")
                                     .path("prueba.php")
                                     .appendQueryParameter("nombreRealUsuario", nombreUsuarioReal)
                                     .appendQueryParameter("generoUsuario", generoUsuario)

@@ -22,6 +22,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/txtUsuarioLogin"
             android:layout_width="match_parent"
+            android:inputType="text"
             android:layout_height="wrap_content"
             android:hint="@string/txtUsuarioLogin" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -32,11 +33,11 @@
         android:layout_width="330dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        app:passwordToggleEnabled="true"
         app:errorEnabled="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutUsuarioLogin">
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutUsuarioLogin"
+        app:passwordToggleEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/txtClaveLogin"
