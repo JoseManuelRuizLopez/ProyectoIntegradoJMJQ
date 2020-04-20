@@ -11,7 +11,7 @@
         android:id="@+id/gridview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/fondappac"
+        android:background="#00000000"
         android:horizontalSpacing="1dp"
         android:numColumns="2"
         android:verticalSpacing="1dp"></GridView>

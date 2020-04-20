@@ -107,7 +107,8 @@
 
     <!-- Busqueda de parametros -->
     <string name="lblRangeEdadBusqueda">Rango de Edad</string>
-    <string name="btnBuscarBusqueda">Buscar</string>
+    <string name="btnBuscarBusqueda">Establecer</string>
+    <string name="btnPredeterminadaBusqueda">Deshacer</string>
 
     <string name="rBtnSolteroBusqueda">Soltero/a</string>
     <string name="rBtnCasadoaBusqueda">Casado/a</string>
@@ -121,6 +122,7 @@
     <string name="toastGenroBusqueda">No has seleccionado un género</string>
     <string name="toastNoEstadoCivilBusqueda">No has seleccionado un estado civil</string>
     <string name="toastPrefCambiadas">Preferencias de busqueda actualizadas</string>
+    <string name="toastPrefDeshechas">Preferencias de busqueda deshechas</string>
 
 
     <!-- Vista de Perfil Usuario -->

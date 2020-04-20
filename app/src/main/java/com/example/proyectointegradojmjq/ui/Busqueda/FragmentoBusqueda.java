@@ -3,29 +3,25 @@ package com.example.proyectointegradojmjq.ui.Busqueda;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.NumberPicker;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.crystal.crystalrangeseekbar.interfaces.OnRangeSeekbarChangeListener;
 import com.crystal.crystalrangeseekbar.widgets.CrystalRangeSeekbar;
 import com.example.proyectointegradojmjq.R;
-import com.example.proyectointegradojmjq.ui.Inicio.FragmentoInicio;
 
 import java.util.ArrayList;
 
@@ -33,13 +29,14 @@ public class FragmentoBusqueda extends Fragment implements View.OnClickListener 
 
     private BusquedaViewModel busquedaViewModel;
 
-    Button btnBuscar;
+    Button btnEstablecer;
+    Button btnDeshacer;
     TextView lblEdadMin;
     TextView lblEdadMax;
     CrystalRangeSeekbar rangeSeekbar;
     Spinner spnGeneroBusqueda;
     RadioButton rb1, rb2, rb3;
-
+    RadioGroup rgGrupo;
 
     SharedPreferences sharedPref;
 
@@ -50,13 +47,16 @@ public class FragmentoBusqueda extends Fragment implements View.OnClickListener 
         rangeSeekbar = (CrystalRangeSeekbar) root.findViewById(R.id.rangeSeekbar1);
         lblEdadMax = root.findViewById(R.id.lblEdadMax);
         lblEdadMin = root.findViewById(R.id.lblEdadMin);
-        btnBuscar = root.findViewById(R.id.btnBuscarBusqueda);
+        btnEstablecer = root.findViewById(R.id.btnBuscarBusqueda);
+        btnDeshacer = root.findViewById(R.id.btnDeshacerBusqueda);
         spnGeneroBusqueda = root.findViewById(R.id.spnGeneroBusqueda);
         rb1 = root.findViewById(R.id.rBoton1Busqueda);
         rb2 = root.findViewById(R.id.rBoton2Busqueda);
         rb3 = root.findViewById(R.id.rBoton3Busqueda);
+        rgGrupo = root.findViewById(R.id.rGroupBusqueda);
 
-        btnBuscar.setOnClickListener(this);
+        btnDeshacer.setOnClickListener(this);
+        btnEstablecer.setOnClickListener(this);
 
         sharedPref = getActivity().getSharedPreferences("prefBusqueda", Context.MODE_PRIVATE);
 
@@ -73,6 +73,36 @@ public class FragmentoBusqueda extends Fragment implements View.OnClickListener 
 
         rangeSeekbar.setMaxValue(95);
         rangeSeekbar.setMinValue(18);
+
+
+        if (!sharedPref.getString("genero", "").equals("") && !sharedPref.getString("estadoCivil", "").equals("")) {
+            String generospn = sharedPref.getString("genero", "");
+            int spinnerPosition = spinnerArrayAdapter.getPosition(generospn);
+            spnGeneroBusqueda.setSelection(spinnerPosition);
+
+            if (sharedPref.getString("estadoCivil", "").equals(getString(R.string.rBtnSolteroBusqueda))) {
+                rb1.setChecked(true);
+            }
+
+            if (sharedPref.getString("estadoCivil", "").equals(getString(R.string.rBtnCasadoaBusqueda))) {
+                rb2.setChecked(true);
+
+            }
+
+            if (sharedPref.getString("estadoCivil", "").equals(getString(R.string.rBtnViudoaBusqueda))) {
+                rb3.setChecked(true);
+
+            }
+
+            Log.println(Log.ASSERT, "Min", sharedPref.getInt("edadMin", 18) + "");
+            Log.println(Log.ASSERT, "Max", sharedPref.getInt("edadMax", 18) + "");
+
+
+
+            rangeSeekbar.setMinStartValue(sharedPref.getInt("edadMin", 18)).apply();
+            rangeSeekbar.setMaxStartValue(sharedPref.getInt("edadMax", 95)).apply();
+
+        }
 
         rangeSeekbar.setOnRangeSeekbarChangeListener(new OnRangeSeekbarChangeListener() {
             @Override
@@ -136,6 +166,25 @@ public class FragmentoBusqueda extends Fragment implements View.OnClickListener 
 
 
                 fallo = false;
+
+                break;
+
+            case R.id.btnDeshacerBusqueda:
+
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putInt("edadMin", 0);
+                editor.putInt("edadMax", 0);
+                editor.putString("genero", "");
+                editor.putString("estadoCivil", "");
+                editor.commit();
+
+                rgGrupo.clearCheck();
+                spnGeneroBusqueda.setSelection(0);
+
+                rangeSeekbar.setMinStartValue(18).apply();
+                rangeSeekbar.setMaxStartValue(95).apply();
+
+                Toast.makeText(getContext(), getString(R.string.toastPrefDeshechas), Toast.LENGTH_SHORT).show();
 
                 break;
         }

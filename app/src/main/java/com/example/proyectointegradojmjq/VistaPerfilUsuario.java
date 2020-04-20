@@ -40,7 +40,8 @@ public class VistaPerfilUsuario extends AppCompatActivity implements View.OnClic
     String nombreRecibido;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vista_perfil_usuario);
 
