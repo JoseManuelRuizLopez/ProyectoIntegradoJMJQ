@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -26,6 +27,8 @@ import java.net.URL;
 
 import javax.net.ssl.HttpsURLConnection;
 
+import static android.app.Activity.RESULT_OK;
+
 public class Bienvenida_fragment4 extends Fragment implements View.OnClickListener
 {
 
@@ -39,6 +42,9 @@ public class Bienvenida_fragment4 extends Fragment implements View.OnClickListen
     String nombreUsuario;
 
     SharedPreferences sharedPref;
+
+    private static final int FILE_SELECT_CODE = 0;
+    private static final String TAG = null;
 
     public Bienvenida_fragment4()
     {
@@ -77,6 +83,9 @@ public class Bienvenida_fragment4 extends Fragment implements View.OnClickListen
         {
 
             case R.id.imgDefectoF4:
+
+                showFileChooser();
+                break;
 
 
             case R.id.btnSiguienteWelcomeF4:
@@ -182,4 +191,48 @@ public class Bienvenida_fragment4 extends Fragment implements View.OnClickListen
         }
 
     }
+
+
+    private void showFileChooser()
+    {
+
+
+        final int RESULT_GALLERY = 0;
+
+        Intent galleryIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(galleryIntent , RESULT_GALLERY );
+
+        /*Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("image/*");
+        intent.addCategory(Intent.CATEGORY_OPENABLE);*/
+
+        try
+        {
+            //startActivityForResult(Intent.createChooser(intent, "Select a File to Upload"), FILE_SELECT_CODE);
+        }
+        catch (android.content.ActivityNotFoundException ex)
+        {
+            // Potentially direct the user to the Market with a Dialog
+           // Toast.makeText(getActivity(), "Please install a File Manager.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode)
+        {
+            case FILE_SELECT_CODE:
+                if (resultCode == RESULT_OK)
+                {
+                    // Get the Uri of the selected file
+                    Uri uri = data.getData();
+                    imgPerfil.setImageURI(uri);
+                    Log.d(TAG, "File Uri: " + uri.toString());
+                }
+                break;
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+
 }

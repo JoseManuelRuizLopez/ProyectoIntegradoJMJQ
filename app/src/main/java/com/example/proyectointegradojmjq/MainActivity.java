@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity
 
                 if (logeado == true) {
 
-                    Intent intentMenuPrincipal = new Intent(MainActivity.this, MenuPrincipalApp.class);
+                    Intent intentMenuPrincipal = new Intent(MainActivity.this, BienvenidaUsuario.class);
                     startActivity(intentMenuPrincipal);
                     finish();
 
