@@ -144,6 +144,7 @@ public class FragmentoInicio extends Fragment {
                                         intent.putExtra("image", fotosPerfil.get(i));
                                         intent.putExtra("edad", edades.get(i));
                                         startActivity(intent);
+                                        getActivity().overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 
                                     }
                                 });
@@ -243,6 +244,7 @@ public class FragmentoInicio extends Fragment {
                                         intent.putExtra("image", fotosPerfil.get(i));
                                         intent.putExtra("edad", edades.get(i));
                                         startActivity(intent);
+                                        getActivity().overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 
                                     }
                                 });

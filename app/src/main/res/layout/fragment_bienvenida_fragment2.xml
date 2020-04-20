@@ -9,26 +9,23 @@
 
     <TextView
         android:id="@+id/txtRelleneCampos"
-        android:layout_width="383dp"
-        android:layout_height="66dp"
-        android:layout_marginTop="72dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:text="@string/lblRellenarDatosB"
-        android:textSize="22sp"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.892"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout1F2"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="330dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="52dp"
+        android:layout_marginTop="15dp"
         app:errorEnabled="true"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.641"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtRelleneCampos">
 
@@ -36,10 +33,10 @@
             android:id="@+id/txtNombreRealB"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:nextFocusDown="@+id/txtDescripcionMiP"
-            android:inputType="text"
             android:drawableRight="@drawable/iconopersona"
-            android:hint="Nombre real" />
+            android:hint="Nombre real"
+            android:inputType="text"
+            android:nextFocusDown="@+id/txtDescripcionMiP" />
     </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -48,11 +45,10 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="330dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="5dp"
         android:drawableRight="@drawable/tartaicono"
         app:errorEnabled="true"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.641"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout1F2">
 
@@ -69,43 +65,40 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="330dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="176dp"
-        app:errorEnabled="true"
-        app:counterMaxLength="250"
+        android:layout_marginTop="5dp"
         app:counterEnabled="true"
+        app:counterMaxLength="250"
+        app:errorEnabled="true"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.641"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout1F2">
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout2F2">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/txtDescripcionMiP"
             android:layout_width="match_parent"
             android:layout_height="107dp"
-            android:maxLength="250"
             android:drawableRight="@drawable/iconobloc"
             android:hint="Descripción"
-            android:inputType="text|textMultiLine" />
+            android:inputType="text|textMultiLine"
+            android:maxLength="250" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <DatePicker
         android:id="@+id/dp"
         android:layout_width="242dp"
         android:layout_height="26dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="284dp"
         android:calendarViewShown="false"
         android:datePickerMode="spinner"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout2F2" />
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutMiP" />
 
     <Button
         android:id="@+id/btnSiguienteWelcomeF2"
         android:layout_width="60dp"
         android:layout_height="40dp"
-        android:layout_marginBottom="16dp"
         android:background="@drawable/botonsecundario"
         android:drawableTop="@drawable/flechaadelante2"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -113,6 +106,6 @@
         app:layout_constraintHorizontal_bias="0.954"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayoutMiP"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.954" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

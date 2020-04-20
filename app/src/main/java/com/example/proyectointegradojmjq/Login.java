@@ -74,11 +74,13 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
             case R.id.btnRegistrarLogin:
                 Intent intentRegistrar = new Intent(Login.this, CrearUsuario.class);
                 startActivity(intentRegistrar);
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 break;
 
             case R.id.lblRecordarClave:
                 Intent intentRecordarClave = new Intent(Login.this, RecordarClave.class);
                 startActivity(intentRecordarClave);
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 break;
 
             case R.id.btnEntrarLogin:
@@ -95,7 +97,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                     public void run() {
                         try {
 
-                            URL url = new URL("http://192.168.1.66/prueba.php?nombreUsuario=" + usuario + "&claveUsuario=" + claveEncriptada + "");
+                            URL url = new URL("http://192.168.1.42/prueba.php?nombreUsuario=" + usuario + "&claveUsuario=" + claveEncriptada + "");
                             HttpURLConnection myConnection = (HttpURLConnection) url.openConnection();
                             myConnection.setRequestMethod("GET");
                             if (myConnection.getResponseCode() == 200) {
@@ -126,12 +128,14 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
                                         Intent intentMenuPrincipal = new Intent(Login.this, MenuPrincipalApp.class);
                                         startActivity(intentMenuPrincipal);
+                                        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                                         finish();
                                     }
                                     else
                                     {
                                         Intent intentMenuPrincipal = new Intent(Login.this, MenuPrincipalApp.class);
                                         startActivity(intentMenuPrincipal);
+                                        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                                         finish();
                                     }
                                 } else {

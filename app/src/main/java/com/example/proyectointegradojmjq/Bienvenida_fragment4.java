@@ -199,21 +199,23 @@ public class Bienvenida_fragment4 extends Fragment implements View.OnClickListen
 
         final int RESULT_GALLERY = 0;
 
-        Intent galleryIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        /*Intent galleryIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(galleryIntent , RESULT_GALLERY );
 
-        /*Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+         */
+
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.setType("image/*");
-        intent.addCategory(Intent.CATEGORY_OPENABLE);*/
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
 
         try
         {
-            //startActivityForResult(Intent.createChooser(intent, "Select a File to Upload"), FILE_SELECT_CODE);
+            startActivityForResult(Intent.createChooser(intent, "Select a File to Upload"), FILE_SELECT_CODE);
         }
         catch (android.content.ActivityNotFoundException ex)
         {
             // Potentially direct the user to the Market with a Dialog
-           // Toast.makeText(getActivity(), "Please install a File Manager.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Please install a File Manager.", Toast.LENGTH_SHORT).show();
         }
     }
 

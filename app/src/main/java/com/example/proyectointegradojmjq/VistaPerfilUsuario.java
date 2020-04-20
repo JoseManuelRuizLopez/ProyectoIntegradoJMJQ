@@ -143,6 +143,7 @@ public class VistaPerfilUsuario extends AppCompatActivity implements View.OnClic
 
             case R.id.btnCancelarVP:
                 finish();
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
         }
     }
 }

@@ -48,6 +48,7 @@ public class RecordarClave extends AppCompatActivity implements View.OnClickList
 
             case R.id.btnCancelarRC:
                 finish();
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 break;
         }
     }

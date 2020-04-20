@@ -72,6 +72,7 @@ public class MenuPrincipalApp extends AppCompatActivity {
 
                         Intent intentLogin = new Intent(MenuPrincipalApp.this, Login.class);
                         startActivity(intentLogin);
+                        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 
                         finish();
                     }
