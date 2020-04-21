@@ -1,6 +1,8 @@
 package com.example.proyectointegradojmjq;
 
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -8,6 +10,8 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -19,6 +23,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -32,7 +39,10 @@ import static android.app.Activity.RESULT_OK;
 public class Bienvenida_fragment4 extends Fragment implements View.OnClickListener
 {
 
-    ImageView imgPerfil;
+    //CardView cardView;
+    Uri uri;
+
+   public static ImageView imgPerfil;
 
     TextView lbl;
 
@@ -61,6 +71,9 @@ public class Bienvenida_fragment4 extends Fragment implements View.OnClickListen
         btnSiguienteF4 = view.findViewById(R.id.btnSiguienteWelcomeF4);
         btnAtrasF4 = view.findViewById(R.id.btnAtrasWelcomeF4);
 
+        //cardView = view.findViewById(R.id.cardviewF4);
+        //cardView.setOnClickListener(this);
+
         imgPerfil.setOnClickListener(this);
         btnSiguienteF4.setOnClickListener(this);
         btnAtrasF4.setOnClickListener(this);
@@ -82,11 +95,16 @@ public class Bienvenida_fragment4 extends Fragment implements View.OnClickListen
         switch(v.getId())
         {
 
-            case R.id.imgDefectoF4:
+            /*case R.id.imgDefectoF4:
 
                 showFileChooser();
                 break;
+*/
 
+            case R.id.imgDefectoF4:
+                CropImage.startPickImageActivity(getActivity());
+
+                break;
 
             case R.id.btnSiguienteWelcomeF4:
 
@@ -192,7 +210,7 @@ public class Bienvenida_fragment4 extends Fragment implements View.OnClickListen
 
     }
 
-
+/*
     private void showFileChooser()
     {
 
@@ -203,7 +221,7 @@ public class Bienvenida_fragment4 extends Fragment implements View.OnClickListen
         startActivityForResult(galleryIntent , RESULT_GALLERY );
 
          */
-
+/*
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.setType("image/*");
         intent.addCategory(Intent.CATEGORY_OPENABLE);
@@ -219,6 +237,7 @@ public class Bienvenida_fragment4 extends Fragment implements View.OnClickListen
         }
     }
 
+/*
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode)
@@ -235,6 +254,6 @@ public class Bienvenida_fragment4 extends Fragment implements View.OnClickListen
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
-
+*/
 
 }

@@ -131,6 +131,9 @@
     <string name="btnCancelarVP">Cancelar</string>
 
 
+    <string name="crop_image_menu_crop">Aceptar</string>
+    <string name="crop_image_activity_title">Ajustar Foto</string>
+
 
     <string name="errorConexion">Error de conexión</string>
     <string name="cambiosGuardados">Error de conexión</string>

@@ -4,17 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Bienvenida_fragment1" >
+    android:background="#00000000"
+    tools:context=".Bienvenida_fragment1">
 
     <TextView
         android:id="@+id/txtBienvenida"
-        android:layout_width="340dp"
-        android:layout_height="64dp"
-        android:layout_marginTop="124dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="116dp"
         android:text="@string/msgBienvenidaB"
         android:textSize="22sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.771"
+        app:layout_constraintHorizontal_bias="0.562"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
