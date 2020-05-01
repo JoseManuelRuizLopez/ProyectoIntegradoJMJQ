@@ -140,6 +140,7 @@ public class Bienvenida_fragment4 extends Fragment implements View.OnClickListen
                         {
                             String response = "";
 
+
                             String idUser = sharedPref.getString("idUsuario", "");
 
                             Uri uri = new Uri.Builder()
