@@ -41,7 +41,6 @@ public class MainActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
-
                 Boolean logeado = sharedPref.getBoolean("isLogged", false);
 
 
@@ -62,5 +61,4 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
 }

@@ -116,8 +116,7 @@ public class CrearUsuario extends AppCompatActivity implements View.OnClickListe
                 AsyncTask.execute(new Runnable() {
                     @Override
                     public void run() {
-                        try
-                        {
+                        try {
                             URL url = new URL("http://www.teamchaterinos.com/prueba.php?emailUsuario=" + emailUsuario);
 
                             //Create connection

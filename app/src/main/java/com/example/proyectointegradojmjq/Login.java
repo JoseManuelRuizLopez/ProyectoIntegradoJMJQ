@@ -97,7 +97,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                     public void run() {
                         try {
 
-                            URL url = new URL("http://192.168.1.42/prueba.php?nombreUsuario=" + usuario + "&claveUsuario=" + claveEncriptada + "");
+                            URL url = new URL("http://teamchaterinos.com/prueba.php?nombreUsuario=" + usuario + "&claveUsuario=" + claveEncriptada + "");
                             HttpURLConnection myConnection = (HttpURLConnection) url.openConnection();
                             myConnection.setRequestMethod("GET");
                             if (myConnection.getResponseCode() == 200) {
@@ -123,7 +123,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                                     if (swMantenerSesion.isChecked()) {
                                         SharedPreferences.Editor editor = sharedPref.edit();
                                         editor.putBoolean("isLogged", true);
-
+                                        editor.putString("idUsuario", "67");
                                         editor.commit();
 
                                         Intent intentMenuPrincipal = new Intent(Login.this, MenuPrincipalApp.class);
@@ -133,6 +133,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                                     }
                                     else
                                     {
+
                                         Intent intentMenuPrincipal = new Intent(Login.this, MenuPrincipalApp.class);
                                         startActivity(intentMenuPrincipal);
                                         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);

@@ -1,41 +1,59 @@
 package com.example.proyectointegradojmjq;
 
-import android.Manifest;
-import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import com.example.proyectointegradojmjq.ui.MiPerfil.FragmentoMiPerfil;
 import com.google.android.material.navigation.NavigationView;
-import com.theartofdev.edmodo.cropper.CropImage;
-import com.theartofdev.edmodo.cropper.CropImageView;
 
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.util.Base64;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 public class MenuPrincipalApp extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
 
-    Uri uri;
-
     SharedPreferences sharedPref;
+
+    String idUsuario;
+    String nombreUsuario;
+    String nombreUsuarioReal;
+
+    ImageView imgPerfil;
+    TextView lblNavUsuario;
+    TextView lblNavNombreCompleto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,13 +75,86 @@ public class MenuPrincipalApp extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
+        View headerView = navigationView.getHeaderView(0);
+
+        imgPerfil = headerView.findViewById(R.id.imgPerfilMenu);
+        lblNavUsuario = headerView.findViewById(R.id.lblNavUsuario);
+        lblNavNombreCompleto = headerView.findViewById(R.id.lblNavNombreCompleto);
+
         sharedPref = getSharedPreferences("logeado", Context.MODE_PRIVATE);
+        /*
+        String foto = sharedPref.getString("imagenPerfil", "");
+
+        Bitmap imageB;
+        if (!foto.equals("")) {
+            imageB = decodeToBase64(foto);
+
+            imgPerfil.setImage
+        }
+*/
+        idUsuario = sharedPref.getString("idUsuario", "0");
+
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    URL url = new URL("http://www.teamchaterinos.com/prueba.php?idUsuario=" + idUsuario);
+                    //Create connection
+                    HttpURLConnection myConnection = (HttpURLConnection) url.openConnection();
+
+                    //Establecer método por defecto GET
+                    myConnection.setRequestMethod("GET");
+
+                    if (myConnection.getResponseCode() == 200) {
+                        InputStream responseBody = myConnection.getInputStream();
+                        InputStreamReader responseBodyReader = new InputStreamReader(responseBody, "UTF-8");
+
+                        BufferedReader bR = new BufferedReader(responseBodyReader);
+                        String line = "";
+
+                        StringBuilder responseStrBuilder = new StringBuilder();
+
+                        while ((line = bR.readLine()) != null) {
+                            responseStrBuilder.append(line);
+                        }
+
+                        JSONArray result = new JSONArray(responseStrBuilder.toString());
+
+                        for (int i = 0; i < result.length(); i++) {
+                            JSONObject jsonobject = result.getJSONObject(i);
+
+                            nombreUsuario = jsonobject.getString("nombreUsuario");
+                            nombreUsuarioReal = jsonobject.getString("nombreRealUsuario");
+                        }
+
+                        responseBody.close();
+                        responseBodyReader.close();
+                        myConnection.disconnect();
+
+                        Log.println(Log.ASSERT, "nom", nombreUsuario);
+                        Log.println(Log.ASSERT, "nomc", nombreUsuarioReal);
+
+                        lblNavUsuario.setText(nombreUsuario);
+                        lblNavNombreCompleto.setText(nombreUsuarioReal);
+
+                    } else {
+                        Log.println(Log.ASSERT, "Error", "Error");
+                    }
+                } catch (Exception e) {
+                    Log.println(Log.ASSERT, "Excepción", "Error de conexión, perdona. " + e.getMessage());
+                }
+            }
+        });
+
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        switch (item.getItemId())
-        {
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
             case R.id.action_settings:
 
                 final AlertDialog.Builder alert = new AlertDialog.Builder(this);
@@ -77,6 +168,8 @@ public class MenuPrincipalApp extends AppCompatActivity {
 
                         SharedPreferences.Editor editor = sharedPref.edit();
                         editor.putBoolean("isLogged", false);
+                        editor.putString("idUsuario", "");
+
                         editor.commit();
 
                         Intent intentLogin = new Intent(MenuPrincipalApp.this, Login.class);
@@ -115,39 +208,8 @@ public class MenuPrincipalApp extends AppCompatActivity {
                 || super.onSupportNavigateUp();
     }
 
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == CropImage.PICK_IMAGE_CHOOSER_REQUEST_CODE && resultCode == Activity.RESULT_OK)
-        {
-            Uri imageUri = CropImage.getPickImageResultUri(this, data);
-
-            if (CropImage.isReadExternalStoragePermissionsRequired(this, imageUri)) {
-                uri = imageUri;
-                requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 0);
-            } else {
-                startCrop(imageUri);
-            }
-        }
-
-        if(requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
-            CropImage.ActivityResult result = CropImage.getActivityResult(data);
-            if(resultCode == RESULT_OK) {
-                FragmentoMiPerfil.imgPerfilMiP.setImageURI(result.getUri());
-            }
-        }
-    }
-
-    private void startCrop(Uri imageUri)
-    {
-        CropImage.activity(imageUri)
-                .setGuidelines(CropImageView.Guidelines.ON)
-                .setAllowFlipping(false)
-                .setAllowRotation(false)
-                .setAspectRatio(200, 200)
-                .setMultiTouchEnabled(true)
-                .start(this);
+    public static Bitmap decodeToBase64(String input) {
+        byte[] decodedByte = Base64.decode(input, 0);
+        return BitmapFactory.decodeByteArray(decodedByte, 0, decodedByte.length);
     }
 }

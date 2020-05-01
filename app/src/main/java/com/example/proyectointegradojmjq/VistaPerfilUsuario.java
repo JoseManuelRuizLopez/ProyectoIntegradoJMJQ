@@ -75,7 +75,7 @@ public class VistaPerfilUsuario extends AppCompatActivity implements View.OnClic
                 try {
                     URL url = null;
                     try {
-                        url = new URL("http://192.168.1.66/prueba.php?nombreUsuario=" + nombreUsuario + "&nombreRealUsuario=" + nombreRecibido + "");
+                        url = new URL("http://www.teamchaterinos.com/prueba.php?nombreUsuario=" + nombreUsuario + "&nombreRealUsuario=" + nombreRecibido + "");
                         HttpURLConnection myConnection = (HttpURLConnection) url.openConnection();
                         myConnection.setRequestMethod("GET");
                         if (myConnection.getResponseCode() == 200) {
@@ -108,13 +108,20 @@ public class VistaPerfilUsuario extends AppCompatActivity implements View.OnClic
                         }
 
                     } catch (Exception e) {
-                        Log.println(Log.ASSERT, "Error", "Error1");
+                        Log.println(Log.ASSERT, "Error", e.getMessage());
                     }
                 } catch (Exception e) {
                     Log.println(Log.ASSERT, "Error", "Error2");
                 }
             }
         });
+
+
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         //enable back Button
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

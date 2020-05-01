@@ -59,6 +59,7 @@ public class Bienvenida_fragment4 extends Fragment implements View.OnClickListen
     String nombreUsuario;
 
     SharedPreferences sharedPref;
+    SharedPreferences sharedPrefB;
 
     Bitmap bitmapFoto;
     String encoded;
@@ -89,6 +90,8 @@ public class Bienvenida_fragment4 extends Fragment implements View.OnClickListen
         btnAtrasF4.setOnClickListener(this);
 
         sharedPref = getActivity().getSharedPreferences("logeado", Context.MODE_PRIVATE);
+        sharedPrefB = getActivity().getSharedPreferences("prefBusqueda", Context.MODE_PRIVATE);
+
 
         lbl = view.findViewById(R.id.lblAddFotosF4);
 
@@ -195,7 +198,16 @@ public class Bienvenida_fragment4 extends Fragment implements View.OnClickListen
 
                                         SharedPreferences.Editor editor = sharedPref.edit();
                                         editor.putBoolean("isLogged", true);
+
+                                        SharedPreferences.Editor editor2 = sharedPref.edit();
+                                        editor2.putInt("edadMin", 0);
+                                        editor2.putInt("edadMax", 0);
+                                        editor2.putString("genero", "");
+                                        editor2.putString("estadoCivil", "");
+
+
                                         editor.commit();
+                                        editor2.commit();
 
                                         Intent intencion = new Intent(getActivity(), MenuPrincipalApp.class);
                                         startActivity(intencion);
@@ -235,52 +247,4 @@ public class Bienvenida_fragment4 extends Fragment implements View.OnClickListen
 
         return "";
     }
-
-
-/*
-    private void showFileChooser()
-    {
-
-
-        final int RESULT_GALLERY = 0;
-
-        /*Intent galleryIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(galleryIntent , RESULT_GALLERY );
-
-         */
-/*
-        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.setType("image/*");
-        intent.addCategory(Intent.CATEGORY_OPENABLE);
-
-        try
-        {
-            startActivityForResult(Intent.createChooser(intent, "Select a File to Upload"), FILE_SELECT_CODE);
-        }
-        catch (android.content.ActivityNotFoundException ex)
-        {
-            // Potentially direct the user to the Market with a Dialog
-            Toast.makeText(getActivity(), "Please install a File Manager.", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-/*
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (requestCode)
-        {
-            case FILE_SELECT_CODE:
-                if (resultCode == RESULT_OK)
-                {
-                    // Get the Uri of the selected file
-                    Uri uri = data.getData();
-                    imgPerfil.setImageURI(uri);
-                    Log.d(TAG, "File Uri: " + uri.toString());
-                }
-                break;
-        }
-        super.onActivityResult(requestCode, resultCode, data);
-    }
-*/
-
 }

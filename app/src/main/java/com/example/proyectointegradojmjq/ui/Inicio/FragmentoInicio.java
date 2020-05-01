@@ -75,7 +75,7 @@ public class FragmentoInicio extends Fragment {
                     try {
                         URL url = null;
                         try {
-                            url = new URL("http://192.168.1.42/prueba.php");
+                            url = new URL("http://www.teamchaterinos.com/prueba.php");
 
                             //Create connection
                             HttpURLConnection myConnection = (HttpURLConnection) url.openConnection();
@@ -249,6 +249,7 @@ public class FragmentoInicio extends Fragment {
                                     }
                                 });
 
+
                             } else {
                                 Log.println(Log.ASSERT, "Error2", "Error");
                             }
@@ -262,14 +263,12 @@ public class FragmentoInicio extends Fragment {
                     }
                 }
             });
+
         }
 
-        try
-        {
-            Thread.sleep(2000);
-        }
-        catch (InterruptedException e)
-        {
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
