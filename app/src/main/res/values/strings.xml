@@ -136,7 +136,7 @@
 
 
     <string name="errorConexion">Error de conexión</string>
-    <string name="cambiosGuardados">Error de conexión</string>
+    <string name="cambiosGuardados">!Cambios Guardados¡</string>
 
 
 </resources>

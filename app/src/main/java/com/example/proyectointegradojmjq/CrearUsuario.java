@@ -116,8 +116,9 @@ public class CrearUsuario extends AppCompatActivity implements View.OnClickListe
                 AsyncTask.execute(new Runnable() {
                     @Override
                     public void run() {
-                        try {
-                            URL url = new URL("http://192.168.1.42/prueba.php?emailUsuario=" + emailUsuario);
+                        try
+                        {
+                            URL url = new URL("http://www.teamchaterinos.com/prueba.php?emailUsuario=" + emailUsuario);
 
                             //Create connection
                             HttpURLConnection myConnection = (HttpURLConnection) url.openConnection();
@@ -153,7 +154,7 @@ public class CrearUsuario extends AppCompatActivity implements View.OnClickListe
                             }
 
 
-                            URL url2 = new URL("http://192.168.1.42/prueba.php?nombreUsuario=" + nombreUsuario);
+                            URL url2 = new URL("http://www.teamchaterinos.com/prueba.php?nombreUsuario=" + nombreUsuario);
 
                             //Create connection
                             HttpURLConnection myConnection2 = (HttpURLConnection) url2.openConnection();
@@ -252,7 +253,7 @@ public class CrearUsuario extends AppCompatActivity implements View.OnClickListe
                                     postDataParams.put("claveUsuario", claveEncriptada);
                                     postDataParams.put("emailUsuario", emailUsuario);
 
-                                    URL url3 = new URL("http://192.168.1.42/prueba.php");
+                                    URL url3 = new URL("http://www.teamchaterinos.com/prueba.php");
                                     HttpURLConnection connection = (HttpURLConnection) url3.openConnection();
                                     connection.setReadTimeout(15000);
                                     connection.setConnectTimeout(15000);
@@ -320,7 +321,14 @@ public class CrearUsuario extends AppCompatActivity implements View.OnClickListe
 
                         } catch (Exception e)
                         {
-                            Toast.makeText(CrearUsuario.this, R.string.errorConexion, Toast.LENGTH_SHORT).show();
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run()
+                                {
+                                    Toast.makeText(CrearUsuario.this, R.string.errorConexion, Toast.LENGTH_SHORT).show();
+                                }
+                            });
+
                             Log.println(Log.ASSERT, "Excepción", "Error de conexión, perdona");
                         }
                     }
@@ -355,7 +363,8 @@ public class CrearUsuario extends AppCompatActivity implements View.OnClickListe
         StringBuilder result = new StringBuilder();
         boolean first = true;
 
-        for (Map.Entry<String, String> entry : params.entrySet()) {
+        for (Map.Entry<String, String> entry : params.entrySet())
+        {
             if (first) {
                 first = false;
             } else {

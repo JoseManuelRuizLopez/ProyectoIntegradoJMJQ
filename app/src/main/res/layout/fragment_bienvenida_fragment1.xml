@@ -7,15 +7,25 @@
     android:background="#00000000"
     tools:context=".Bienvenida_fragment1">
 
-    <TextView
-        android:id="@+id/txtBienvenida"
-        android:layout_width="wrap_content"
+    <pl.droidsonroids.gif.GifImageView
+        android:id="@+id/bienvenidaGif"
+        android:layout_width="340dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="116dp"
-        android:text="@string/msgBienvenidaB"
-        android:textSize="22sp"
+        android:layout_marginTop="108dp"
+        android:src="@drawable/bienvenidaani"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.562"
+        app:layout_constraintHorizontal_bias="0.633"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <pl.droidsonroids.gif.GifImageView
+        android:id="@+id/logoanimado"
+        android:layout_width="340dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="232dp"
+        android:src="@drawable/ceagirando"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.633"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -23,12 +33,14 @@
         android:id="@+id/btnSiguienteWelcomeF1"
         android:layout_width="60dp"
         android:layout_height="40dp"
+        android:layout_marginBottom="16dp"
         android:background="@drawable/botonsecundario"
         android:drawableTop="@drawable/flechaadelante2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.954"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtBienvenida"
-        app:layout_constraintVertical_bias="0.968" />
+        app:layout_constraintTop_toBottomOf="@+id/bienvenidaGif"
+        app:layout_constraintVertical_bias="0.94" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

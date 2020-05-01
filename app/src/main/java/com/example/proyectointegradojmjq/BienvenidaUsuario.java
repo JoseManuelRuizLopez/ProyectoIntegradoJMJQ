@@ -73,7 +73,8 @@ public class BienvenidaUsuario extends AppCompatActivity
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == CropImage.PICK_IMAGE_CHOOSER_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+        if (requestCode == CropImage.PICK_IMAGE_CHOOSER_REQUEST_CODE && resultCode == Activity.RESULT_OK)
+        {
             Uri imageUri = CropImage.getPickImageResultUri(this, data);
 
             if (CropImage.isReadExternalStoragePermissionsRequired(this, imageUri)) {
@@ -86,13 +87,15 @@ public class BienvenidaUsuario extends AppCompatActivity
 
         if(requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
-            if(resultCode == RESULT_OK) {
+            if(resultCode == RESULT_OK)
+            {
                 Bienvenida_fragment4.imgPerfil.setImageURI(result.getUri());
             }
         }
     }
 
-    private void startCrop(Uri imageUri) {
+    private void startCrop(Uri imageUri)
+    {
         CropImage.activity(imageUri)
                 .setGuidelines(CropImageView.Guidelines.ON)
                 .setAllowFlipping(false)

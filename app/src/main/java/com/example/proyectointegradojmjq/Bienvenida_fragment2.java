@@ -63,7 +63,9 @@ public class Bienvenida_fragment2 extends Fragment implements View.OnClickListen
         til3 = view.findViewById(R.id.textInputLayoutMiP);
 
         txtNombreRealB = view.findViewById(R.id.txtNombreRealB);
+
         txtFechaNacimientoB = view.findViewById(R.id.txtFechaNacimientoB);
+        txtFechaNacimientoB.setShowSoftInputOnFocus(false);
         txtDescripcionB = view.findViewById(R.id.txtDescripcionMiP);
 
         txtFechaNacimientoB.setFocusable(false);

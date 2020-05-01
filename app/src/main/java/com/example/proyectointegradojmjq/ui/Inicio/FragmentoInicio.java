@@ -169,7 +169,7 @@ public class FragmentoInicio extends Fragment {
                     try {
                         URL url = null;
                         try {
-                            url = new URL("http://192.168.1.42/prueba.php?generoUsuario=" + sharedPref.getString("genero", "")
+                            url = new URL("http://www.teamchaterinos.com/prueba.php?generoUsuario=" + sharedPref.getString("genero", "")
                                     + "&estadoCivilUsuario=" + sharedPref.getString("estadoCivil", "")
                                     + "&fechaMin=" + fechaAñoAprox((sharedPref.getInt("edadMax", 0)))
                                     + "&fechaMax=" + fechaAñoAprox((sharedPref.getInt("edadMin", 0))) + "");
@@ -263,6 +263,16 @@ public class FragmentoInicio extends Fragment {
                 }
             });
         }
+
+        try
+        {
+            Thread.sleep(2000);
+        }
+        catch (InterruptedException e)
+        {
+            e.printStackTrace();
+        }
+
         return root;
     }
 
@@ -289,7 +299,7 @@ public class FragmentoInicio extends Fragment {
             //getting view in row_data
             TextView nombre = view1.findViewById(R.id.lblNombre);
             TextView edad = view1.findViewById(R.id.lblEdad);
-            ImageView image = view1.findViewById(R.id.images);
+            ImageView image = view1.findViewById(R.id.imgDefectoF4);
 
             nombre.setText(nombres.get(i));
             edad.setText(edades.get(i) + " años");

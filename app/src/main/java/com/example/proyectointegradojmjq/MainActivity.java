@@ -47,13 +47,13 @@ public class MainActivity extends AppCompatActivity {
 
                 if (logeado == true) {
 
-                    Intent intentMenuPrincipal = new Intent(MainActivity.this, MenuPrincipalApp.class);
+                    Intent intentMenuPrincipal = new Intent(MainActivity.this, Login.class);
                     startActivity(intentMenuPrincipal);
                     overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                     finish();
 
                 } else {
-                    Intent intentLogin = new Intent(MainActivity.this, BienvenidaUsuario.class);
+                    Intent intentLogin = new Intent(MainActivity.this, Login.class);
                     startActivity(intentLogin);
                     overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                     finish();

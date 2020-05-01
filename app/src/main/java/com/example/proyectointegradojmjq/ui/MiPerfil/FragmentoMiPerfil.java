@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -26,6 +27,7 @@ import com.example.proyectointegradojmjq.CrearUsuario;
 import com.example.proyectointegradojmjq.MenuPrincipalApp;
 import com.example.proyectointegradojmjq.R;
 import com.google.android.material.textfield.TextInputLayout;
+import com.theartofdev.edmodo.cropper.CropImage;
 
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -52,6 +54,8 @@ public class FragmentoMiPerfil extends Fragment implements View.OnClickListener
 
     private MiPerfilViewModel miPerfilViewModel;
 
+    public static ImageView imgPerfilMiP;
+
     Spinner spnMiPerfil;
     SeekBar seekBarMiPerfil;
 
@@ -63,7 +67,6 @@ public class FragmentoMiPerfil extends Fragment implements View.OnClickListener
     Button btnEditarGaleria;
 
     String nombreUsuarioReal;
-    String edadUsuario;
     String generoUsuario;
     String estadoCivilUsuario;
     String alturaUsuario;
@@ -82,6 +85,9 @@ public class FragmentoMiPerfil extends Fragment implements View.OnClickListener
         View view = inflater.inflate(R.layout.fragment_miperfil, container, false);
 
         sharedPref = getActivity().getSharedPreferences("logeado", Context.MODE_PRIVATE);
+
+        imgPerfilMiP = view.findViewById(R.id.imgPerfilMiP);
+        imgPerfilMiP.setOnClickListener(this);
 
         btnEditarGaleria = view.findViewById(R.id.btnEditarGaleriaMiP);
         btnGuardarCambios = view.findViewById(R.id.btnGuardarCambiosMiP);
@@ -141,7 +147,7 @@ public class FragmentoMiPerfil extends Fragment implements View.OnClickListener
             @Override
             public void run() {
                 try {
-                    URL url = new URL("http://192.168.1.66/prueba.php?idUsuario=" + idUser);
+                    URL url = new URL("http://www.teamchaterinos.com/prueba.php?idUsuario=" + idUser);
 
                     //Create connection
                     HttpURLConnection myConnection = (HttpURLConnection) url.openConnection();
@@ -224,6 +230,14 @@ public class FragmentoMiPerfil extends Fragment implements View.OnClickListener
 
         switch (v.getId())
         {
+
+            case R.id.imgPerfilMiP:
+
+                CropImage.startPickImageActivity(getActivity());
+
+                break;
+
+
             case R.id.btnEditarGaleriaMiP:
 
 
@@ -242,7 +256,7 @@ public class FragmentoMiPerfil extends Fragment implements View.OnClickListener
                             String nuevaAltura = String.valueOf(seekBarMiPerfil.getProgress() + 140);
 
                             Uri uri = new Uri.Builder()
-                                    .scheme("http").authority("192.168.1.66")
+                                    .scheme("http").authority("www.teamchaterinos.com")
                                     .path("prueba.php")
                                     .appendQueryParameter("nombreRealUsuario", nombreUsuarioReal)
                                     .appendQueryParameter("generoUsuario", generoUsuario)
@@ -289,11 +303,12 @@ public class FragmentoMiPerfil extends Fragment implements View.OnClickListener
                                     public void run()
                                     {
                                         Toast.makeText(getContext(), R.string.cambiosGuardados, Toast.LENGTH_SHORT).show();
-                                        Intent intencion = new Intent(getActivity(), MenuPrincipalApp.class);
-                                        startActivity(intencion);
-                                        getActivity().finish();
                                     }
                                 });
+
+                                Intent intencion = new Intent(getActivity(), MenuPrincipalApp.class);
+                                startActivity(intencion);
+                                getActivity().finish();
 
                                 connection.disconnect();
                             }

@@ -6,6 +6,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -14,6 +17,7 @@ import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -28,7 +32,10 @@ import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.Serializable;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -36,13 +43,13 @@ import javax.net.ssl.HttpsURLConnection;
 
 import static android.app.Activity.RESULT_OK;
 
-public class Bienvenida_fragment4 extends Fragment implements View.OnClickListener
+public class Bienvenida_fragment4 extends Fragment implements View.OnClickListener, Serializable
 {
 
     //CardView cardView;
     Uri uri;
 
-   public static ImageView imgPerfil;
+    public static ImageView imgPerfil;
 
     TextView lbl;
 
@@ -52,6 +59,9 @@ public class Bienvenida_fragment4 extends Fragment implements View.OnClickListen
     String nombreUsuario;
 
     SharedPreferences sharedPref;
+
+    Bitmap bitmapFoto;
+    String encoded;
 
     private static final int FILE_SELECT_CODE = 0;
     private static final String TAG = null;
@@ -95,15 +105,9 @@ public class Bienvenida_fragment4 extends Fragment implements View.OnClickListen
         switch(v.getId())
         {
 
-            /*case R.id.imgDefectoF4:
-
-                showFileChooser();
-                break;
-*/
-
             case R.id.imgDefectoF4:
-                CropImage.startPickImageActivity(getActivity());
 
+                CropImage.startPickImageActivity(getActivity());
                 break;
 
             case R.id.btnSiguienteWelcomeF4:
@@ -116,90 +120,102 @@ public class Bienvenida_fragment4 extends Fragment implements View.OnClickListen
                 final String estadoCivilUsuario = getActivity().getIntent().getExtras().getString("estadoCivilUsuario");
                 final String alturaUsuario = getActivity().getIntent().getExtras().getString("alturaUsuario");
 
+
+
+                bitmapFoto = ((BitmapDrawable)imgPerfil.getDrawable()).getBitmap();
+                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                bitmapFoto.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+                byte[] byteArray = byteArrayOutputStream .toByteArray();
+
+                encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
+
+                Log.println(Log.ASSERT,"Bitmap", encoded);
+
                 AsyncTask.execute(new Runnable()
                 {
-                                      @Override
-                                      public void run()
-                                      {
-                                          try
-                                          {
-                                              String response = "";
+                    @Override
+                    public void run()
+                    {
+                        try
+                        {
+                            String response = "";
 
-                                              String idUser = sharedPref.getString("idUsuario", "");
+                            String idUser = sharedPref.getString("idUsuario", "");
 
-                                              Uri uri = new Uri.Builder()
-                                                      .scheme("http").authority("192.168.1.66")
-                                                      .path("prueba.php")
-                                                      .appendQueryParameter("nombreRealUsuario", nombreReal)
-                                                      .appendQueryParameter("generoUsuario", generoUsuario)
-                                                      .appendQueryParameter("estadoCivilUsuario", estadoCivilUsuario)
-                                                      .appendQueryParameter("alturaUsuario", alturaUsuario)
-                                                      .appendQueryParameter("fechaNacimientoUsuario", fechaAmericana)
-                                                      .appendQueryParameter("descripcionUsuario", descripcionUsuario)
-                                                      .appendQueryParameter("idUsuario", idUser)
-                                                      //.appendQueryParameter("fotoPerfilusuario", "    ")
-                                                      .build();//
-                                              // Create connection
-                                              URL url = new URL(uri.toString());
+                            Uri uri = new Uri.Builder()
+                                    .scheme("http")
+                                    .authority("www.teamchaterinos.com")
+                                    .appendPath("prueba.php")
+                                    .appendQueryParameter("nombreRealUsuario", nombreReal)
+                                    .appendQueryParameter("generoUsuario", generoUsuario)
+                                    .appendQueryParameter("estadoCivilUsuario", estadoCivilUsuario)
+                                    .appendQueryParameter("alturaUsuario", alturaUsuario)
+                                    .appendQueryParameter("fechaNacimientoUsuario", fechaAmericana)
+                                    .appendQueryParameter("descripcionUsuario", descripcionUsuario)
+                                    .appendQueryParameter("idUsuario", idUser)
+                                    .appendQueryParameter("fotoPerfilusuario", encoded)
+                                    .build();//
+                            // Create connection
+                            URL url = new URL(uri.toString());
 
-                                              HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                                              connection.setReadTimeout(15000);
-                                              connection.setConnectTimeout(15000);
-                                              connection.setRequestMethod("PUT");
-                                              connection.setDoInput(true);
-                                              connection.setDoOutput(true);
+                            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                            connection.setReadTimeout(15000);
+                            connection.setConnectTimeout(15000);
+                            connection.setRequestMethod("PUT");
+                            connection.setDoInput(true);
+                            connection.setDoOutput(true);
 
-                                              int responseCode=connection.getResponseCode();
+                            int responseCode=connection.getResponseCode();
 
-                                              if (responseCode == HttpsURLConnection.HTTP_OK)
-                                              {
-                                                  String line;
-                                                  BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                            if (responseCode == HttpsURLConnection.HTTP_OK)
+                            {
+                                String line;
+                                BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 
-                                                  while ((line=br.readLine()) != null)
-                                                  {
-                                                      response += line;
-                                                  }
-                                              }
-                                              else
-                                                  {
-                                                      response = "";
-                                                  }
+                                while ((line=br.readLine()) != null)
+                                {
+                                    response += line;
+                                }
+                            }
+                            else
+                            {
+                                response = "";
+                            }
 
-                                              connection.getResponseCode();
+                            connection.getResponseCode();
 
-                                              if (connection.getResponseCode() == 200)
-                                              {
-                                                  getActivity().runOnUiThread(new Runnable()
-                                                  {
-                                                      public void run()
-                                                      {
-                                                          Toast.makeText(getContext(), R.string.perfilCreadoExito, Toast.LENGTH_SHORT).show();
+                            if (connection.getResponseCode() == 200)
+                            {
+                                getActivity().runOnUiThread(new Runnable()
+                                {
+                                    public void run()
+                                    {
+                                        Toast.makeText(getContext(), R.string.perfilCreadoExito, Toast.LENGTH_SHORT).show();
 
-                                                          SharedPreferences.Editor editor = sharedPref.edit();
-                                                          editor.putBoolean("isLogged", true);
-                                                          editor.commit();
+                                        SharedPreferences.Editor editor = sharedPref.edit();
+                                        editor.putBoolean("isLogged", true);
+                                        editor.commit();
 
-                                                          Intent intencion = new Intent(getActivity(), MenuPrincipalApp.class);
-                                                          startActivity(intencion);
-                                                          getActivity().finish();
-                                                      }
-                                                  });
+                                        Intent intencion = new Intent(getActivity(), MenuPrincipalApp.class);
+                                        startActivity(intencion);
+                                        getActivity().finish();
+                                    }
+                                });
 
-                                                  connection.disconnect();
-                                              }
-                                              else
-                                                  {
-                                                      // Error handling code goes here
-                                                      Log.println(Log.ASSERT,"Error", "Error");
-                                                  }
-                                          }
-                                          catch (Exception e)
-                                          {
-                                              Log.println(Log.ASSERT,"Excepción", e.getMessage());
-                                          }
-                                      }
-                                  });
+                                connection.disconnect();
+                            }
+                            else
+                            {
+                                // Error handling code goes here
+                                Log.println(Log.ASSERT,"Error", "Error");
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            Log.println(Log.ASSERT,"Excepción", e.getMessage());
+                        }
+                    }
+                });
                 break;
 
             case R.id.btnAtrasWelcomeF4:
@@ -209,6 +225,16 @@ public class Bienvenida_fragment4 extends Fragment implements View.OnClickListen
         }
 
     }
+
+    public String encondeandoFoto (Bitmap bitmapImagen)
+    {
+
+
+
+
+        return "";
+    }
+
 
 /*
     private void showFileChooser()
