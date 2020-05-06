@@ -113,6 +113,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                                 JSONObject jsonobject = new JSONObject(responseStrBuilder.toString());
 
                                 String respuesta = jsonobject.getString("mensaje");
+                                String nombreUsuario = jsonobject.getString("nombre");
                                 responseBody.close();
                                 responseBodyReader.close();
                                 myConnection.disconnect();
@@ -124,7 +125,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                                         SharedPreferences.Editor editor = sharedPref.edit();
                                         editor.putBoolean("isLogged", true);
                                         editor.putString("idUsuario", respuesta);
-                                        editor.putString("nombreUsuario", txtUsuarioLogin.getText().toString());
+                                        editor.putString("nombreUsuario", nombreUsuario);
 
                                         SharedPreferences.Editor editor2 = sharedPrefB.edit();
                                         editor2.putInt("edadMin", 0);
@@ -144,7 +145,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
                                         SharedPreferences.Editor editor = sharedPref.edit();
                                         editor.putString("idUsuario", respuesta);
-                                        editor.putString("nombreUsuario", txtUsuarioLogin.getText().toString());
+                                        editor.putString("nombreUsuario", nombreUsuario);
 
                                         SharedPreferences.Editor editor2 = sharedPrefB.edit();
                                         editor2.putInt("edadMin", 0);

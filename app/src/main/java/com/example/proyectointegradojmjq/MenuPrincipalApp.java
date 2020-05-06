@@ -174,6 +174,7 @@ public class MenuPrincipalApp extends AppCompatActivity {
                         SharedPreferences.Editor editor = sharedPref.edit();
                         editor.putBoolean("isLogged", false);
                         editor.putString("idUsuario", "");
+                        editor.putString("nombreUsuario", "");
 
                         editor.commit();
 
