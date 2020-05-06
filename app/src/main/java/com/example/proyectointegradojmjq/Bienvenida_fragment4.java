@@ -31,13 +31,25 @@ import android.widget.Toast;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
+import org.apache.commons.codec.binary.Hex;
+import org.apache.commons.codec.digest.DigestUtils;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -64,8 +76,12 @@ public class Bienvenida_fragment4 extends Fragment implements View.OnClickListen
     Bitmap bitmapFoto;
     String encoded;
 
+    String idUser;
+
     private static final int FILE_SELECT_CODE = 0;
     private static final String TAG = null;
+
+    public static final String UPLOAD_KEY = "image";
 
     public Bienvenida_fragment4()
     {
@@ -130,9 +146,92 @@ public class Bienvenida_fragment4 extends Fragment implements View.OnClickListen
                 bitmapFoto.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
                 byte[] byteArray = byteArrayOutputStream .toByteArray();
 
-                encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
+                encoded = "nada que ver por aqui";
 
-                Log.println(Log.ASSERT,"Bitmap", encoded);
+                encoded = Base64.encodeToString(byteArray, Base64.NO_WRAP);
+
+                idUser = sharedPref.getString("idUsuario", "");
+
+                Log.println(Log.ASSERT,"Bitmap", encoded.toString());
+
+
+                AsyncTask.execute(new Runnable()
+                {
+                    @Override
+                    public void run()
+                    {
+                        try
+                        {
+
+                            String respuesta = "";
+                            HashMap<String, String> postDataParams = new HashMap<String, String>();
+                            postDataParams.put(UPLOAD_KEY, encoded);
+                            postDataParams.put("id", idUser);
+
+                            URL url3 = new URL("http://www.teamchaterinos.com/pruebafoto.php");
+                            HttpURLConnection connection = (HttpURLConnection) url3.openConnection();
+                            connection.setReadTimeout(15000);
+                            connection.setConnectTimeout(15000);
+                            connection.setRequestMethod("POST");
+                            connection.setDoInput(true);
+                            connection.setDoOutput(true);
+
+                            OutputStream os = connection.getOutputStream();
+                            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
+                            writer.write(getPostDataString(postDataParams));
+
+                            writer.flush();
+                            writer.close();
+                            os.close();
+
+                            int responseCode = connection.getResponseCode();
+
+                            if (responseCode == HttpsURLConnection.HTTP_OK) {
+                                String line;
+                                BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+
+                                while ((line = br.readLine()) != null)
+                                {
+                                    respuesta += line;
+                                }
+                            }
+                            else
+                            {
+                                respuesta = "";
+                            }
+                            connection.getResponseCode();
+
+                            if (connection.getResponseCode() == 200)
+                            {
+                                Log.println(Log.ASSERT, "Registro exitoso", "Registrado con éxito: " + respuesta);
+                                //cargaCU.setVisibility(View.GONE);
+                                connection.disconnect();
+
+                                String respuestaId = "";
+
+                                JSONArray result = new JSONArray(respuesta.toString());
+
+                                for(int i=0; i < result.length(); i++)
+                                {
+                                    JSONObject jsonobject = result.getJSONObject(i);
+
+                                    respuestaId = jsonobject.getString("idUsuario");
+                                }
+
+                                SharedPreferences.Editor editor = sharedPref.edit();
+                                editor.putString("idUsuario", respuestaId);
+                                editor.commit();
+
+
+                            } else {
+                                Log.println(Log.ASSERT, "Error", "Error");
+                            }
+                        } catch (Exception e) {
+                            Log.println(Log.ASSERT, "Excepción", e.getMessage());
+                        }
+                    }
+                });
+
 
                 AsyncTask.execute(new Runnable()
                 {
@@ -143,8 +242,7 @@ public class Bienvenida_fragment4 extends Fragment implements View.OnClickListen
                         {
                             String response = "";
 
-
-                            String idUser = sharedPref.getString("idUsuario", "");
+                            idUser = sharedPref.getString("idUsuario", "");
 
                             Uri uri = new Uri.Builder()
                                     .scheme("http")
@@ -157,8 +255,7 @@ public class Bienvenida_fragment4 extends Fragment implements View.OnClickListen
                                     .appendQueryParameter("fechaNacimientoUsuario", fechaAmericana)
                                     .appendQueryParameter("descripcionUsuario", descripcionUsuario)
                                     .appendQueryParameter("idUsuario", idUser)
-                                    .appendQueryParameter("fotoPerfilusuario", encoded)
-                                    .build();//
+                                    .build();
                             // Create connection
                             URL url = new URL(uri.toString());
 
@@ -209,17 +306,17 @@ public class Bienvenida_fragment4 extends Fragment implements View.OnClickListen
                                         editor.commit();
                                         editor2.commit();
 
-                                        Intent intencion = new Intent(getActivity(), MenuPrincipalApp.class);
-                                        startActivity(intencion);
-                                        getActivity().finish();
                                     }
                                 });
+
+                                Intent intencion = new Intent(getActivity(), MenuPrincipalApp.class);
+                                startActivity(intencion);
+                                getActivity().finish();
 
                                 connection.disconnect();
                             }
                             else
                             {
-                                // Error handling code goes here
                                 Log.println(Log.ASSERT,"Error", "Error");
                             }
                         }
@@ -246,5 +343,24 @@ public class Bienvenida_fragment4 extends Fragment implements View.OnClickListen
 
 
         return "";
+    }
+
+    private String getPostDataString(HashMap<String, String> params) throws UnsupportedEncodingException {
+        StringBuilder result = new StringBuilder();
+        boolean first = true;
+
+        for (Map.Entry<String, String> entry : params.entrySet())
+        {
+            if (first) {
+                first = false;
+            } else {
+                result.append("&");
+            }
+
+            result.append(URLEncoder.encode(entry.getKey(), "UTF-8"));
+            result.append("=");
+            result.append(URLEncoder.encode(entry.getValue(), "UTF-8"));
+        }
+        return result.toString();
     }
 }

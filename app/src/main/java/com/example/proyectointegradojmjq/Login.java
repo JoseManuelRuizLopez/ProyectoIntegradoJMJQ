@@ -119,7 +119,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
                                 Log.println(Log.ASSERT, "Resultado", respuesta);
 
-                                if (respuesta.equals("1")) {
+                                if (!respuesta.equals("0")) {
                                     if (swMantenerSesion.isChecked()) {
                                         SharedPreferences.Editor editor = sharedPref.edit();
                                         editor.putBoolean("isLogged", true);
