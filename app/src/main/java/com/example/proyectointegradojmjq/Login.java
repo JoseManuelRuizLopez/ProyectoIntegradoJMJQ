@@ -42,10 +42,10 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     Switch swMantenerSesion;
 
     SharedPreferences sharedPref;
+    SharedPreferences sharedPrefB;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
@@ -64,13 +64,13 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         cargaLogin.setVisibility(View.GONE);
 
         sharedPref = getSharedPreferences("logeado", Context.MODE_PRIVATE);
+        sharedPrefB = getSharedPreferences("prefBusqueda", Context.MODE_PRIVATE);
+
     }
 
     @Override
-    public void onClick(final View v)
-    {
-        switch (v.getId())
-        {
+    public void onClick(final View v) {
+        switch (v.getId()) {
             case R.id.btnRegistrarLogin:
                 Intent intentRegistrar = new Intent(Login.this, CrearUsuario.class);
                 startActivity(intentRegistrar);
@@ -123,16 +123,36 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                                     if (swMantenerSesion.isChecked()) {
                                         SharedPreferences.Editor editor = sharedPref.edit();
                                         editor.putBoolean("isLogged", true);
-                                        editor.putString("idUsuario", "67");
+                                        editor.putString("idUsuario", respuesta);
+
+                                        SharedPreferences.Editor editor2 = sharedPrefB.edit();
+                                        editor2.putInt("edadMin", 0);
+                                        editor2.putInt("edadMax", 0);
+                                        editor2.putString("genero", "");
+                                        editor2.putString("estadoCivil", "");
+
+
                                         editor.commit();
+                                        editor2.commit();
 
                                         Intent intentMenuPrincipal = new Intent(Login.this, MenuPrincipalApp.class);
                                         startActivity(intentMenuPrincipal);
                                         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                                         finish();
-                                    }
-                                    else
-                                    {
+                                    } else {
+
+                                        SharedPreferences.Editor editor = sharedPref.edit();
+                                        editor.putString("idUsuario", respuesta);
+
+                                        SharedPreferences.Editor editor2 = sharedPrefB.edit();
+                                        editor2.putInt("edadMin", 0);
+                                        editor2.putInt("edadMax", 0);
+                                        editor2.putString("genero", "");
+                                        editor2.putString("estadoCivil", "");
+
+
+                                        editor.commit();
+                                        editor2.commit();
 
                                         Intent intentMenuPrincipal = new Intent(Login.this, MenuPrincipalApp.class);
                                         startActivity(intentMenuPrincipal);
@@ -140,7 +160,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                                         finish();
                                     }
                                 } else {
-                                   //cargaLogin.setVisibility(View.GONE);
+                                    //cargaLogin.setVisibility(View.GONE);
 
                                     Snackbar.make(v, getString(R.string.snkBarClaveIncorrecta), Snackbar.LENGTH_LONG).setAction("Action", null).show();
 
@@ -157,7 +177,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                             Snackbar.make(v, getString(R.string.snkBarError), Snackbar.LENGTH_LONG).setAction("Action", null).show();
                         }
                     }
-
 
 
                 });

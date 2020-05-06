@@ -298,7 +298,7 @@ public class FragmentoInicio extends Fragment {
             //getting view in row_data
             TextView nombre = view1.findViewById(R.id.lblNombre);
             TextView edad = view1.findViewById(R.id.lblEdad);
-            ImageView image = view1.findViewById(R.id.imgDefectoF4);
+            ImageView image = view1.findViewById(R.id.imgTablaInicio);
 
             nombre.setText(nombres.get(i));
             edad.setText(edades.get(i) + " años");

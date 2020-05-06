@@ -94,6 +94,13 @@ public class MenuPrincipalApp extends AppCompatActivity {
 */
         idUsuario = sharedPref.getString("idUsuario", "0");
 
+        String imgss = sharedPref.getString("foto", "s");
+
+        byte[] decodedString = Base64.decode(imgss, Base64.NO_WRAP);
+        InputStream input=new ByteArrayInputStream(decodedString);
+        Bitmap ext_pic = BitmapFactory.decodeStream(input);
+        imgPerfil.setImageBitmap(ext_pic);
+
         AsyncTask.execute(new Runnable() {
             @Override
             public void run() {

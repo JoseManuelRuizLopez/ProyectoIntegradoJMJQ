@@ -64,7 +64,6 @@ public class FragmentoMiPerfil extends Fragment implements View.OnClickListener
     TextView txtDescripcionMiP;
 
     Button btnGuardarCambios;
-    Button btnEditarGaleria;
 
     String nombreUsuarioReal;
     String generoUsuario;
@@ -89,10 +88,8 @@ public class FragmentoMiPerfil extends Fragment implements View.OnClickListener
         imgPerfilMiP = view.findViewById(R.id.imgPerfilMiP);
         imgPerfilMiP.setOnClickListener(this);
 
-        btnEditarGaleria = view.findViewById(R.id.btnEditarGaleriaMiP);
         btnGuardarCambios = view.findViewById(R.id.btnGuardarCambiosMiP);
 
-        btnEditarGaleria.setOnClickListener(this);
         btnGuardarCambios.setOnClickListener(this);
 
         txtDescripcionMiP = view.findViewById(R.id.txtDescripcionMiP);
@@ -236,9 +233,6 @@ public class FragmentoMiPerfil extends Fragment implements View.OnClickListener
                 CropImage.startPickImageActivity(getActivity());
 
                 break;
-
-
-            case R.id.btnEditarGaleriaMiP:
 
 
             case R.id.btnGuardarCambiosMiP:

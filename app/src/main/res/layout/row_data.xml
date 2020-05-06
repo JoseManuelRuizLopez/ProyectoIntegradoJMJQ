@@ -24,7 +24,7 @@
             app:cardCornerRadius="40dp">
 
             <ImageView
-                android:id="@+id/imgDefectoF4"
+                android:id="@+id/imgTablaInicio"
                 android:layout_width="130dp"
                 android:layout_height="130dp"
                 android:layout_alignParentTop="true"
