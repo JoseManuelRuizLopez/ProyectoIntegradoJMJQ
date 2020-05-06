@@ -17,6 +17,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.navigation.NavigationView;
+import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
 
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -90,7 +91,7 @@ public class MenuPrincipalApp extends AppCompatActivity {
 
         imgPerfilUrl = "http://www.teamchaterinos.com/images/ " + idUsuario + ".png";
 
-        Picasso.with(this).load(imgPerfilUrl).into(imgPerfil);
+        Picasso.with(this).load(imgPerfilUrl).memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE).into(imgPerfil);
 
         AsyncTask.execute(new Runnable() {
             @Override

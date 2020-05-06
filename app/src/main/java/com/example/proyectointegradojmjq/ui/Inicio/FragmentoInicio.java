@@ -22,6 +22,7 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.example.proyectointegradojmjq.VistaPerfilUsuario;
 import com.example.proyectointegradojmjq.R;
+import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -307,7 +308,7 @@ public class FragmentoInicio extends Fragment {
 
             nombre.setText(nombres.get(i));
             edad.setText(edades.get(i) + " años");
-            Picasso.with(getActivity().getApplicationContext()).load(fotosPerfil.get(i)).into(image);
+            Picasso.with(getActivity().getApplicationContext()).load(fotosPerfil.get(i)).memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE).into(image);
 
             return view1;
         }
