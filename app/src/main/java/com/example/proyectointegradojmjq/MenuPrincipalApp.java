@@ -1,5 +1,7 @@
 package com.example.proyectointegradojmjq;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -7,16 +9,21 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.example.proyectointegradojmjq.ui.MiPerfil.FragmentoMiPerfil;
 import com.google.android.material.navigation.NavigationView;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
 
@@ -56,6 +63,8 @@ public class MenuPrincipalApp extends AppCompatActivity {
     ImageView imgPerfil;
     TextView lblNavUsuario;
     TextView lblNavNombreCompleto;
+
+    Uri uri;
 
     String imgPerfilUrl;
 
@@ -207,5 +216,41 @@ public class MenuPrincipalApp extends AppCompatActivity {
     public static Bitmap decodeToBase64(String input) {
         byte[] decodedByte = Base64.decode(input, 0);
         return BitmapFactory.decodeByteArray(decodedByte, 0, decodedByte.length);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == CropImage.PICK_IMAGE_CHOOSER_REQUEST_CODE && resultCode == Activity.RESULT_OK)
+        {
+            Uri imageUri = CropImage.getPickImageResultUri(this, data);
+
+            if (CropImage.isReadExternalStoragePermissionsRequired(this, imageUri)) {
+                uri = imageUri;
+                requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 0);
+            } else {
+                startCrop(imageUri);
+            }
+        }
+
+        if(requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+            if(resultCode == RESULT_OK)
+            {
+                FragmentoMiPerfil.imgPerfilMiP.setImageURI(result.getUri());
+            }
+        }
+    }
+
+    private void startCrop(Uri imageUri)
+    {
+        CropImage.activity(imageUri)
+                .setGuidelines(CropImageView.Guidelines.ON)
+                .setAllowFlipping(false)
+                .setAllowRotation(false)
+                .setAspectRatio(200, 200)
+                .setMultiTouchEnabled(true)
+                .start(this);
     }
 }
