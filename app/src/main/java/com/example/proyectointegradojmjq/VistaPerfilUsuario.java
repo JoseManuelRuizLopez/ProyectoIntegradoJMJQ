@@ -12,6 +12,8 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.squareup.picasso.Picasso;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -36,8 +38,9 @@ public class VistaPerfilUsuario extends AppCompatActivity implements View.OnClic
     Button btnCancelarVP;
 
     String nombreUsuario;
-
     String nombreRecibido;
+    String edadRecibida;
+    String imgUrlRecibida;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -62,12 +65,12 @@ public class VistaPerfilUsuario extends AppCompatActivity implements View.OnClic
         Intent intent = getIntent();
         nombreUsuario = intent.getStringExtra("nombreUsuario");
         nombreRecibido = intent.getStringExtra("nombre");
-        String edadRecibida = intent.getStringExtra("edad");
-        int imagenRecibida = intent.getIntExtra("image", 0);
+        edadRecibida = intent.getStringExtra("edad");
+        imgUrlRecibida = intent.getStringExtra("image");
 
         lblNombreVP.setText(nombreRecibido);
         lblEdadVP.setText(edadRecibida + " años");
-        imgPerfilVP.setImageResource(imagenRecibida);
+        Picasso.with(this).load(imgUrlRecibida).into(imgPerfilVP);
 
         AsyncTask.execute(new Runnable() {
             @Override

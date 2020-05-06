@@ -124,6 +124,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                                         SharedPreferences.Editor editor = sharedPref.edit();
                                         editor.putBoolean("isLogged", true);
                                         editor.putString("idUsuario", respuesta);
+                                        editor.putString("nombreUsuario", txtUsuarioLogin.getText().toString());
 
                                         SharedPreferences.Editor editor2 = sharedPrefB.edit();
                                         editor2.putInt("edadMin", 0);
@@ -143,6 +144,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
                                         SharedPreferences.Editor editor = sharedPref.edit();
                                         editor.putString("idUsuario", respuesta);
+                                        editor.putString("nombreUsuario", txtUsuarioLogin.getText().toString());
 
                                         SharedPreferences.Editor editor2 = sharedPrefB.edit();
                                         editor2.putInt("edadMin", 0);

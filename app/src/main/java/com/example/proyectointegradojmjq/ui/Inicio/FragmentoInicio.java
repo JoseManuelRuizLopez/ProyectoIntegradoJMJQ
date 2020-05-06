@@ -16,11 +16,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.proyectointegradojmjq.VistaPerfilUsuario;
 import com.example.proyectointegradojmjq.R;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -46,9 +48,10 @@ public class FragmentoInicio extends Fragment {
     ArrayList<String> nombresUsuarios;
     ArrayList<String> nombres;
     ArrayList<String> edades;
-    ArrayList<Integer> fotosPerfil;
+    ArrayList<String> fotosPerfil;
 
     SharedPreferences sharedPref;
+    SharedPreferences sharedPrefB;
 
     //String[] nombres;
     //String[] edades;
@@ -58,7 +61,8 @@ public class FragmentoInicio extends Fragment {
         inicioViewModel = ViewModelProviders.of(this).get(InicioViewModel.class);
         root = inflater.inflate(R.layout.fragment_inicio, container, false);
 
-        sharedPref = getActivity().getSharedPreferences("prefBusqueda", Context.MODE_PRIVATE);
+        sharedPref = getActivity().getSharedPreferences("logeado", Context.MODE_PRIVATE);
+        sharedPrefB = getActivity().getSharedPreferences("prefBusqueda", Context.MODE_PRIVATE);
 /*
         inicioViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
@@ -68,7 +72,7 @@ public class FragmentoInicio extends Fragment {
         });
         */
 
-        if (sharedPref.getString("estadoCivil", "").equals("") && sharedPref.getString("genero", "").equals("")) {
+        if (sharedPrefB.getString("estadoCivil", "").equals("") && sharedPrefB.getString("genero", "").equals("")) {
             AsyncTask.execute(new Runnable() {
                 @Override
                 public void run() {
@@ -100,30 +104,33 @@ public class FragmentoInicio extends Fragment {
                                 nombres = new ArrayList<String>();
                                 edades = new ArrayList<String>();
 
-                                fotosPerfil = new ArrayList<Integer>();
+                                fotosPerfil = new ArrayList<String>();
 
-                                Log.println(Log.ASSERT, "Nullp", respuesta +  "");
+                                Log.println(Log.ASSERT, "Nullp", respuesta + "");
 
                                 JSONArray jsonArray1 = new JSONArray(respuesta);
 
-                                Log.println(Log.ASSERT, "Nullp", jsonArray1.length() +  "");
+                                Log.println(Log.ASSERT, "Nullp", jsonArray1.length() + "");
 
                                 for (int i = 0; i < jsonArray1.length(); i++) {
                                     JSONObject json_data = jsonArray1.getJSONObject(i);
-                                    nombresUsuarios.add(json_data.getString("nombreUsuario"));
-                                    nombres.add(json_data.getString("nombreRealUsuario"));
 
-                                    String fecha = json_data.getString("fechaNacimientoUsuario");
-                                    String fechaSplit[] = fecha.split("-");
-                                    int año = Integer.parseInt(fechaSplit[0]);
-                                    int mes = Integer.parseInt(fechaSplit[1]);
-                                    int dia = Integer.parseInt(fechaSplit[2]);
+                                    if (!json_data.getString("nombreUsuario").equals(sharedPref.getString("nombreUsuario", ""))) {
+                                        nombresUsuarios.add(json_data.getString("nombreUsuario"));
+                                        nombres.add(json_data.getString("nombreRealUsuario"));
 
-                                    String edadUsuario = getAge(año, mes, dia) + "";
+                                        String fecha = json_data.getString("fechaNacimientoUsuario");
+                                        String fechaSplit[] = fecha.split("-");
+                                        int año = Integer.parseInt(fechaSplit[0]);
+                                        int mes = Integer.parseInt(fechaSplit[1]);
+                                        int dia = Integer.parseInt(fechaSplit[2]);
 
-                                    edades.add(edadUsuario);
+                                        String edadUsuario = getAge(año, mes, dia) + "";
 
-                                    fotosPerfil.add(R.drawable.usericonpred);
+                                        edades.add(edadUsuario);
+
+                                        fotosPerfil.add(json_data.getString("fotoPerfilUsuario"));
+                                    }
                                 }
 
                                 responseBody.close();
@@ -169,14 +176,14 @@ public class FragmentoInicio extends Fragment {
                     try {
                         URL url = null;
                         try {
-                            url = new URL("http://www.teamchaterinos.com/prueba.php?generoUsuario=" + sharedPref.getString("genero", "")
-                                    + "&estadoCivilUsuario=" + sharedPref.getString("estadoCivil", "")
-                                    + "&fechaMin=" + fechaAñoAprox((sharedPref.getInt("edadMax", 0)))
-                                    + "&fechaMax=" + fechaAñoAprox((sharedPref.getInt("edadMin", 0))) + "");
+                            url = new URL("http://www.teamchaterinos.com/prueba.php?generoUsuario=" + sharedPrefB.getString("genero", "")
+                                    + "&estadoCivilUsuario=" + sharedPrefB.getString("estadoCivil", "")
+                                    + "&fechaMin=" + fechaAñoAprox((sharedPrefB.getInt("edadMax", 0)))
+                                    + "&fechaMax=" + fechaAñoAprox((sharedPrefB.getInt("edadMin", 0))) + "");
 
 
-                            Log.println(Log.ASSERT, "Max", fechaAñoAprox((sharedPref.getInt("edadMax", 0))));
-                            Log.println(Log.ASSERT, "Min", fechaAñoAprox((sharedPref.getInt("edadMin", 0))));
+                            Log.println(Log.ASSERT, "Max", fechaAñoAprox((sharedPrefB.getInt("edadMax", 0))));
+                            Log.println(Log.ASSERT, "Min", fechaAñoAprox((sharedPrefB.getInt("edadMin", 0))));
 
                             //Create connection
                             HttpURLConnection myConnection = (HttpURLConnection) url.openConnection();
@@ -200,30 +207,28 @@ public class FragmentoInicio extends Fragment {
                                 nombresUsuarios = new ArrayList<String>();
                                 nombres = new ArrayList<String>();
                                 edades = new ArrayList<String>();
-
-                                fotosPerfil = new ArrayList<Integer>();
-
+                                fotosPerfil = new ArrayList<String>();
 
                                 JSONArray jsonArray1 = new JSONArray(respuesta);
 
-                                Log.println(Log.ASSERT, "Nullp", jsonArray1.length() +  "");
-
                                 for (int i = 0; i < jsonArray1.length(); i++) {
                                     JSONObject json_data = jsonArray1.getJSONObject(i);
-                                    nombresUsuarios.add(json_data.getString("nombreUsuario"));
-                                    nombres.add(json_data.getString("nombreRealUsuario"));
+                                    if (!json_data.getString("nombreUsuario").equals(sharedPref.getString("nombreUsuario", ""))) {
+                                        nombresUsuarios.add(json_data.getString("nombreUsuario"));
+                                        nombres.add(json_data.getString("nombreRealUsuario"));
 
-                                    String fecha = json_data.getString("fechaNacimientoUsuario");
-                                    String fechaSplit[] = fecha.split("-");
-                                    int año = Integer.parseInt(fechaSplit[0]);
-                                    int mes = Integer.parseInt(fechaSplit[1]);
-                                    int dia = Integer.parseInt(fechaSplit[2]);
+                                        String fecha = json_data.getString("fechaNacimientoUsuario");
+                                        String fechaSplit[] = fecha.split("-");
+                                        int año = Integer.parseInt(fechaSplit[0]);
+                                        int mes = Integer.parseInt(fechaSplit[1]);
+                                        int dia = Integer.parseInt(fechaSplit[2]);
 
-                                    String edadUsuario = getAge(año, mes, dia) + "";
+                                        String edadUsuario = getAge(año, mes, dia) + "";
 
-                                    edades.add(edadUsuario);
+                                        edades.add(edadUsuario);
 
-                                    fotosPerfil.add(R.drawable.usericonpred);
+                                        fotosPerfil.add(json_data.getString("fotoPerfilUsuario"));
+                                    }
                                 }
 
                                 responseBody.close();
@@ -295,14 +300,14 @@ public class FragmentoInicio extends Fragment {
         @Override
         public View getView(int i, View view, ViewGroup viewGroup) {
             View view1 = getLayoutInflater().inflate(R.layout.row_data, null);
-            //getting view in row_data
+
             TextView nombre = view1.findViewById(R.id.lblNombre);
             TextView edad = view1.findViewById(R.id.lblEdad);
             ImageView image = view1.findViewById(R.id.imgTablaInicio);
 
             nombre.setText(nombres.get(i));
             edad.setText(edades.get(i) + " años");
-            image.setImageResource(fotosPerfil.get(i));
+            Picasso.with(getActivity().getApplicationContext()).load(fotosPerfil.get(i)).into(image);
 
             return view1;
         }

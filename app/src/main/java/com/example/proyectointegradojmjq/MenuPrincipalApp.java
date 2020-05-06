@@ -17,6 +17,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.navigation.NavigationView;
+import com.squareup.picasso.Picasso;
 
 import androidx.drawerlayout.widget.DrawerLayout;
 
@@ -55,6 +56,8 @@ public class MenuPrincipalApp extends AppCompatActivity {
     TextView lblNavUsuario;
     TextView lblNavNombreCompleto;
 
+    String imgPerfilUrl;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,24 +85,12 @@ public class MenuPrincipalApp extends AppCompatActivity {
         lblNavNombreCompleto = headerView.findViewById(R.id.lblNavNombreCompleto);
 
         sharedPref = getSharedPreferences("logeado", Context.MODE_PRIVATE);
-        /*
-        String foto = sharedPref.getString("imagenPerfil", "");
 
-        Bitmap imageB;
-        if (!foto.equals("")) {
-            imageB = decodeToBase64(foto);
-
-            imgPerfil.setImage
-        }
-*/
         idUsuario = sharedPref.getString("idUsuario", "0");
 
-        String imgss = sharedPref.getString("foto", "s");
+        imgPerfilUrl = "http://www.teamchaterinos.com/images/ " + idUsuario + ".png";
 
-        byte[] decodedString = Base64.decode(imgss, Base64.NO_WRAP);
-        InputStream input=new ByteArrayInputStream(decodedString);
-        Bitmap ext_pic = BitmapFactory.decodeStream(input);
-        imgPerfil.setImageBitmap(ext_pic);
+        Picasso.with(this).load(imgPerfilUrl).into(imgPerfil);
 
         AsyncTask.execute(new Runnable() {
             @Override
@@ -137,9 +128,6 @@ public class MenuPrincipalApp extends AppCompatActivity {
                         responseBody.close();
                         responseBodyReader.close();
                         myConnection.disconnect();
-
-                        Log.println(Log.ASSERT, "nom", nombreUsuario);
-                        Log.println(Log.ASSERT, "nomc", nombreUsuarioReal);
 
                         lblNavUsuario.setText(nombreUsuario);
                         lblNavNombreCompleto.setText(nombreUsuarioReal);
