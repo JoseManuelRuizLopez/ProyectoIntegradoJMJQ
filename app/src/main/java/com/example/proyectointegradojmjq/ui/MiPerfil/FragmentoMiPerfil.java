@@ -219,6 +219,7 @@ public class FragmentoMiPerfil extends Fragment implements View.OnClickListener
                                 seekBarMiPerfil.setProgress(Integer.parseInt(alturaUsuario) - 140);
                                 picasin.with(getActivity().getApplicationContext()).load(fotoUsuario).memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE).into(imgPerfilMiP);
 
+                                Log.println(Log.ASSERT, "Error", fotoUsuario);
                             }
                         });
 
