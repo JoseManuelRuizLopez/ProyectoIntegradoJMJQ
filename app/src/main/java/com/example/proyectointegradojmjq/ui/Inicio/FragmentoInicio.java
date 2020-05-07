@@ -140,20 +140,26 @@ public class FragmentoInicio extends Fragment {
 
                                 gridView = root.findViewById(R.id.gridview);
 
-                                CustomAdapter customAdapter = new CustomAdapter();
-
-                                gridView.setAdapter(customAdapter);
-                                gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                getActivity().runOnUiThread(new Runnable() {
                                     @Override
-                                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                                        Intent intent = new Intent(getActivity(), VistaPerfilUsuario.class);
-                                        intent.putExtra("nombreUsuario", nombresUsuarios.get(i));
-                                        intent.putExtra("nombre", nombres.get(i));
-                                        intent.putExtra("image", fotosPerfil.get(i));
-                                        intent.putExtra("edad", edades.get(i));
-                                        startActivity(intent);
-                                        getActivity().overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                                    public void run() {
 
+                                        CustomAdapter customAdapter = new CustomAdapter();
+
+                                        gridView.setAdapter(customAdapter);
+                                        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                            @Override
+                                            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                                                Intent intent = new Intent(getActivity(), VistaPerfilUsuario.class);
+                                                intent.putExtra("nombreUsuario", nombresUsuarios.get(i));
+                                                intent.putExtra("nombre", nombres.get(i));
+                                                intent.putExtra("image", fotosPerfil.get(i));
+                                                intent.putExtra("edad", edades.get(i));
+                                                startActivity(intent);
+                                                getActivity().overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+
+                                            }
+                                        });
                                     }
                                 });
 
@@ -181,10 +187,6 @@ public class FragmentoInicio extends Fragment {
                                     + "&estadoCivilUsuario=" + sharedPrefB.getString("estadoCivil", "")
                                     + "&fechaMin=" + fechaAñoAprox((sharedPrefB.getInt("edadMax", 0)))
                                     + "&fechaMax=" + fechaAñoAprox((sharedPrefB.getInt("edadMin", 0))) + "");
-
-
-                            Log.println(Log.ASSERT, "Max", fechaAñoAprox((sharedPrefB.getInt("edadMax", 0))));
-                            Log.println(Log.ASSERT, "Min", fechaAñoAprox((sharedPrefB.getInt("edadMin", 0))));
 
                             //Create connection
                             HttpURLConnection myConnection = (HttpURLConnection) url.openConnection();
@@ -238,24 +240,28 @@ public class FragmentoInicio extends Fragment {
 
                                 gridView = root.findViewById(R.id.gridview);
 
-                                CustomAdapter customAdapter = new CustomAdapter();
-
-                                gridView.setAdapter(customAdapter);
-                                gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                getActivity().runOnUiThread(new Runnable() {
                                     @Override
-                                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                                        Intent intent = new Intent(getActivity(), VistaPerfilUsuario.class);
-                                        intent.putExtra("nombreUsuario", nombresUsuarios.get(i));
-                                        intent.putExtra("nombre", nombres.get(i));
-                                        intent.putExtra("image", fotosPerfil.get(i));
-                                        intent.putExtra("edad", edades.get(i));
-                                        startActivity(intent);
-                                        getActivity().overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                                    public void run() {
+                                        CustomAdapter customAdapter = new CustomAdapter();
+
+                                        gridView.setAdapter(customAdapter);
+                                        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                            @Override
+                                            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                                                Intent intent = new Intent(getActivity(), VistaPerfilUsuario.class);
+                                                intent.putExtra("nombreUsuario", nombresUsuarios.get(i));
+                                                intent.putExtra("nombre", nombres.get(i));
+                                                intent.putExtra("image", fotosPerfil.get(i));
+                                                intent.putExtra("edad", edades.get(i));
+                                                startActivity(intent);
+                                                getActivity().overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+
+                                            }
+                                        });
 
                                     }
                                 });
-
-
                             } else {
                                 Log.println(Log.ASSERT, "Error2", "Error");
                             }
@@ -272,17 +278,12 @@ public class FragmentoInicio extends Fragment {
 
         }
 
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
         return root;
     }
 
 
     public class CustomAdapter extends BaseAdapter {
+
         @Override
         public int getCount() {
             return fotosPerfil.size();
@@ -298,13 +299,15 @@ public class FragmentoInicio extends Fragment {
             return 0;
         }
 
-        @Override
-        public View getView(int i, View view, ViewGroup viewGroup) {
-            View view1 = getLayoutInflater().inflate(R.layout.row_data, null);
 
-            TextView nombre = view1.findViewById(R.id.lblNombre);
-            TextView edad = view1.findViewById(R.id.lblEdad);
-            ImageView image = view1.findViewById(R.id.imgTablaInicio);
+        @Override
+        public View getView(final int i, View view, ViewGroup viewGroup) {
+
+            final View view1 = getLayoutInflater().inflate(R.layout.row_data, null);
+
+            final TextView nombre = view1.findViewById(R.id.lblNombre);
+            final TextView edad = view1.findViewById(R.id.lblEdad);
+            final ImageView image = view1.findViewById(R.id.imgTablaInicio);
 
             nombre.setText(nombres.get(i));
             edad.setText(edades.get(i) + " años");
@@ -312,6 +315,7 @@ public class FragmentoInicio extends Fragment {
 
             return view1;
         }
+
 
     }
 

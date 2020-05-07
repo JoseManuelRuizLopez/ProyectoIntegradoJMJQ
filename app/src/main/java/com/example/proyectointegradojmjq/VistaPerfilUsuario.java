@@ -44,8 +44,7 @@ public class VistaPerfilUsuario extends AppCompatActivity implements View.OnClic
     String imgUrlRecibida;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vista_perfil_usuario);
 
@@ -94,18 +93,27 @@ public class VistaPerfilUsuario extends AppCompatActivity implements View.OnClic
                             }
 
                             JSONArray jsonArray = new JSONArray(respuesta);
-                            JSONObject jsonObject = jsonArray.getJSONObject(0);
+                            final JSONObject jsonObject = jsonArray.getJSONObject(0);
 
-                            lblGeneroVP.setText(jsonObject.getString("generoUsuario"));
-                            lblAlturaVP.setText(jsonObject.getString("alturaUsuario") + " cm");
-                            lblEstadoCivilVP.setText(jsonObject.getString("estadoCivilUsuario"));
-                            lblDescripcionVP.setText(jsonObject.getString("descripcionUsuario"));
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    try {
+                                        lblGeneroVP.setText(jsonObject.getString("generoUsuario"));
+                                        lblAlturaVP.setText(jsonObject.getString("alturaUsuario") + " cm");
+                                        lblEstadoCivilVP.setText(jsonObject.getString("estadoCivilUsuario"));
+                                        lblDescripcionVP.setText(jsonObject.getString("descripcionUsuario"));
+                                    } catch (Exception e) {
+
+                                    }
+                                }
+                            });
 
                             responseBody.close();
                             responseBodyReader.close();
                             myConnection.disconnect();
 
-                           // Log.println(Log.ASSERT, "sas", "sos");
+                            // Log.println(Log.ASSERT, "sas", "sos");
                             //Log.println(Log.ASSERT, "Resultado", lblNombreVP.getText().toString());
 
                         } else {
@@ -120,13 +128,6 @@ public class VistaPerfilUsuario extends AppCompatActivity implements View.OnClic
                 }
             }
         });
-
-
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
 
         //enable back Button
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
