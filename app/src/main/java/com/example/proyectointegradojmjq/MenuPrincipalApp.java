@@ -100,6 +100,7 @@ public class MenuPrincipalApp extends AppCompatActivity {
 
         imgPerfilUrl = "http://www.teamchaterinos.com/images/ " + idUsuario + ".png";
 
+        Picasso.with(this).invalidate(imgPerfilUrl);
         Picasso.with(this).load(imgPerfilUrl).memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE).into(imgPerfil);
 
         AsyncTask.execute(new Runnable() {

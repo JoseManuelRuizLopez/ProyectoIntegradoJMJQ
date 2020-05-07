@@ -71,6 +71,7 @@ public class VistaPerfilUsuario extends AppCompatActivity implements View.OnClic
 
         lblNombreVP.setText(nombreRecibido);
         lblEdadVP.setText(edadRecibida + " años");
+        Picasso.with(this).invalidate(imgUrlRecibida);
         Picasso.with(this).load(imgUrlRecibida).memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE).into(imgPerfilVP);
 
         AsyncTask.execute(new Runnable() {
