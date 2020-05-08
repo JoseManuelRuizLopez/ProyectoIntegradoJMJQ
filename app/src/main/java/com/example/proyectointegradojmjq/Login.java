@@ -96,7 +96,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                     @Override
                     public void run() {
                         try {
-
                             URL url = new URL("http://teamchaterinos.com/prueba.php?nombreUsuario=" + usuario + "&claveUsuario=" + claveEncriptada + "");
                             HttpURLConnection myConnection = (HttpURLConnection) url.openConnection();
                             myConnection.setRequestMethod("GET");
@@ -111,9 +110,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                                 }
 
                                 JSONObject jsonobject = new JSONObject(responseStrBuilder.toString());
-
                                 String respuesta = jsonobject.getString("mensaje");
-                                String nombreUsuario = jsonobject.getString("nombre");
                                 responseBody.close();
                                 responseBodyReader.close();
                                 myConnection.disconnect();
@@ -121,6 +118,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                                 Log.println(Log.ASSERT, "Resultado", respuesta);
 
                                 if (!respuesta.equals("0")) {
+                                    String nombreUsuario = jsonobject.getString("nombre");
                                     if (swMantenerSesion.isChecked()) {
                                         SharedPreferences.Editor editor = sharedPref.edit();
                                         editor.putBoolean("isLogged", true);
@@ -163,7 +161,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                                         finish();
                                     }
                                 } else {
-                                    //cargaLogin.setVisibility(View.GONE);
+                                    cargaLogin.setVisibility(View.INVISIBLE);
 
                                     Snackbar.make(v, getString(R.string.snkBarClaveIncorrecta), Snackbar.LENGTH_LONG).setAction("Action", null).show();
 
@@ -171,12 +169,12 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
                             } else {
                                 // Error handling code goes here
-                                //cargaLogin.setVisibility(View.GONE);
+                                cargaLogin.setVisibility(View.INVISIBLE);
                                 Snackbar.make(v, getString(R.string.snkBarError), Snackbar.LENGTH_LONG).setAction("Action", null).show();
 
                             }
                         } catch (Exception e) {
-                            //cargaLogin.setVisibility(View.GONE);
+                            cargaLogin.setVisibility(View.INVISIBLE);
                             Snackbar.make(v, getString(R.string.snkBarError), Snackbar.LENGTH_LONG).setAction("Action", null).show();
                         }
                     }

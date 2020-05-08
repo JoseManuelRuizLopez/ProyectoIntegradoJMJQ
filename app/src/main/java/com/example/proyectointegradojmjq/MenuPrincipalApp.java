@@ -141,8 +141,13 @@ public class MenuPrincipalApp extends AppCompatActivity {
                         responseBodyReader.close();
                         myConnection.disconnect();
 
-                        lblNavUsuario.setText(nombreUsuario);
-                        lblNavNombreCompleto.setText(nombreUsuarioReal);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                lblNavUsuario.setText(nombreUsuario);
+                                lblNavNombreCompleto.setText(nombreUsuarioReal);
+                            }
+                        });
 
                     } else {
                         Log.println(Log.ASSERT, "Error", "Error");
@@ -152,12 +157,6 @@ public class MenuPrincipalApp extends AppCompatActivity {
                 }
             }
         });
-
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -225,8 +224,7 @@ public class MenuPrincipalApp extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == CropImage.PICK_IMAGE_CHOOSER_REQUEST_CODE && resultCode == Activity.RESULT_OK)
-        {
+        if (requestCode == CropImage.PICK_IMAGE_CHOOSER_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             Uri imageUri = CropImage.getPickImageResultUri(this, data);
 
             if (CropImage.isReadExternalStoragePermissionsRequired(this, imageUri)) {
@@ -237,17 +235,15 @@ public class MenuPrincipalApp extends AppCompatActivity {
             }
         }
 
-        if(requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
-            if(resultCode == RESULT_OK)
-            {
+            if (resultCode == RESULT_OK) {
                 FragmentoMiPerfil.imgPerfilMiP.setImageURI(result.getUri());
             }
         }
     }
 
-    private void startCrop(Uri imageUri)
-    {
+    private void startCrop(Uri imageUri) {
         CropImage.activity(imageUri)
                 .setGuidelines(CropImageView.Guidelines.ON)
                 .setAllowFlipping(false)

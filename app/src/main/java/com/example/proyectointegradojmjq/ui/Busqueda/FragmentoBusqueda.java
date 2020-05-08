@@ -20,7 +20,6 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.crystal.crystalrangeseekbar.interfaces.OnRangeSeekbarChangeListener;
-import com.crystal.crystalrangeseekbar.interfaces.OnRangeSeekbarFinalValueListener;
 import com.crystal.crystalrangeseekbar.widgets.CrystalRangeSeekbar;
 import com.example.proyectointegradojmjq.R;
 
@@ -72,8 +71,8 @@ public class FragmentoBusqueda extends Fragment implements View.OnClickListener 
         spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spnGeneroBusqueda.setAdapter(spinnerArrayAdapter);
 
-        rangeSeekbar.setMinValue(18);
-        rangeSeekbar.setMaxValue(95);
+        rangeSeekbar.setMinValue(18).setMaxValue(95).apply();
+        //rangeSeekbar.setMaxValue(95).apply();
 
         if (!sharedPref.getString("genero", "").equals("") && !sharedPref.getString("estadoCivil", "").equals("")) {
             String generospn = sharedPref.getString("genero", "");
@@ -95,31 +94,22 @@ public class FragmentoBusqueda extends Fragment implements View.OnClickListener 
             }
 
             Log.println(Log.ASSERT, "Min", sharedPref.getInt("edadMin", 18) + "");
-            Log.println(Log.ASSERT, "Max", sharedPref.getInt("edadMax", 18) + "");
+            Log.println(Log.ASSERT, "Max", sharedPref.getInt("edadMax", 95) + "");
 
 
-
-            rangeSeekbar.setMinStartValue(sharedPref.getInt("edadMin", 18)).apply();
-            rangeSeekbar.setMaxStartValue(sharedPref.getInt("edadMax", 95)).apply();
-
+            rangeSeekbar.setMinStartValue(sharedPref.getInt("edadMin", 18)).setMaxStartValue(sharedPref.getInt("edadMax", 95)).apply();
         }
 
         rangeSeekbar.setOnRangeSeekbarChangeListener(new OnRangeSeekbarChangeListener() {
             @Override
-            public void valueChanged(Number minValue, Number maxValue)
-            {
+            public void valueChanged(Number minValue, Number maxValue) {
                 lblEdadMin.setText(String.valueOf(minValue));
                 lblEdadMax.setText(String.valueOf(maxValue));
+
+                Log.println(Log.ASSERT, "Minimoso", minValue + "");
+                Log.println(Log.ASSERT, "Maximoso", maxValue + "");
             }
         });
-
-        rangeSeekbar.setOnRangeSeekbarFinalValueListener(new OnRangeSeekbarFinalValueListener() {
-            @Override
-            public void finalValue(Number minValue, Number maxValue) {
-                Log.println(Log.ASSERT, "CRS=>", String.valueOf(minValue) + " : " + String.valueOf(maxValue));
-            }
-        });
-
 
         return root;
     }
@@ -158,7 +148,7 @@ public class FragmentoBusqueda extends Fragment implements View.OnClickListener 
                     }
 
                     genero = spnGeneroBusqueda.getSelectedItem().toString();
-                    edadMin = Integer.parseInt(lblEdadMin.getText().toString());
+                    edadMin = Integer.parseInt(rangeSeekbar.getSelectedMinValue().toString());
                     edadMax = Integer.parseInt(rangeSeekbar.getSelectedMaxValue().toString());
 
                     SharedPreferences.Editor editor = sharedPref.edit();
