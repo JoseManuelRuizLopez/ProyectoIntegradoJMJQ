@@ -20,6 +20,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.crystal.crystalrangeseekbar.interfaces.OnRangeSeekbarChangeListener;
+import com.crystal.crystalrangeseekbar.interfaces.OnRangeSeekbarFinalValueListener;
 import com.crystal.crystalrangeseekbar.widgets.CrystalRangeSeekbar;
 import com.example.proyectointegradojmjq.R;
 
@@ -71,9 +72,8 @@ public class FragmentoBusqueda extends Fragment implements View.OnClickListener 
         spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spnGeneroBusqueda.setAdapter(spinnerArrayAdapter);
 
-        rangeSeekbar.setMaxValue(95);
         rangeSeekbar.setMinValue(18);
-
+        rangeSeekbar.setMaxValue(95);
 
         if (!sharedPref.getString("genero", "").equals("") && !sharedPref.getString("estadoCivil", "").equals("")) {
             String generospn = sharedPref.getString("genero", "");
@@ -106,11 +106,20 @@ public class FragmentoBusqueda extends Fragment implements View.OnClickListener 
 
         rangeSeekbar.setOnRangeSeekbarChangeListener(new OnRangeSeekbarChangeListener() {
             @Override
-            public void valueChanged(Number minValue, Number maxValue) {
+            public void valueChanged(Number minValue, Number maxValue)
+            {
                 lblEdadMin.setText(String.valueOf(minValue));
                 lblEdadMax.setText(String.valueOf(maxValue));
             }
         });
+
+        rangeSeekbar.setOnRangeSeekbarFinalValueListener(new OnRangeSeekbarFinalValueListener() {
+            @Override
+            public void finalValue(Number minValue, Number maxValue) {
+                Log.println(Log.ASSERT, "CRS=>", String.valueOf(minValue) + " : " + String.valueOf(maxValue));
+            }
+        });
+
 
         return root;
     }

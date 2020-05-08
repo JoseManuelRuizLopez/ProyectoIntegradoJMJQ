@@ -217,7 +217,8 @@ public class FragmentoMiPerfil extends Fragment implements View.OnClickListener
                                 txtDescripcionMiP.setText(descripcionUsuario);
                                 txtAlturaMiPerfil.setText(alturaUsuario + "cm");
                                 seekBarMiPerfil.setProgress(Integer.parseInt(alturaUsuario) - 140);
-                                Picasso.with(getActivity().getApplicationContext()).invalidate(fotoUsuario);
+
+                                picasin.with(getActivity().getApplicationContext()).invalidate(fotoUsuario);
                                 picasin.with(getActivity().getApplicationContext()).load(fotoUsuario).memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE).into(imgPerfilMiP);
 
                                 Log.println(Log.ASSERT, "Error", fotoUsuario);

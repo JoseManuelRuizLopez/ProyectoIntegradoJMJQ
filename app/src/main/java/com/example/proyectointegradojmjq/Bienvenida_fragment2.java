@@ -81,7 +81,7 @@ public class Bienvenida_fragment2 extends Fragment implements View.OnClickListen
         int dayOfMonth = c.get(c.DAY_OF_MONTH);
 
 
-        dialogoCalendario = new DatePickerDialog(getContext(), android.R.style.Theme_Material_Dialog, new DatePickerDialog.OnDateSetListener()
+        dialogoCalendario = new DatePickerDialog(getContext(), R.style.datePickerTheme, new DatePickerDialog.OnDateSetListener()
         {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day)
@@ -123,7 +123,7 @@ public class Bienvenida_fragment2 extends Fragment implements View.OnClickListen
             }
         });
 
-        dialogoCalendario.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialogoCalendario.getWindow().setBackgroundDrawable(new ColorDrawable(Color.WHITE));
         dialogoCalendario.getDatePicker().setMaxDate(System.currentTimeMillis());
 
         datePicker = view.findViewById(R.id.dp);

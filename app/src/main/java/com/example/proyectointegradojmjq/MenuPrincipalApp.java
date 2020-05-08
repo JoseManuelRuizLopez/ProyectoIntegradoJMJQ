@@ -103,6 +103,7 @@ public class MenuPrincipalApp extends AppCompatActivity {
         Picasso.with(this).invalidate(imgPerfilUrl);
         Picasso.with(this).load(imgPerfilUrl).memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE).into(imgPerfil);
 
+
         AsyncTask.execute(new Runnable() {
             @Override
             public void run() {

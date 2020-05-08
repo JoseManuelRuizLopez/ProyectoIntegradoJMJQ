@@ -25,6 +25,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -78,6 +79,8 @@ public class Bienvenida_fragment4 extends Fragment implements View.OnClickListen
 
     String idUser;
 
+    ProgressBar cargaBienvenida4;
+
     private static final int FILE_SELECT_CODE = 0;
     private static final String TAG = null;
 
@@ -100,6 +103,9 @@ public class Bienvenida_fragment4 extends Fragment implements View.OnClickListen
 
         //cardView = view.findViewById(R.id.cardviewF4);
         //cardView.setOnClickListener(this);
+
+        cargaBienvenida4 = view.findViewById(R.id.cargaBienvenida4);
+        cargaBienvenida4.setVisibility(View.GONE);
 
         imgPerfil.setOnClickListener(this);
         btnSiguienteF4.setOnClickListener(this);
@@ -131,6 +137,8 @@ public class Bienvenida_fragment4 extends Fragment implements View.OnClickListen
 
             case R.id.btnSiguienteWelcomeF4:
 
+                cargaBienvenida4.setVisibility(View.VISIBLE);
+
                 final String nombreReal = getActivity().getIntent().getExtras().getString("nombreReal");
                 final String fechaAmericana = getActivity().getIntent().getExtras().getString("fechaAmericana");
                 final String descripcionUsuario = getActivity().getIntent().getExtras().getString("descripcion");
@@ -140,13 +148,10 @@ public class Bienvenida_fragment4 extends Fragment implements View.OnClickListen
                 final String alturaUsuario = getActivity().getIntent().getExtras().getString("alturaUsuario");
 
 
-
                 bitmapFoto = ((BitmapDrawable)imgPerfil.getDrawable()).getBitmap();
                 ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
                 bitmapFoto.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
                 byte[] byteArray = byteArrayOutputStream .toByteArray();
-
-                encoded = "nada que ver por aqui";
 
                 encoded = Base64.encodeToString(byteArray, Base64.NO_WRAP);
 
@@ -204,7 +209,7 @@ public class Bienvenida_fragment4 extends Fragment implements View.OnClickListen
                             if (connection.getResponseCode() == 200)
                             {
                                 Log.println(Log.ASSERT, "Registro exitoso", "Registrado con éxito: " + respuesta);
-                                //cargaCU.setVisibility(View.GONE);
+
                                 connection.disconnect();
 
                                 String respuestaId = "";
@@ -322,6 +327,7 @@ public class Bienvenida_fragment4 extends Fragment implements View.OnClickListen
                         }
                         catch (Exception e)
                         {
+                            cargaBienvenida4.setVisibility(View.INVISIBLE);
                             Log.println(Log.ASSERT,"Excepción", e.getMessage());
                         }
                     }

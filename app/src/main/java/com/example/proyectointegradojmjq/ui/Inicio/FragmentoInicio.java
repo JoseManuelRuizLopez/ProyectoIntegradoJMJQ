@@ -54,11 +54,10 @@ public class FragmentoInicio extends Fragment {
     SharedPreferences sharedPref;
     SharedPreferences sharedPrefB;
 
-    //String[] nombres;
-    //String[] edades;
-    //int[] fotosPerfil = {R.drawable.senora, R.drawable.senior, R.drawable.senora, R.drawable.senora, R.drawable.senora, R.drawable.senora, R.drawable.senora};
+    AsyncTask myTaskerain;
 
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    {
         inicioViewModel = ViewModelProviders.of(this).get(InicioViewModel.class);
         root = inflater.inflate(R.layout.fragment_inicio, container, false);
 
@@ -72,6 +71,7 @@ public class FragmentoInicio extends Fragment {
             }
         });
         */
+
 
         if (sharedPrefB.getString("estadoCivil", "").equals("") && sharedPrefB.getString("genero", "").equals("")) {
             AsyncTask.execute(new Runnable() {
@@ -176,7 +176,9 @@ public class FragmentoInicio extends Fragment {
                 }
             });
 
-        } else {
+        }
+        else
+            {
             AsyncTask.execute(new Runnable() {
                 @Override
                 public void run() {
@@ -269,8 +271,7 @@ public class FragmentoInicio extends Fragment {
                         } catch (MalformedURLException e) {
                             Log.println(Log.ASSERT, "Error2", "Error1");
                         }
-                    } catch (
-                            Exception e) {
+                    } catch (Exception e) {
                         Log.println(Log.ASSERT, "Error2", "Error2");
                     }
                 }
@@ -311,6 +312,8 @@ public class FragmentoInicio extends Fragment {
 
             nombre.setText(nombres.get(i));
             edad.setText(edades.get(i) + " años");
+
+            Picasso.with(getActivity().getApplicationContext()).invalidate(fotosPerfil.get(i));
             Picasso.with(getActivity().getApplicationContext()).load(fotosPerfil.get(i)).memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE).into(image);
 
             return view1;
