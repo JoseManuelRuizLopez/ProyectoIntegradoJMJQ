@@ -56,8 +56,7 @@ public class FragmentoInicio extends Fragment {
 
     AsyncTask myTaskerain;
 
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-    {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         inicioViewModel = ViewModelProviders.of(this).get(InicioViewModel.class);
         root = inflater.inflate(R.layout.fragment_inicio, container, false);
 
@@ -116,7 +115,11 @@ public class FragmentoInicio extends Fragment {
                                 for (int i = 0; i < jsonArray1.length(); i++) {
                                     JSONObject json_data = jsonArray1.getJSONObject(i);
 
-                                    if (!json_data.getString("nombreUsuario").equals(sharedPref.getString("nombreUsuario", ""))) {
+                                    String fechajsn = json_data.getString("fechaNacimientoUsuario") + "";
+
+                                    if (!json_data.getString("nombreUsuario").equals(sharedPref.getString("nombreUsuario", ""))
+                                            && (json_data.getString("fechaNacimientoUsuario").contains("-"))) {
+
                                         nombresUsuarios.add(json_data.getString("nombreUsuario"));
                                         nombres.add(json_data.getString("nombreRealUsuario"));
 
@@ -176,9 +179,107 @@ public class FragmentoInicio extends Fragment {
                 }
             });
 
-        }
-        else
-            {
+        } else if (sharedPrefB.getString("genero", "").equals("Otro")) {
+            AsyncTask.execute(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        URL url = null;
+                        try {
+                            url = new URL("http://www.teamchaterinos.com/prueba.php?estadoCivilUsuario=" + sharedPrefB.getString("estadoCivil", "")
+                                    + "&fechaMin=" + fechaAñoAprox((sharedPrefB.getInt("edadMax", 0)))
+                                    + "&fechaMax=" + fechaAñoAprox((sharedPrefB.getInt("edadMin", 0))) + "");
+
+                            //Create connection
+                            HttpURLConnection myConnection = (HttpURLConnection) url.openConnection();
+
+                            //Establecer método por defecto GET
+                            myConnection.setRequestMethod("GET");
+
+                            if (myConnection.getResponseCode() == 200) {
+                                InputStream responseBody = myConnection.getInputStream();
+                                InputStreamReader responseBodyReader = new InputStreamReader(responseBody, "UTF-8");
+
+                                BufferedReader bR = new BufferedReader(responseBodyReader);
+                                String line = "";
+
+                                String respuesta = "";
+
+                                while ((line = bR.readLine()) != null) {
+                                    respuesta += line;
+                                }
+
+                                nombresUsuarios = new ArrayList<String>();
+                                nombres = new ArrayList<String>();
+                                edades = new ArrayList<String>();
+                                fotosPerfil = new ArrayList<String>();
+
+                                JSONArray jsonArray1 = new JSONArray(respuesta);
+
+                                for (int i = 0; i < jsonArray1.length(); i++) {
+                                    JSONObject json_data = jsonArray1.getJSONObject(i);
+                                    if (!json_data.getString("nombreUsuario").equals(sharedPref.getString("nombreUsuario", ""))
+                                            && (json_data.getString("fechaNacimientoUsuario").contains("-"))) {
+                                        nombresUsuarios.add(json_data.getString("nombreUsuario"));
+                                        nombres.add(json_data.getString("nombreRealUsuario"));
+
+                                        String fecha = json_data.getString("fechaNacimientoUsuario");
+                                        String fechaSplit[] = fecha.split("-");
+                                        int año = Integer.parseInt(fechaSplit[0]);
+                                        int mes = Integer.parseInt(fechaSplit[1]);
+                                        int dia = Integer.parseInt(fechaSplit[2]);
+
+                                        String edadUsuario = getAge(año, mes, dia) + "";
+
+                                        edades.add(edadUsuario);
+
+                                        fotosPerfil.add(json_data.getString("fotoPerfilUsuario"));
+                                    }
+                                }
+
+                                responseBody.close();
+                                responseBodyReader.close();
+                                myConnection.disconnect();
+
+                                gridView = root.findViewById(R.id.gridview);
+
+                                getActivity().runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        CustomAdapter customAdapter = new CustomAdapter();
+
+                                        gridView.setAdapter(customAdapter);
+                                        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                            @Override
+                                            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                                                Intent intent = new Intent(getActivity(), VistaPerfilUsuario.class);
+                                                intent.putExtra("nombreUsuario", nombresUsuarios.get(i));
+                                                intent.putExtra("nombre", nombres.get(i));
+                                                intent.putExtra("image", fotosPerfil.get(i));
+                                                intent.putExtra("edad", edades.get(i));
+                                                startActivity(intent);
+                                                getActivity().overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+
+                                            }
+                                        });
+
+                                    }
+                                });
+                            } else {
+                                Log.println(Log.ASSERT, "Error2", "Error");
+                            }
+
+                        } catch (MalformedURLException e) {
+                            Log.println(Log.ASSERT, "Error2", "Error1");
+                        }
+                    } catch (Exception e) {
+                        Log.println(Log.ASSERT, "Error2", "Error2");
+                    }
+                }
+            });
+
+
+        } else {
             AsyncTask.execute(new Runnable() {
                 @Override
                 public void run() {
@@ -218,7 +319,8 @@ public class FragmentoInicio extends Fragment {
 
                                 for (int i = 0; i < jsonArray1.length(); i++) {
                                     JSONObject json_data = jsonArray1.getJSONObject(i);
-                                    if (!json_data.getString("nombreUsuario").equals(sharedPref.getString("nombreUsuario", ""))) {
+                                    if (!json_data.getString("nombreUsuario").equals(sharedPref.getString("nombreUsuario", ""))
+                                            && (json_data.getString("fechaNacimientoUsuario").contains("-"))) {
                                         nombresUsuarios.add(json_data.getString("nombreUsuario"));
                                         nombres.add(json_data.getString("nombreRealUsuario"));
 

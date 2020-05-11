@@ -122,7 +122,7 @@
     <string name="toastGenroBusqueda">No has seleccionado un género</string>
     <string name="toastNoEstadoCivilBusqueda">No has seleccionado un estado civil</string>
     <string name="toastPrefCambiadas">Preferencias de busqueda actualizadas</string>
-    <string name="toastPrefDeshechas">Preferencias de busqueda deshechas</string>
+    <string name="toastPrefDeshechas">Preferencias de busqueda anuladas</string>
 
 
     <!-- Vista de Perfil Usuario -->

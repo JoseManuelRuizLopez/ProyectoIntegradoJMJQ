@@ -1,6 +1,7 @@
 package com.example.proyectointegradojmjq.ui.Busqueda;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,6 +22,7 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.crystal.crystalrangeseekbar.interfaces.OnRangeSeekbarChangeListener;
 import com.crystal.crystalrangeseekbar.widgets.CrystalRangeSeekbar;
+import com.example.proyectointegradojmjq.MenuPrincipalApp;
 import com.example.proyectointegradojmjq.R;
 
 import java.util.ArrayList;
@@ -161,6 +163,9 @@ public class FragmentoBusqueda extends Fragment implements View.OnClickListener 
 
                     Toast.makeText(getContext(), getString(R.string.toastPrefCambiadas), Toast.LENGTH_SHORT).show();
 
+                    Intent intencion = new Intent(getActivity(), MenuPrincipalApp.class);
+                    startActivity(intencion);
+                    getActivity().finish();
                 }
 
 
@@ -184,6 +189,10 @@ public class FragmentoBusqueda extends Fragment implements View.OnClickListener 
                 rangeSeekbar.setMaxStartValue(95).apply();
 
                 Toast.makeText(getContext(), getString(R.string.toastPrefDeshechas), Toast.LENGTH_SHORT).show();
+
+                Intent intencion = new Intent(getActivity(), MenuPrincipalApp.class);
+                startActivity(intencion);
+                getActivity().finish();
 
                 break;
         }
