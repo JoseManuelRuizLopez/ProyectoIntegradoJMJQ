@@ -13,8 +13,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".VistaPerfilUsuario"
-            android:label="@string/tituloVistaPerfilUsuario"></activity>
+        <activity android:name=".chat"></activity>
+        <activity
+            android:name=".VistaPerfilUsuario"
+            android:label="@string/tituloVistaPerfilUsuario" />
         <activity
             android:name=".BienvenidaUsuario"
             android:label="@string/title_activity_bienvenida_usuario"
@@ -42,8 +44,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity"/>
+        <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity" />
     </application>
 
 </manifest>

@@ -46,6 +46,7 @@ public class FragmentoInicio extends Fragment {
 
     GridView gridView;
 
+    ArrayList<String> idUsuarios;
     ArrayList<String> nombresUsuarios;
     ArrayList<String> nombres;
     ArrayList<String> edades;
@@ -56,7 +57,7 @@ public class FragmentoInicio extends Fragment {
 
     AsyncTask myTaskerain;
 
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         inicioViewModel = ViewModelProviders.of(this).get(InicioViewModel.class);
         root = inflater.inflate(R.layout.fragment_inicio, container, false);
 
@@ -100,10 +101,10 @@ public class FragmentoInicio extends Fragment {
                                     respuesta += line;
                                 }
 
+                                idUsuarios = new ArrayList<String>();
                                 nombresUsuarios = new ArrayList<String>();
                                 nombres = new ArrayList<String>();
                                 edades = new ArrayList<String>();
-
                                 fotosPerfil = new ArrayList<String>();
 
                                 Log.println(Log.ASSERT, "Nullp", respuesta + "");
@@ -120,6 +121,7 @@ public class FragmentoInicio extends Fragment {
                                     if (!json_data.getString("nombreUsuario").equals(sharedPref.getString("nombreUsuario", ""))
                                             && (json_data.getString("fechaNacimientoUsuario").contains("-"))) {
 
+                                        idUsuarios.add(json_data.getString("idUsuario"));
                                         nombresUsuarios.add(json_data.getString("nombreUsuario"));
                                         nombres.add(json_data.getString("nombreRealUsuario"));
 
@@ -154,6 +156,7 @@ public class FragmentoInicio extends Fragment {
                                             @Override
                                             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                                                 Intent intent = new Intent(getActivity(), VistaPerfilUsuario.class);
+                                                intent.putExtra("idUsuario", idUsuarios.get(i));
                                                 intent.putExtra("nombreUsuario", nombresUsuarios.get(i));
                                                 intent.putExtra("nombre", nombres.get(i));
                                                 intent.putExtra("image", fotosPerfil.get(i));
@@ -209,6 +212,7 @@ public class FragmentoInicio extends Fragment {
                                     respuesta += line;
                                 }
 
+                                idUsuarios = new ArrayList<String>();
                                 nombresUsuarios = new ArrayList<String>();
                                 nombres = new ArrayList<String>();
                                 edades = new ArrayList<String>();
@@ -220,6 +224,7 @@ public class FragmentoInicio extends Fragment {
                                     JSONObject json_data = jsonArray1.getJSONObject(i);
                                     if (!json_data.getString("nombreUsuario").equals(sharedPref.getString("nombreUsuario", ""))
                                             && (json_data.getString("fechaNacimientoUsuario").contains("-"))) {
+                                        idUsuarios.add(json_data.getString("idUsuario"));
                                         nombresUsuarios.add(json_data.getString("nombreUsuario"));
                                         nombres.add(json_data.getString("nombreRealUsuario"));
 
@@ -253,6 +258,7 @@ public class FragmentoInicio extends Fragment {
                                             @Override
                                             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                                                 Intent intent = new Intent(getActivity(), VistaPerfilUsuario.class);
+                                                intent.putExtra("idUsuario", idUsuarios.get(i));
                                                 intent.putExtra("nombreUsuario", nombresUsuarios.get(i));
                                                 intent.putExtra("nombre", nombres.get(i));
                                                 intent.putExtra("image", fotosPerfil.get(i));
@@ -310,6 +316,7 @@ public class FragmentoInicio extends Fragment {
                                     respuesta += line;
                                 }
 
+                                idUsuarios = new ArrayList<String>();
                                 nombresUsuarios = new ArrayList<String>();
                                 nombres = new ArrayList<String>();
                                 edades = new ArrayList<String>();
@@ -321,6 +328,7 @@ public class FragmentoInicio extends Fragment {
                                     JSONObject json_data = jsonArray1.getJSONObject(i);
                                     if (!json_data.getString("nombreUsuario").equals(sharedPref.getString("nombreUsuario", ""))
                                             && (json_data.getString("fechaNacimientoUsuario").contains("-"))) {
+                                        idUsuarios.add(json_data.getString("idUsuario"));
                                         nombresUsuarios.add(json_data.getString("nombreUsuario"));
                                         nombres.add(json_data.getString("nombreRealUsuario"));
 
@@ -354,6 +362,7 @@ public class FragmentoInicio extends Fragment {
                                             @Override
                                             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                                                 Intent intent = new Intent(getActivity(), VistaPerfilUsuario.class);
+                                                intent.putExtra("idUsuario", idUsuarios.get(i));
                                                 intent.putExtra("nombreUsuario", nombresUsuarios.get(i));
                                                 intent.putExtra("nombre", nombres.get(i));
                                                 intent.putExtra("image", fotosPerfil.get(i));

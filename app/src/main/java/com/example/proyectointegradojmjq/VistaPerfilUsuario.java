@@ -38,6 +38,7 @@ public class VistaPerfilUsuario extends AppCompatActivity implements View.OnClic
     Button btnChatearVP;
     Button btnCancelarVP;
 
+    String idRecibido;
     String nombreUsuario;
     String nombreRecibido;
     String edadRecibida;
@@ -63,10 +64,13 @@ public class VistaPerfilUsuario extends AppCompatActivity implements View.OnClic
         btnCancelarVP.setOnClickListener(this);
 
         Intent intent = getIntent();
+        idRecibido = intent.getStringExtra("idUsuario");
         nombreUsuario = intent.getStringExtra("nombreUsuario");
         nombreRecibido = intent.getStringExtra("nombre");
         edadRecibida = intent.getStringExtra("edad");
         imgUrlRecibida = intent.getStringExtra("image");
+
+        Log.println(Log.ASSERT, "id", idRecibido);
 
         lblNombreVP.setText(nombreRecibido);
         lblEdadVP.setText(edadRecibida + " años");
@@ -152,7 +156,11 @@ public class VistaPerfilUsuario extends AppCompatActivity implements View.OnClic
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btnChatearVP:
+                Intent intent = new Intent(this, chat.class);
+                intent.putExtra("idReceptor", idRecibido);
 
+                startActivity(intent);
+                break;
 
             case R.id.btnCancelarVP:
                 finish();
