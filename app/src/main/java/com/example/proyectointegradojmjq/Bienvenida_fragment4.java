@@ -117,7 +117,7 @@ public class Bienvenida_fragment4 extends Fragment implements View.OnClickListen
 
         lbl = view.findViewById(R.id.lblAddFotosF4);
 
-        lbl.setText(nombreUsuario);
+        lbl.setText(getActivity().getString(R.string.lblAddFotosGaleriaB));
 
 
         return view;

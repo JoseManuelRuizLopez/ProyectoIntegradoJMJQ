@@ -349,6 +349,7 @@ public class CrearUsuario extends AppCompatActivity implements View.OnClickListe
                 txtClaveUsuario.setText("");
                 txtEmailUsuario.setText("");
                 txtRepetirClaveUsuario.setText("");
+
                 break;
 
             case R.id.btnCancelarCU:

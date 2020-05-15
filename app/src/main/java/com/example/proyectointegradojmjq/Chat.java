@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -28,12 +29,17 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
+import java.util.TimeZone;
 
 import javax.net.ssl.HttpsURLConnection;
 
-public class chat extends AppCompatActivity implements View.OnClickListener {
+public class Chat extends AppCompatActivity implements View.OnClickListener {
 
     EditText txtEnviar;
     EditText txtRecibir;
@@ -42,6 +48,9 @@ public class chat extends AppCompatActivity implements View.OnClickListener {
     SharedPreferences sharedPref;
 
     String idReceptor;
+
+    Handler handler = new Handler();
+    Runnable refresh;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +72,14 @@ public class chat extends AppCompatActivity implements View.OnClickListener {
 
         //recibirMensaje();
 
-        Log.println(Log.ASSERT, "hsha", "sisisisi");
+        refresh = new Runnable() {
+            public void run()
+            {
+                recibirMensaje();
+                handler.postDelayed(refresh, 500);
+            }
+        };
+        handler.post(refresh);
 
     }
 
@@ -89,11 +105,18 @@ public class chat extends AppCompatActivity implements View.OnClickListener {
 
                 try {
 
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy'--'HH:mm:ss");
+                    sdf.setTimeZone(TimeZone.getTimeZone("GMT+2"));
+                    System.out.println(sdf.format(new Date()));
+
+                    String marcaDeTiempo = sdf.format(new Date());
+
                     String respuesta = "";
                     HashMap<String, String> postDataParams = new HashMap<String, String>();
                     postDataParams.put("mensaje", txtEnviar.getText().toString());
                     postDataParams.put("idEmisor", sharedPref.getString("idUsuario", ""));
                     postDataParams.put("idReceptorFK", idReceptor);
+                    postDataParams.put("timeStamperino", marcaDeTiempo);
 
                     URL url3 = new URL("http://www.teamchaterinos.com/pruebachat.php");
                     HttpURLConnection connection = (HttpURLConnection) url3.openConnection();
@@ -113,14 +136,17 @@ public class chat extends AppCompatActivity implements View.OnClickListener {
 
                     int responseCode = connection.getResponseCode();
 
-                    if (responseCode == HttpsURLConnection.HTTP_OK) {
+                    if (responseCode == HttpsURLConnection.HTTP_OK)
+                    {
                         String line;
                         BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 
-                        while ((line = br.readLine()) != null) {
+                        while ((line = br.readLine()) != null)
+                        {
                             respuesta += line;
                         }
-                    } else {
+                    } else
+                        {
                         respuesta = "";
                     }
                     connection.getResponseCode();
@@ -167,8 +193,7 @@ public class chat extends AppCompatActivity implements View.OnClickListener {
 
                                 final JSONArray jsonArray = new JSONArray(respuesta);
 
-
-                                final JSONObject jsonObject = jsonArray.getJSONObject(0);
+                                final JSONObject[] jsonObject = {null};
 
                                 runOnUiThread(new Runnable() {
                                     @Override
@@ -176,8 +201,11 @@ public class chat extends AppCompatActivity implements View.OnClickListener {
                                         String s = "";
                                         try {
                                             for(int i=0; i<jsonArray.length(); i++) {
-                                               s += jsonObject.getString("mensaje");
-                                               txtRecibir.setText(s);
+
+                                                jsonObject[0] = jsonArray.getJSONObject(i);
+                                                s += jsonObject[0].getString("mensaje") + "\n";
+
+                                                txtRecibir.setText(s);
                                             }
                                         } catch (Exception e) {
 

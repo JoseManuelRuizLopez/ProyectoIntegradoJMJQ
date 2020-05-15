@@ -23,12 +23,12 @@
         android:id="@+id/lblAddFotosF4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="96dp"
         android:text="@string/lblAddFotosGaleriaB"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cardviewF4"
         app:layout_constraintVertical_bias="0.0" />
@@ -67,7 +67,7 @@
         app:layout_constraintHorizontal_bias="0.954"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/lblAddFotosF4"
-        app:layout_constraintVertical_bias="0.951" />
+        app:layout_constraintVertical_bias="0.937" />
 
     <Button
         android:id="@+id/btnAtrasWelcomeF4"
@@ -81,18 +81,16 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/lblAddFotosF4"
-        app:layout_constraintVertical_bias="0.951" />
+        app:layout_constraintVertical_bias="0.933" />
 
     <ProgressBar
         android:id="@+id/cargaBienvenida4"
         style="?android:attr/progressBarStyle"
         android:layout_width="171dp"
         android:layout_height="133dp"
-        android:layout_marginTop="50dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="60dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lblAddFotosF4"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/lblAddFotosF4" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
