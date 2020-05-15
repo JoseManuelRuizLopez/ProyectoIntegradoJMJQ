@@ -20,6 +20,7 @@ import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
@@ -37,7 +38,7 @@ public class chat extends AppCompatActivity implements View.OnClickListener {
     EditText txtEnviar;
     EditText txtRecibir;
     Button btnEnviar;
-
+    Button btnRecibir;
     SharedPreferences sharedPref;
 
     String idReceptor;
@@ -50,6 +51,7 @@ public class chat extends AppCompatActivity implements View.OnClickListener {
         txtEnviar = findViewById(R.id.txtEnviar);
         txtRecibir = findViewById(R.id.txtRecibir);
         btnEnviar = findViewById(R.id.btnEnviar);
+        btnRecibir = findViewById(R.id.btnRecibir);
 
         sharedPref = getSharedPreferences("logeado", Context.MODE_PRIVATE);
 
@@ -57,17 +59,12 @@ public class chat extends AppCompatActivity implements View.OnClickListener {
         idReceptor = intent.getStringExtra("idReceptor");
 
         btnEnviar.setOnClickListener(this);
+        btnRecibir.setOnClickListener(this);
 
-        /*runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                while (true) {
+        //recibirMensaje();
 
-                }
-            }
-        });
+        Log.println(Log.ASSERT, "hsha", "sisisisi");
 
-         */
     }
 
     @Override
@@ -76,6 +73,10 @@ public class chat extends AppCompatActivity implements View.OnClickListener {
             case R.id.btnEnviar:
 
                 enviarMensaje();
+                break;
+
+            case R.id.btnRecibir:
+                recibirMensaje();
                 break;
         }
     }
@@ -105,8 +106,6 @@ public class chat extends AppCompatActivity implements View.OnClickListener {
                     OutputStream os = connection.getOutputStream();
                     BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
                     writer.write(getPostDataString(postDataParams));
-
-                    Log.println(Log.ASSERT, "hsha", "sisisisi");
 
                     writer.flush();
                     writer.close();
@@ -143,8 +142,70 @@ public class chat extends AppCompatActivity implements View.OnClickListener {
     }
 
     //Metodo para recibir mensajes
-    public void recibirMensaje()
-    {
+    public void recibirMensaje() {
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                //while (true) {
+                    try {
+                        URL url = null;
+                        try {
+                            url = new URL("http://www.teamchaterinos.com/pruebachat.php?idEmisor=" + idReceptor +
+                                    "&idReceptorFK=" + sharedPref.getString("idUsuario", "") + "");
+                            HttpURLConnection myConnection = (HttpURLConnection) url.openConnection();
+                            myConnection.setRequestMethod("GET");
+                            if (myConnection.getResponseCode() == 200) {
+                                InputStream responseBody = myConnection.getInputStream();
+                                InputStreamReader responseBodyReader = new InputStreamReader(responseBody, "UTF-8");
+                                BufferedReader bR = new BufferedReader(responseBodyReader);
+                                String line = "";
+                                String respuesta = "";
+                                while ((line = bR.readLine()) != null) {
+                                    respuesta += line;
+                                }
+
+
+                                final JSONArray jsonArray = new JSONArray(respuesta);
+
+
+                                final JSONObject jsonObject = jsonArray.getJSONObject(0);
+
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        String s = "";
+                                        try {
+                                            for(int i=0; i<jsonArray.length(); i++) {
+                                               s += jsonObject.getString("mensaje");
+                                               txtRecibir.setText(s);
+                                            }
+                                        } catch (Exception e) {
+
+                                        }
+                                    }
+                                });
+
+
+                                responseBody.close();
+                                responseBodyReader.close();
+                                myConnection.disconnect();
+
+                                // Log.println(Log.ASSERT, "sas", "sos");
+                                //Log.println(Log.ASSERT, "Resultado", lblNombreVP.getText().toString());
+
+                            } else {
+                                Log.println(Log.ASSERT, "Error", "Error");
+                            }
+
+                        } catch (Exception e) {
+                            Log.println(Log.ASSERT, "Error", e.getMessage());
+                        }
+                    } catch (Exception e) {
+                        Log.println(Log.ASSERT, "Error", "Error2");
+                    }
+                }
+            //}
+        });
 
     }
 
