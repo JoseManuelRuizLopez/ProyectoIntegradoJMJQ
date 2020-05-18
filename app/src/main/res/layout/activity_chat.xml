@@ -1,57 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Chat">
+    android:orientation="vertical"
+    android:clipToPadding="false"
+    android:focusableInTouchMode="true">
 
-    <EditText
-        android:id="@+id/txtRecibir"
-        android:layout_width="217dp"
-        android:layout_height="156dp"
-        android:ems="10"
-        android:hint="Recibir"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.401" />
-
-    <EditText
-        android:id="@+id/txtEnviar"
-        android:layout_width="213dp"
-        android:layout_height="167dp"
-        android:ems="10"
-        android:hint="Enviar"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.064" />
-
-    <Button
-        android:id="@+id/btnEnviar"
-        android:layout_width="wrap_content"
+    <ListView
+        android:layout_width="match_parent"
+        android:id="@+id/messages_view"
+        android:layout_weight="2"
+        android:divider="#fff"
         android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
-        android:text="Enviar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.13"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtRecibir" />
+        android:background="@drawable/fondappac"
+        />
 
-    <Button
-        android:id="@+id/btnRecibir"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Button"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.972"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnEnviar"
-        app:layout_constraintVertical_bias="0.0" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:background="#fff"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/txtMensajeEnviar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:ems="10"
+            android:hint="@string/txtEnviarMensaje"
+            android:inputType="text"
+            android:paddingHorizontal="10dp"
+            android:text="" />
+
+
+        <ImageButton
+            android:id="@+id/btnEnviar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginHorizontal="10dp"
+            android:background="@drawable/ic_enviar"
+            android:onClick="sendMessage"
+            android:padding="20dp"
+            android:scaleType="fitCenter" />
+    </LinearLayout>
+</LinearLayout>

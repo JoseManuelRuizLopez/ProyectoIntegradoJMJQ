@@ -138,5 +138,7 @@
     <string name="errorConexion">Error de conexión</string>
     <string name="cambiosGuardados">!Cambios Guardados¡</string>
 
+    <!-- Chat -->
+    <string name="txtEnviarMensaje">Escribe un mensaje</string>
 
 </resources>

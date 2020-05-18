@@ -158,6 +158,8 @@ public class VistaPerfilUsuario extends AppCompatActivity implements View.OnClic
             case R.id.btnChatearVP:
                 Intent intent = new Intent(this, Chat.class);
                 intent.putExtra("idReceptor", idRecibido);
+                intent.putExtra("nombre", nombreRecibido);
+                intent.putExtra("urlImagen", imgUrlRecibida);
 
                 startActivity(intent);
                 break;
