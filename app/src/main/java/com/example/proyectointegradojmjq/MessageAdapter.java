@@ -6,7 +6,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,18 +54,22 @@ public class MessageAdapter extends BaseAdapter {
 
         if (message.isBelongsToCurrentUser()) {
             convertView = messageInflater.inflate(R.layout.my_message, null);
+            holder.name = (TextView) convertView.findViewById(R.id.fechaMensajeM);
             holder.messageBody = (TextView) convertView.findViewById(R.id.message_body);
             convertView.setTag(holder);
+            holder.name.setText(message.getFecha());
             holder.messageBody.setText(message.getText());
         } else {
             convertView = messageInflater.inflate(R.layout.their_message, null);
-            holder.avatar = (View) convertView.findViewById(R.id.avatar);
             holder.name = (TextView) convertView.findViewById(R.id.fechaMensaje);
             holder.messageBody = (TextView) convertView.findViewById(R.id.message_body);
             convertView.setTag(holder);
 
             holder.name.setText(message.getFecha());
             holder.messageBody.setText(message.getText());
+
+            //Picasso.with(context).invalidate("http://www.teamchaterinos.com/images/3.png");
+            //Picasso.with(context).load("http://www.teamchaterinos.com/images/3.png").memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE).into((ImageView) holder.avatar);
             //GradientDrawable drawable = (GradientDrawable) holder.avatar.getBackground();
             //drawable.setColor(Color.parseColor(message.getMemberData().getColor()));
         }
@@ -72,7 +80,6 @@ public class MessageAdapter extends BaseAdapter {
 }
 
 class MessageViewHolder {
-    public View avatar;
     public TextView name;
     public TextView messageBody;
 }

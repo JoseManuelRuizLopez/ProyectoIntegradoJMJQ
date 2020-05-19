@@ -1,6 +1,5 @@
 package com.example.proyectointegradojmjq;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
@@ -11,19 +10,14 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.Toolbar;
 
 import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
 
-import org.apache.commons.codec.binary.Hex;
-import org.apache.commons.codec.digest.DigestUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -38,10 +32,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 import java.util.TimeZone;
 
@@ -65,6 +57,10 @@ public class Chat extends AppCompatActivity implements View.OnClickListener {
     MessageAdapter messageAdapter;
     ListView messagesView;
 
+    ImageView imgUsuario;
+
+    TextView lblNombre;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,13 +74,15 @@ public class Chat extends AppCompatActivity implements View.OnClickListener {
         nombre = intent.getStringExtra("nombre");
         urlImagen = intent.getStringExtra("urlImagen");
 
-        //Picasso.with(this).invalidate(urlImagen);
-        //Picasso.with(this).load(urlImagen).memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE);
 
-
-        setTitle(nombre);
         //ActionBar actionBar = setActionBar();
 
+        imgUsuario = findViewById(R.id.imgUsuarioChat);
+        Picasso.with(this).invalidate(urlImagen);
+        Picasso.with(this).load(urlImagen).memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE).into(imgUsuario);
+
+        lblNombre = findViewById(R.id.lblNombreUsuarioChat);
+        lblNombre.setText(nombre);
 
         messageAdapter = new MessageAdapter(this);
         messagesView = (ListView) findViewById(R.id.messages_view);
@@ -133,7 +131,7 @@ public class Chat extends AppCompatActivity implements View.OnClickListener {
                     sdf.setTimeZone(TimeZone.getTimeZone("GMT+2"));
                     System.out.println(sdf.format(new Date()));
 
-                    String marcaDeTiempo = sdf.format(new Date());
+                    final String marcaDeTiempo = sdf.format(new Date());
 
                     String respuesta = "";
                     HashMap<String, String> postDataParams = new HashMap<String, String>();
@@ -178,7 +176,8 @@ public class Chat extends AppCompatActivity implements View.OnClickListener {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                Message m = new Message(txtEnviar.getText().toString(), true, "");
+
+                                Message m = new Message(txtEnviar.getText().toString(), true, marcaDeTiempo);
                                 messageAdapter.add(m);
                                 txtEnviar.setText("");
                             }

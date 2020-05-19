@@ -13,7 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Chat"></activity>
+        <activity
+            android:name=".Chat"
+            android:theme="@style/quitarTitulo"></activity>
         <activity
             android:name=".VistaPerfilUsuario"
             android:label="@string/tituloVistaPerfilUsuario" />
