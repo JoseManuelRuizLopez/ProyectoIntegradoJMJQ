@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
 
+import org.apache.commons.io.FileUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -80,6 +81,8 @@ public class Chat extends AppCompatActivity implements View.OnClickListener {
         //ActionBar actionBar = setActionBar();
 
         imgUsuario = findViewById(R.id.imgUsuarioChat);
+
+        FileUtils.deleteQuietly(getApplicationContext().getCacheDir());
         Picasso.with(this).invalidate(urlImagen);
         Picasso.with(this).load(urlImagen).memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE).into(imgUsuario);
 

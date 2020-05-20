@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
 
+import org.apache.commons.io.FileUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -74,6 +75,8 @@ public class VistaPerfilUsuario extends AppCompatActivity implements View.OnClic
 
         lblNombreVP.setText(nombreRecibido);
         lblEdadVP.setText(edadRecibida + " años");
+
+        FileUtils.deleteQuietly(getApplicationContext().getCacheDir());
         Picasso.with(this).invalidate(imgUrlRecibida);
         Picasso.with(this).load(imgUrlRecibida).memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE).into(imgPerfilVP);
 

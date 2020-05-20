@@ -40,6 +40,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.apache.commons.io.FileUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -100,6 +101,8 @@ public class MenuPrincipalApp extends AppCompatActivity {
 
         imgPerfilUrl = "http://www.teamchaterinos.com/images/ " + idUsuario + ".png";
 
+
+        FileUtils.deleteQuietly(getApplicationContext().getCacheDir());
         Picasso.with(this).invalidate(imgPerfilUrl);
         Picasso.with(this).load(imgPerfilUrl).memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE).into(imgPerfil);
 
