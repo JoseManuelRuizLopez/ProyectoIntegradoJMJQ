@@ -61,6 +61,8 @@ public class Chat extends AppCompatActivity implements View.OnClickListener {
 
     TextView lblNombre;
 
+    Thread hilo;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,7 +101,7 @@ public class Chat extends AppCompatActivity implements View.OnClickListener {
         refresh = new Runnable() {
             public void run() {
                 recibirMensaje();
-                handler.postDelayed(refresh, 500);
+                handler.postDelayed(refresh, 2000);
             }
         };
         handler.post(refresh);
@@ -233,21 +235,19 @@ public class Chat extends AppCompatActivity implements View.OnClickListener {
                                     try {
                                         for (int i = 0; i < jsonArray.length(); i++) {
 
+                                            Log.println(Log.ASSERT, "Longitud1", i +"");
                                             jsonObject[i] = jsonArray.getJSONObject(i);
                                             mensaje = jsonObject[i].getString("mensaje");
                                             fecha = jsonObject[i].getString("timeStamperino");
-
+                                            Log.println(Log.ASSERT, "Longitud2", jsonArray.length() + "");
 
                                             final String finalMensaje = mensaje;
                                             final String finalFecha = fecha;
-                                            runOnUiThread(new Runnable() {
-                                                @Override
-                                                public void run() {
-                                                    Message m = new Message(finalMensaje, false, finalFecha);
 
-                                                    messageAdapter.add(m);
-                                                }
-                                            });
+
+                                            Message m = new Message(finalMensaje, false, finalFecha);
+                                            messageAdapter.add(m);
+
 
                                             //txtRecibir.setText(s);
                                         }

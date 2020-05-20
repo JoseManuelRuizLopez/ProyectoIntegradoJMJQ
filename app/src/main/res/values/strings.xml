@@ -141,4 +141,13 @@
     <!-- Chat -->
     <string name="txtEnviarMensaje">Escribe un mensaje</string>
 
+    <string name="configuracion">Configuración</string>
+
+
+    <string name="CorreoElectronicoConf">Correo Electronico</string>
+    <string name="ClaveConf">Clave</string>
+    <string name="GuardarCambiosConf">Guardar Cambios</string>
+    <string name="BorrarPerfilConf">Borrar Perfil</string>
+
+
 </resources>

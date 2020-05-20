@@ -196,6 +196,13 @@ public class MenuPrincipalApp extends AppCompatActivity {
 
                 return true;
 
+
+            case R.id.configuracion:
+
+                Intent intentConfiguracion = new Intent(MenuPrincipalApp.this, ConfiguracionPerfil.class);
+                startActivity(intentConfiguracion);
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+
             default:
                 return super.onOptionsItemSelected(item);
         }

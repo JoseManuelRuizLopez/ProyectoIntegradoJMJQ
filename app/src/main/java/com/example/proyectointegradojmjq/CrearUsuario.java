@@ -319,7 +319,8 @@ public class CrearUsuario extends AppCompatActivity implements View.OnClickListe
                                 }
                             }
 
-                        } catch (Exception e)
+                        }
+                        catch (Exception e)
                         {
                             runOnUiThread(new Runnable() {
                                 @Override

@@ -36,6 +36,7 @@ import com.theartofdev.edmodo.cropper.CropImage;
 
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.io.FileUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -218,6 +219,7 @@ public class FragmentoMiPerfil extends Fragment implements View.OnClickListener
                                 txtAlturaMiPerfil.setText(alturaUsuario + "cm");
                                 seekBarMiPerfil.setProgress(Integer.parseInt(alturaUsuario) - 140);
 
+                                FileUtils.deleteQuietly(getActivity().getCacheDir());
                                 picasin.with(getActivity().getApplicationContext()).invalidate(fotoUsuario);
                                 picasin.with(getActivity().getApplicationContext()).load(fotoUsuario).memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE).into(imgPerfilMiP);
 

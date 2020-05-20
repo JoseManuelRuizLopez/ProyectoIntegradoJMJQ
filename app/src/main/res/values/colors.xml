@@ -13,4 +13,6 @@
     <color name="azulI">#008AE6</color>
     <color name="azulO">#006BB3</color>
     <color name="blanco">#ffffff</color>
+
+    <color name="rojo">#ff0000</color>
 </resources>
