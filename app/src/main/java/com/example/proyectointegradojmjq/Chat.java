@@ -45,6 +45,7 @@ public class Chat extends AppCompatActivity implements View.OnClickListener {
 
     SharedPreferences sharedPref;
 
+
     String idReceptor;
     String nombre;
     String urlImagen;
