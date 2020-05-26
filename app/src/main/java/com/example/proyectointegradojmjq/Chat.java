@@ -8,7 +8,10 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.Editable;
+import android.text.method.KeyListener;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -41,9 +44,10 @@ import java.util.TimeZone;
 import javax.net.ssl.HttpsURLConnection;
 
 
-public class Chat extends AppCompatActivity implements View.OnClickListener {
+public class Chat extends AppCompatActivity implements View.OnClickListener, KeyListener {
 
     SharedPreferences sharedPref;
+
 
     String idReceptor;
     String nombre;
@@ -61,8 +65,6 @@ public class Chat extends AppCompatActivity implements View.OnClickListener {
     ImageView imgUsuario;
 
     TextView lblNombre;
-
-    Thread hilo;
 
 
     @Override
@@ -129,7 +131,6 @@ public class Chat extends AppCompatActivity implements View.OnClickListener {
 
                 try {
 
-                    Log.println(Log.ASSERT, "sisisis", "sisisi");
 
                     SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy'--'HH:mm:ss");
                     sdf.setTimeZone(TimeZone.getTimeZone("GMT+2"));
@@ -213,6 +214,8 @@ public class Chat extends AppCompatActivity implements View.OnClickListener {
                                 "&idReceptorFK=" + sharedPref.getString("idUsuario", "") + "");
                         HttpURLConnection myConnection = (HttpURLConnection) url.openConnection();
                         myConnection.setRequestMethod("GET");
+
+
                         if (myConnection.getResponseCode() == 200) {
                             InputStream responseBody = myConnection.getInputStream();
                             InputStreamReader responseBodyReader = new InputStreamReader(responseBody, "UTF-8");
@@ -228,6 +231,7 @@ public class Chat extends AppCompatActivity implements View.OnClickListener {
 
                             final JSONObject[] jsonObject = {null};
 
+
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
@@ -237,32 +241,29 @@ public class Chat extends AppCompatActivity implements View.OnClickListener {
                                     try {
                                         for (int i = 0; i < jsonArray.length(); i++) {
 
+                                            Log.println(Log.ASSERT, "Longitud1", i + "");
                                             jsonObject[i] = jsonArray.getJSONObject(i);
                                             mensaje = jsonObject[i].getString("mensaje");
                                             fecha = jsonObject[i].getString("timeStamperino");
-                                            Log.println(Log.ASSERT, "mensaje recibido", mensaje);
+                                            Log.println(Log.ASSERT, "Longitud2", jsonArray.length() + "");
 
+                                            final String finalMensaje = mensaje;
+                                            final String finalFecha = fecha;
 
-                                            Message m = new Message(mensaje, false, fecha);
-
+                                            Message m = new Message(finalMensaje, false, finalFecha);
                                             messageAdapter.add(m);
+
                                         }
-
-                                        //txtRecibir.setText(s);
-
                                     } catch (Exception e) {
 
                                     }
                                 }
                             });
 
-
                             responseBody.close();
                             responseBodyReader.close();
                             myConnection.disconnect();
 
-                            // Log.println(Log.ASSERT, "sas", "sos");
-                            //Log.println(Log.ASSERT, "Resultado", lblNombreVP.getText().toString());
 
                         } else {
                             Log.println(Log.ASSERT, "Error", "Error");
@@ -297,5 +298,35 @@ public class Chat extends AppCompatActivity implements View.OnClickListener {
             result.append(URLEncoder.encode(entry.getValue(), "UTF-8"));
         }
         return result.toString();
+    }
+
+    @Override
+    public int getInputType() {
+        return 0;
+    }
+
+    @Override
+    public boolean onKeyDown(View view, Editable text, int keyCode, KeyEvent event) {
+
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            this.finish();
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean onKeyUp(View view, Editable text, int keyCode, KeyEvent event) {
+        return false;
+    }
+
+    @Override
+    public boolean onKeyOther(View view, Editable text, KeyEvent event) {
+        return false;
+    }
+
+    @Override
+    public void clearMetaKeyState(View view, Editable content, int states) {
+
     }
 }

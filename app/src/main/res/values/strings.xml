@@ -149,5 +149,7 @@
     <string name="GuardarCambiosConf">Guardar Cambios</string>
     <string name="BorrarPerfilConf">Borrar Perfil</string>
 
+    <string name="errorEmailUsuarioNoExisteRC">La dirección de correo no existe en la Base de Datos</string>
+
 
 </resources>

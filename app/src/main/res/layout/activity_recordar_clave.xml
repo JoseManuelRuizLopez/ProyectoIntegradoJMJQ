@@ -35,6 +35,7 @@
             android:id="@+id/txtCorreoRC"
             android:layout_width="match_parent"
             android:layout_height="61dp"
+            android:inputType="textEmailAddress"
             android:hint="@string/txtCorreoRC" />
     </com.google.android.material.textfield.TextInputLayout>
 

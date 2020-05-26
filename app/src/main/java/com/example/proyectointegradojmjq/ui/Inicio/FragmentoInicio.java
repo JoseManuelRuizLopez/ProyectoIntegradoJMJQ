@@ -25,6 +25,7 @@ import com.example.proyectointegradojmjq.R;
 import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
 
+import org.apache.commons.io.FileUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -424,6 +425,7 @@ public class FragmentoInicio extends Fragment {
             nombre.setText(nombres.get(i));
             edad.setText(edades.get(i) + " años");
 
+            FileUtils.deleteQuietly(getActivity().getCacheDir());
             Picasso.with(getActivity().getApplicationContext()).invalidate(fotosPerfil.get(i));
             Picasso.with(getActivity().getApplicationContext()).load(fotosPerfil.get(i)).memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE).into(image);
 
