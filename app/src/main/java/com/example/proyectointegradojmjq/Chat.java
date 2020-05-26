@@ -216,6 +216,7 @@ public class Chat extends AppCompatActivity implements View.OnClickListener, Key
                         myConnection.setRequestMethod("GET");
 
 
+
                         if (myConnection.getResponseCode() == 200) {
                             InputStream responseBody = myConnection.getInputStream();
                             InputStreamReader responseBodyReader = new InputStreamReader(responseBody, "UTF-8");
