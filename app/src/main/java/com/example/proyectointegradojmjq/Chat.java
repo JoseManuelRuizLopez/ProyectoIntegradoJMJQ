@@ -45,7 +45,6 @@ public class Chat extends AppCompatActivity implements View.OnClickListener {
 
     SharedPreferences sharedPref;
 
-
     String idReceptor;
     String nombre;
     String urlImagen;
@@ -131,7 +130,6 @@ public class Chat extends AppCompatActivity implements View.OnClickListener {
                 try {
 
                     Log.println(Log.ASSERT, "sisisis", "sisisi");
-
 
                     SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy'--'HH:mm:ss");
                     sdf.setTimeZone(TimeZone.getTimeZone("GMT+2"));
@@ -239,22 +237,19 @@ public class Chat extends AppCompatActivity implements View.OnClickListener {
                                     try {
                                         for (int i = 0; i < jsonArray.length(); i++) {
 
-                                            Log.println(Log.ASSERT, "Longitud1", i +"");
                                             jsonObject[i] = jsonArray.getJSONObject(i);
                                             mensaje = jsonObject[i].getString("mensaje");
                                             fecha = jsonObject[i].getString("timeStamperino");
-                                            Log.println(Log.ASSERT, "Longitud2", jsonArray.length() + "");
-
-                                            final String finalMensaje = mensaje;
-                                            final String finalFecha = fecha;
+                                            Log.println(Log.ASSERT, "mensaje recibido", mensaje);
 
 
-                                            Message m = new Message(finalMensaje, false, finalFecha);
+                                            Message m = new Message(mensaje, false, fecha);
+
                                             messageAdapter.add(m);
-
-
-                                            //txtRecibir.setText(s);
                                         }
+
+                                        //txtRecibir.setText(s);
+
                                     } catch (Exception e) {
 
                                     }
