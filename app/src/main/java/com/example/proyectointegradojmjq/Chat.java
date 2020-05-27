@@ -106,7 +106,7 @@ public class Chat extends AppCompatActivity implements View.OnClickListener, Key
         refresh = new Runnable() {
             public void run() {
                 recibirMensaje();
-                handler.postDelayed(refresh, 2000);
+                handler.postDelayed(refresh, 1000);
             }
         };
         handler.post(refresh);
@@ -136,7 +136,7 @@ public class Chat extends AppCompatActivity implements View.OnClickListener, Key
                     sdf.setTimeZone(TimeZone.getTimeZone("GMT+2"));
                     System.out.println(sdf.format(new Date()));
 
-                    final String marcaDeTiempo = sdf.format(new Date());
+                    String marcaDeTiempo = sdf.format(new Date());
 
                     String respuesta = "";
                     HashMap<String, String> postDataParams = new HashMap<String, String>();
@@ -178,11 +178,17 @@ public class Chat extends AppCompatActivity implements View.OnClickListener, Key
                     if (connection.getResponseCode() == 200) {
 
                         Log.println(Log.ASSERT, "Mensaje Enviado", respuesta);
+
+                        marcaDeTiempo = marcaDeTiempo.replace("-", "/");
+                        marcaDeTiempo = marcaDeTiempo.replace("//", "  ");
+                        marcaDeTiempo = marcaDeTiempo.substring(0, marcaDeTiempo.lastIndexOf(":"));
+
+                        final String finalMarcaDeTiempo = marcaDeTiempo;
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
 
-                                Message m = new Message(txtEnviar.getText().toString(), true, marcaDeTiempo);
+                                Message m = new Message(txtEnviar.getText().toString(), true, finalMarcaDeTiempo);
                                 messageAdapter.add(m);
                                 txtEnviar.setText("");
                             }
@@ -249,6 +255,12 @@ public class Chat extends AppCompatActivity implements View.OnClickListener, Key
                                             Log.println(Log.ASSERT, "Longitud2", jsonArray.length() + "");
 
                                             final String finalMensaje = mensaje;
+
+                                            fecha = fecha.replace("-", "/");
+                                            fecha = fecha.replace("//", "  ");
+                                            fecha = fecha.substring(0, fecha.lastIndexOf(":"));
+
+
                                             final String finalFecha = fecha;
 
                                             Message m = new Message(finalMensaje, false, finalFecha);

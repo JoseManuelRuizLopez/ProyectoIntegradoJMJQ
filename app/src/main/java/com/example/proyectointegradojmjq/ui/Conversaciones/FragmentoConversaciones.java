@@ -23,13 +23,8 @@ public class FragmentoConversaciones extends Fragment {
         conversacionesViewModel =
                 ViewModelProviders.of(this).get(ConversacionesViewModel.class);
         View root = inflater.inflate(R.layout.fragment_conversaciones, container, false);
-        final TextView textView = root.findViewById(R.id.text_slideshow);
-        conversacionesViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
+
+
         return root;
     }
 }
