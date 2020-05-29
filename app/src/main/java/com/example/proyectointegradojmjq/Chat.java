@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -66,6 +68,10 @@ public class Chat extends AppCompatActivity implements View.OnClickListener, Key
 
     TextView lblNombre;
 
+    BaseDatos dbHelper;
+
+    Boolean mePertence;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,6 +109,47 @@ public class Chat extends AppCompatActivity implements View.OnClickListener, Key
         txtFecha = findViewById(R.id.fechaMensaje);
         //recibirMensaje();
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////d
+        dbHelper = new BaseDatos(getApplicationContext());
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        if (db != null) {
+
+            try {
+
+
+                Cursor c = db.rawQuery("SELECT mensaje, timeStamperino, idEmisor, mePertenece FROM conversaciones WHERE idEmisor = " + sharedPref.getString("idUsuario", "") + "" +
+                        " and idReceptorFK = " + idReceptor, null);
+
+                if (c != null) {
+                    c.moveToFirst();
+                    do {
+                        String m = c.getString(c.getColumnIndex("mensaje"));
+                        String t = c.getString(c.getColumnIndex("timeStamperino"));
+                        //int idE = c.getInt(c.getColumnIndex("idEmisor"));
+                        int esMio = c.getInt(c.getColumnIndex("mePertenece"));
+
+                        if (esMio == 1) {
+                            mePertence = true;
+                        } else {
+                            mePertence = false;
+                        }
+
+                        t = t.replace("-", "/");
+                        t = t.replace("//", "  ");
+                        t = t.substring(0, t.lastIndexOf(":"));
+
+                        Message men = new Message(m, mePertence, t);
+                        messageAdapter.add(men);
+
+                    } while (c.moveToNext());
+                }
+                c.close();
+                db.close();
+            } catch (Exception e) {
+
+            }
+        }
+
         refresh = new Runnable() {
             public void run() {
                 recibirMensaje();
@@ -125,86 +172,100 @@ public class Chat extends AppCompatActivity implements View.OnClickListener, Key
 
     //Metodo para enviar mensajes
     public void enviarMensaje() {
-        AsyncTask.execute(new Runnable() {
-            @Override
-            public void run() {
+        if(!txtEnviar.getText().toString().equals("")) {
+            AsyncTask.execute(new Runnable() {
+                @Override
+                public void run() {
 
-                try {
+                    try {
 
 
-                    SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy'--'HH:mm:ss");
-                    sdf.setTimeZone(TimeZone.getTimeZone("GMT+2"));
-                    System.out.println(sdf.format(new Date()));
+                        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy'--'HH:mm:ss");
+                        sdf.setTimeZone(TimeZone.getTimeZone("GMT+2"));
+                        System.out.println(sdf.format(new Date()));
 
-                    String marcaDeTiempo = sdf.format(new Date());
+                        String marcaDeTiempo = sdf.format(new Date());
 
-                    String respuesta = "";
-                    HashMap<String, String> postDataParams = new HashMap<String, String>();
-                    postDataParams.put("mensaje", txtEnviar.getText().toString());
-                    postDataParams.put("idEmisor", sharedPref.getString("idUsuario", ""));
-                    postDataParams.put("idReceptorFK", idReceptor);
-                    postDataParams.put("timeStamperino", marcaDeTiempo);
+                        String respuesta = "";
+                        HashMap<String, String> postDataParams = new HashMap<String, String>();
+                        postDataParams.put("mensaje", txtEnviar.getText().toString());
+                        postDataParams.put("idEmisor", sharedPref.getString("idUsuario", ""));
+                        postDataParams.put("idReceptorFK", idReceptor);
+                        postDataParams.put("timeStamperino", marcaDeTiempo);
 
-                    URL url3 = new URL("http://www.teamchaterinos.com/pruebachat.php");
-                    HttpURLConnection connection = (HttpURLConnection) url3.openConnection();
-                    connection.setReadTimeout(15000);
-                    connection.setConnectTimeout(15000);
-                    connection.setRequestMethod("POST");
-                    connection.setDoInput(true);
-                    connection.setDoOutput(true);
+                        URL url3 = new URL("http://www.teamchaterinos.com/pruebachat.php");
+                        HttpURLConnection connection = (HttpURLConnection) url3.openConnection();
+                        connection.setReadTimeout(15000);
+                        connection.setConnectTimeout(15000);
+                        connection.setRequestMethod("POST");
+                        connection.setDoInput(true);
+                        connection.setDoOutput(true);
 
-                    OutputStream os = connection.getOutputStream();
-                    BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
-                    writer.write(getPostDataString(postDataParams));
+                        OutputStream os = connection.getOutputStream();
+                        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
+                        writer.write(getPostDataString(postDataParams));
 
-                    writer.flush();
-                    writer.close();
-                    os.close();
+                        writer.flush();
+                        writer.close();
+                        os.close();
 
-                    int responseCode = connection.getResponseCode();
+                        int responseCode = connection.getResponseCode();
 
-                    if (responseCode == HttpsURLConnection.HTTP_OK) {
-                        String line;
-                        BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                        if (responseCode == HttpsURLConnection.HTTP_OK) {
+                            String line;
+                            BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 
-                        while ((line = br.readLine()) != null) {
-                            respuesta += line;
-                        }
-                    } else {
-                        respuesta = "";
-                    }
-                    connection.getResponseCode();
-
-                    if (connection.getResponseCode() == 200) {
-
-                        Log.println(Log.ASSERT, "Mensaje Enviado", respuesta);
-
-                        marcaDeTiempo = marcaDeTiempo.replace("-", "/");
-                        marcaDeTiempo = marcaDeTiempo.replace("//", "  ");
-                        marcaDeTiempo = marcaDeTiempo.substring(0, marcaDeTiempo.lastIndexOf(":"));
-
-                        final String finalMarcaDeTiempo = marcaDeTiempo;
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-
-                                Message m = new Message(txtEnviar.getText().toString(), true, finalMarcaDeTiempo);
-                                messageAdapter.add(m);
-                                txtEnviar.setText("");
+                            while ((line = br.readLine()) != null) {
+                                respuesta += line;
                             }
-                        });
-                        connection.disconnect();
+                        } else {
+                            respuesta = "";
+                        }
+                        connection.getResponseCode();
+
+                        if (connection.getResponseCode() == 200) {
+
+                            Log.println(Log.ASSERT, "Mensaje Enviado", respuesta);
+
+                            final String tiempoSQLITE = marcaDeTiempo;
+
+                            marcaDeTiempo = marcaDeTiempo.replace("-", "/");
+                            marcaDeTiempo = marcaDeTiempo.replace("//", "  ");
+                            marcaDeTiempo = marcaDeTiempo.substring(0, marcaDeTiempo.lastIndexOf(":"));
+
+                            final String finalMarcaDeTiempo = marcaDeTiempo;
+                            final String finalMarcaDeTiempo1 = marcaDeTiempo;
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+
+                                    Message m = new Message(txtEnviar.getText().toString(), true, finalMarcaDeTiempo);
+                                    messageAdapter.add(m);
+/////////////////////////////////////g/////////////////////////////////////////////////////////////////////////////////////////////////
+                                    dbHelper = new BaseDatos(getApplicationContext());
+                                    SQLiteDatabase db = dbHelper.getWritableDatabase();
+                                    if (db != null) {
+                                        db.execSQL("INSERT INTO conversaciones (mensaje, timeStamperino, idEmisor, idReceptorFK, mePertenece) VALUES ('" + txtEnviar.getText().toString() + "'," +
+                                                "'" + tiempoSQLITE + "', " + sharedPref.getString("idUsuario", "") + ", " + idReceptor + " , 1)");
+                                    }
+
+                                    db.close();
+                                    txtEnviar.setText("");
+
+                                }
+                            });
+                            connection.disconnect();
 
 
-                    } else {
-                        Log.println(Log.ASSERT, "Error", "Error");
+                        } else {
+                            Log.println(Log.ASSERT, "Error", "Error");
+                        }
+                    } catch (Exception e) {
+                        Log.println(Log.ASSERT, "Excepción", e.getMessage());
                     }
-                } catch (Exception e) {
-                    Log.println(Log.ASSERT, "Excepción", e.getMessage());
                 }
-            }
-        });
-
+            });
+        }
     }
 
     //Metodo para recibir mensajes
@@ -220,7 +281,6 @@ public class Chat extends AppCompatActivity implements View.OnClickListener, Key
                                 "&idReceptorFK=" + sharedPref.getString("idUsuario", "") + "");
                         HttpURLConnection myConnection = (HttpURLConnection) url.openConnection();
                         myConnection.setRequestMethod("GET");
-
 
 
                         if (myConnection.getResponseCode() == 200) {
@@ -242,6 +302,8 @@ public class Chat extends AppCompatActivity implements View.OnClickListener, Key
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
+
+
                                     String mensaje = "";
                                     String fecha = "";
 
@@ -254,6 +316,7 @@ public class Chat extends AppCompatActivity implements View.OnClickListener, Key
                                             fecha = jsonObject[i].getString("timeStamperino");
                                             Log.println(Log.ASSERT, "Longitud2", jsonArray.length() + "");
 
+                                            final String tiempoSQLITE = fecha;
                                             final String finalMensaje = mensaje;
 
                                             fecha = fecha.replace("-", "/");
@@ -265,6 +328,15 @@ public class Chat extends AppCompatActivity implements View.OnClickListener, Key
 
                                             Message m = new Message(finalMensaje, false, finalFecha);
                                             messageAdapter.add(m);
+
+                                            dbHelper = new BaseDatos(getApplicationContext());
+                                            SQLiteDatabase db = dbHelper.getWritableDatabase();
+                                            if (db != null) {
+                                                db.execSQL("INSERT INTO conversaciones (mensaje, timeStamperino, idEmisor, idReceptorFK, mePertenece) VALUES ('" + mensaje + "'," +
+                                                        "'" + tiempoSQLITE + "', " + sharedPref.getString("idUsuario", "") + ", " +  idReceptor + ", 0)");
+                                            }
+
+                                            db.close();
 
                                         }
                                     } catch (Exception e) {

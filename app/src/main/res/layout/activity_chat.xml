@@ -51,6 +51,8 @@
         android:divider="#fff"
         android:layout_height="wrap_content"
         android:background="#00000000"
+        android:transcriptMode="alwaysScroll"
+        android:stackFromBottom="true"
         >
 
     </ListView>
