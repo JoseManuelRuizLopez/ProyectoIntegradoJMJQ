@@ -19,6 +19,7 @@ import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -36,8 +37,11 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.text.Editable;
+import android.text.method.KeyListener;
 import android.util.Base64;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -57,7 +61,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class MenuPrincipalApp extends AppCompatActivity {
+public class MenuPrincipalApp extends AppCompatActivity implements KeyListener {
 
     private AppBarConfiguration mAppBarConfiguration;
 
@@ -72,6 +76,8 @@ public class MenuPrincipalApp extends AppCompatActivity {
     TextView lblNavNombreCompleto;
 
     Uri uri;
+
+    NavigationView navigationView;
 
     String imgPerfilUrl;
 
@@ -96,7 +102,7 @@ public class MenuPrincipalApp extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
@@ -124,7 +130,6 @@ public class MenuPrincipalApp extends AppCompatActivity {
         FileUtils.deleteQuietly(getApplicationContext().getCacheDir());
         Picasso.with(this).invalidate(imgPerfilUrl);
         Picasso.with(this).load(imgPerfilUrl).memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE).into(imgPerfil);
-
 
         AsyncTask.execute(new Runnable() {
             @Override
@@ -410,5 +415,33 @@ public class MenuPrincipalApp extends AppCompatActivity {
                 .setAspectRatio(200, 200)
                 .setMultiTouchEnabled(true)
                 .start(this);
+    }
+
+    @Override
+    public int getInputType() {
+        return 0;
+    }
+
+    @Override
+    public boolean onKeyDown(View view, Editable text, int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            this.finish();
+            return true;
+        }
+        return false;    }
+
+    @Override
+    public boolean onKeyUp(View view, Editable text, int keyCode, KeyEvent event) {
+        return false;
+    }
+
+    @Override
+    public boolean onKeyOther(View view, Editable text, KeyEvent event) {
+        return false;
+    }
+
+    @Override
+    public void clearMetaKeyState(View view, Editable content, int states) {
+
     }
 }

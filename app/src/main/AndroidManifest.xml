@@ -13,33 +13,45 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ConfiguracionPerfil"></activity>
+        <activity android:name=".VerPerfilChat"
+            android:screenOrientation = "portrait"
+            android:label="Perfil del Usuario"></activity>
+        <activity android:name=".ConfiguracionPerfil"
+            android:screenOrientation = "portrait"/>
         <activity
             android:name=".Chat"
+            android:screenOrientation = "portrait"
             android:theme="@style/quitarTitulo" />
         <activity
             android:name=".VistaPerfilUsuario"
+            android:screenOrientation = "portrait"
             android:label="@string/tituloVistaPerfilUsuario" />
         <activity
             android:name=".BienvenidaUsuario"
+            android:screenOrientation = "portrait"
             android:label="@string/title_activity_bienvenida_usuario"
             android:theme="@style/quitarTitulo" />
         <activity
             android:name=".MenuPrincipalApp"
+            android:screenOrientation = "portrait"
             android:label="@string/tituloActMenuPrincipalApp"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".MenuPrincipal" />
         <activity
             android:name=".RecordarClave"
+            android:screenOrientation = "portrait"
             android:label="@string/tituloActRecordarClave" />
         <activity
             android:name=".CrearUsuario"
+            android:screenOrientation = "portrait"
             android:label="@string/tituloActCrearUsuario" />
         <activity
             android:name=".Login"
+            android:screenOrientation = "portrait"
             android:label="@string/tituloActLogin" />
         <activity
             android:name=".MainActivity"
+            android:screenOrientation = "portrait"
             android:theme="@style/quitarTitulo">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -4,7 +4,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.method.KeyListener;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -34,7 +37,7 @@ import java.util.Map;
 
 import javax.net.ssl.HttpsURLConnection;
 
-public class RecordarClave extends AppCompatActivity implements View.OnClickListener
+public class RecordarClave extends AppCompatActivity implements View.OnClickListener, KeyListener
 {
 
     Button btnCancelarRC;
@@ -243,5 +246,33 @@ public class RecordarClave extends AppCompatActivity implements View.OnClickList
             result.append(URLEncoder.encode(entry.getValue(), "UTF-8"));
         }
         return result.toString();
+    }
+
+    @Override
+    public int getInputType() {
+        return 0;
+    }
+
+    @Override
+    public boolean onKeyDown(View view, Editable text, int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            this.finish();
+            return true;
+        }
+        return false;    }
+
+    @Override
+    public boolean onKeyUp(View view, Editable text, int keyCode, KeyEvent event) {
+        return false;
+    }
+
+    @Override
+    public boolean onKeyOther(View view, Editable text, KeyEvent event) {
+        return false;
+    }
+
+    @Override
+    public void clearMetaKeyState(View view, Editable content, int states) {
+
     }
 }

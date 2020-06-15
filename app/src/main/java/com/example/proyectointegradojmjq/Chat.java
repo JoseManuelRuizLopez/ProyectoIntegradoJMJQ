@@ -54,6 +54,12 @@ public class Chat extends AppCompatActivity implements View.OnClickListener, Key
     String idReceptor;
     String nombre;
     String urlImagen;
+    String edad;
+    String genero;
+    String estadoCivil;
+    String altura;
+    String descripcion;
+
     ImageButton btnEnviar;
 
     TextView txtEnviar;
@@ -84,12 +90,14 @@ public class Chat extends AppCompatActivity implements View.OnClickListener, Key
         idReceptor = intent.getStringExtra("idReceptor");
         nombre = intent.getStringExtra("nombre");
         urlImagen = intent.getStringExtra("urlImagen");
-
-        //Log.println(Log.ASSERT, "IMAGEN", urlImagen);
-
-        //ActionBar actionBar = setActionBar();
+        edad = intent.getStringExtra("edad");
+        genero = intent.getStringExtra("genero");
+        altura = intent.getStringExtra("altura");
+        estadoCivil = intent.getStringExtra("estadoCivil");
+        descripcion = intent.getStringExtra("descripcion");
 
         imgUsuario = findViewById(R.id.imgUsuarioChat);
+        imgUsuario.setOnClickListener(this);
 
         FileUtils.deleteQuietly(getApplicationContext().getCacheDir());
         Picasso.with(this).invalidate(urlImagen);
@@ -108,8 +116,9 @@ public class Chat extends AppCompatActivity implements View.OnClickListener, Key
 
         txtEnviar = findViewById(R.id.txtMensajeEnviar);
         txtFecha = findViewById(R.id.fechaMensaje);
+        //recibirMensaje();
 
-
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////d
         dbHelper = new BaseDatos(getApplicationContext());
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         if (db != null) {
@@ -166,6 +175,19 @@ public class Chat extends AppCompatActivity implements View.OnClickListener, Key
             case R.id.btnEnviar:
 
                 enviarMensaje();
+                break;
+
+            case R.id.imgUsuarioChat:
+                Intent intent = new Intent(this, VerPerfilChat.class);
+                intent.putExtra("urlImagen", urlImagen);
+                intent.putExtra("nombre", nombre);
+                intent.putExtra("edad", edad);
+                intent.putExtra("genero", genero);
+                intent.putExtra("altura", altura);
+                intent.putExtra("descripcion", descripcion);
+                intent.putExtra("estadoCivil", estadoCivil);
+
+                startActivity(intent);
                 break;
         }
     }

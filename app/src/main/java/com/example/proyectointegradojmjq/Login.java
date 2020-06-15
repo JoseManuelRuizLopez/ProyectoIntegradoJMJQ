@@ -7,8 +7,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.InputType;
+import android.text.method.KeyListener;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -31,7 +34,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class Login extends AppCompatActivity implements View.OnClickListener {
+public class Login extends AppCompatActivity implements View.OnClickListener , KeyListener {
 
     Button btnRegistrarLogin, btnEntrarLogin;
     TextView lblRecordarClave;
@@ -184,5 +187,33 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
                 break;
         }
+    }
+
+    @Override
+    public int getInputType() {
+        return 0;
+    }
+
+    @Override
+    public boolean onKeyDown(View view, Editable text, int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            this.finish();
+            return true;
+        }
+        return false;    }
+
+    @Override
+    public boolean onKeyUp(View view, Editable text, int keyCode, KeyEvent event) {
+        return false;
+    }
+
+    @Override
+    public boolean onKeyOther(View view, Editable text, KeyEvent event) {
+        return false;
+    }
+
+    @Override
+    public void clearMetaKeyState(View view, Editable content, int states) {
+
     }
 }

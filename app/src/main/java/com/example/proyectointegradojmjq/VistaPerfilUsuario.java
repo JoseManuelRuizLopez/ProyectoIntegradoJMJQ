@@ -9,7 +9,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.telephony.SignalStrength;
+import android.text.Editable;
+import android.text.method.KeyListener;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -33,7 +37,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class VistaPerfilUsuario extends AppCompatActivity implements View.OnClickListener {
+public class VistaPerfilUsuario extends AppCompatActivity implements View.OnClickListener, KeyListener {
 
     TextView lblNombreVP;
     TextView lblEdadVP;
@@ -52,6 +56,10 @@ public class VistaPerfilUsuario extends AppCompatActivity implements View.OnClic
     String nombreRecibido;
     String edadRecibida;
     String imgUrlRecibida;
+    String generoEnviar;
+    String estadoCivilEnviar;
+    String alturaEnviar;
+    String descripcionEnviar;
 
     String mensaje;
     String idEmisor;
@@ -136,6 +144,12 @@ public class VistaPerfilUsuario extends AppCompatActivity implements View.OnClic
                                         lblAlturaVP.setText(jsonObject.getString("alturaUsuario") + " cm");
                                         lblEstadoCivilVP.setText(jsonObject.getString("estadoCivilUsuario"));
                                         lblDescripcionVP.setText(jsonObject.getString("descripcionUsuario"));
+
+                                        generoEnviar = jsonObject.getString("generoUsuario");
+                                        alturaEnviar = jsonObject.getString("alturaUsuario") + " cm";
+                                        estadoCivilEnviar = jsonObject.getString("estadoCivilUsuario");
+                                        descripcionEnviar = jsonObject.getString("descripcionUsuario");
+
                                     } catch (Exception e) {
 
                                     }
@@ -313,6 +327,11 @@ public class VistaPerfilUsuario extends AppCompatActivity implements View.OnClic
                 intent.putExtra("idReceptor", idRecibido);
                 intent.putExtra("nombre", nombreRecibido);
                 intent.putExtra("urlImagen", imgUrlRecibida);
+                intent.putExtra("edad", edadRecibida);
+                intent.putExtra("genero", generoEnviar);
+                intent.putExtra("estadoCivil", estadoCivilEnviar);
+                intent.putExtra("altura", alturaEnviar);
+                intent.putExtra("descripcion", descripcionEnviar);
 
                 startActivity(intent);
                 break;
@@ -321,5 +340,33 @@ public class VistaPerfilUsuario extends AppCompatActivity implements View.OnClic
                 finish();
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
         }
+    }
+
+    @Override
+    public int getInputType() {
+        return 0;
+    }
+
+    @Override
+    public boolean onKeyDown(View view, Editable text, int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            this.finish();
+            return true;
+        }
+        return false;    }
+
+    @Override
+    public boolean onKeyUp(View view, Editable text, int keyCode, KeyEvent event) {
+        return false;
+    }
+
+    @Override
+    public boolean onKeyOther(View view, Editable text, KeyEvent event) {
+        return false;
+    }
+
+    @Override
+    public void clearMetaKeyState(View view, Editable content, int states) {
+
     }
 }

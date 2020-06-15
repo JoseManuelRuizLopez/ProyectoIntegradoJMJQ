@@ -16,8 +16,11 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.method.KeyListener;
 import android.util.Base64;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -49,8 +52,7 @@ import java.util.Map;
 
 import javax.net.ssl.HttpsURLConnection;
 
-public class ConfiguracionPerfil extends AppCompatActivity implements View.OnClickListener {
-
+public class ConfiguracionPerfil extends AppCompatActivity implements View.OnClickListener, KeyListener {
 
     EditText txtCorreo;
     EditText txtClave;
@@ -150,8 +152,8 @@ public class ConfiguracionPerfil extends AppCompatActivity implements View.OnCli
                                 txtIn2.setHint("Nueva Clave");
                                 txtIn3.setHint("Repetir Nueva Clave");
                                 txtCorreo.setText(correoEmail);
-                                txtClave.setText("");
-                                txtClave2.setText("");
+                                txtClave.setText("**********");
+                                txtClave2.setText("**********");
                             }
                         });
 
@@ -539,5 +541,33 @@ public class ConfiguracionPerfil extends AppCompatActivity implements View.OnCli
         NotificationManager notificationManager=(NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.createNotificationChannel(notificationChannel);
         notificationManager.notify(1, notification);
+    }
+
+    @Override
+    public int getInputType() {
+        return 0;
+    }
+
+    @Override
+    public boolean onKeyDown(View view, Editable text, int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            this.finish();
+            return true;
+        }
+        return false;    }
+
+    @Override
+    public boolean onKeyUp(View view, Editable text, int keyCode, KeyEvent event) {
+        return false;
+    }
+
+    @Override
+    public boolean onKeyOther(View view, Editable text, KeyEvent event) {
+        return false;
+    }
+
+    @Override
+    public void clearMetaKeyState(View view, Editable content, int states) {
+
     }
 }
