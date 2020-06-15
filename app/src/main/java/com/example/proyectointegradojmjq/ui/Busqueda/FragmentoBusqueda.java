@@ -1,8 +1,13 @@
 package com.example.proyectointegradojmjq.ui.Busqueda;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,10 +27,21 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.crystal.crystalrangeseekbar.interfaces.OnRangeSeekbarChangeListener;
 import com.crystal.crystalrangeseekbar.widgets.CrystalRangeSeekbar;
+import com.example.proyectointegradojmjq.Chat;
+import com.example.proyectointegradojmjq.MainActivity;
 import com.example.proyectointegradojmjq.MenuPrincipalApp;
 import com.example.proyectointegradojmjq.R;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class FragmentoBusqueda extends Fragment implements View.OnClickListener {
 
@@ -41,6 +57,20 @@ public class FragmentoBusqueda extends Fragment implements View.OnClickListener 
     RadioGroup rgGrupo;
 
     SharedPreferences sharedPref;
+    SharedPreferences sharedPref2;
+
+    String mensaje;
+    String idEmisor;
+    String nombreUsuario;
+    String notificado;
+    String idUser;
+    String foto;
+
+    ArrayList<String> mensajesArray;
+    ArrayList<String> nombresArray;
+    ArrayList<String> notificadoArray;
+    ArrayList<String> idEmisoresArray;
+    ArrayList<String> fotosArray;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         busquedaViewModel = ViewModelProviders.of(this).get(BusquedaViewModel.class);
@@ -61,6 +91,7 @@ public class FragmentoBusqueda extends Fragment implements View.OnClickListener 
         btnEstablecer.setOnClickListener(this);
 
         sharedPref = getActivity().getSharedPreferences("prefBusqueda", Context.MODE_PRIVATE);
+        sharedPref2 = getActivity().getSharedPreferences("logeado", Context.MODE_PRIVATE);
 
         ArrayList<String> arraySpinner = new ArrayList<String>();
 
@@ -113,7 +144,136 @@ public class FragmentoBusqueda extends Fragment implements View.OnClickListener 
             }
         });
 
+
+        idUser = sharedPref2.getString("idUsuario", "0");
+        Log.println(Log.ASSERT, "Maximoso", idUser);
+
+        Log.println(Log.ASSERT, "IDUSUARIOSO", idUser);
+
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run()
+            {
+                try {
+                    URL url = new URL("http://www.teamchaterinos.com/pruebachat.php?idReceptorFK=" + idUser);
+
+                    //Create connection
+                    HttpURLConnection myConnection = (HttpURLConnection) url.openConnection();
+
+                    //Establecer método por defecto GET
+                    myConnection.setRequestMethod("GET");
+
+                    if (myConnection.getResponseCode() == 200) {
+                        InputStream responseBody = myConnection.getInputStream();
+                        InputStreamReader responseBodyReader = new InputStreamReader(responseBody, "UTF-8");
+
+                        BufferedReader bR = new BufferedReader(responseBodyReader);
+                        String line = "";
+
+                        StringBuilder responseStrBuilder = new StringBuilder();
+
+                        while ((line = bR.readLine()) != null) {
+                            responseStrBuilder.append(line);
+                        }
+
+                        JSONArray result = new JSONArray(responseStrBuilder.toString());
+
+                        mensajesArray = new ArrayList<String>();
+                        nombresArray = new ArrayList<String>();
+                        notificadoArray = new ArrayList<String>();
+                        idEmisoresArray = new ArrayList<String>();
+                        fotosArray= new ArrayList<String>();
+
+                        for (int i = 0; i < result.length(); i++)
+                        {
+                            JSONObject jsonobject = result.getJSONObject(i);
+
+                            mensaje = jsonobject.getString("mensaje") + "\n";
+                            idEmisor = jsonobject.getString("idEmisor");
+                            nombreUsuario = jsonobject.getString("nombreRealUsuario");
+                            notificado = jsonobject.getString("notificado");
+                            foto = jsonobject.getString("fotoPerfilUsuario");
+
+                            mensajesArray.add(mensaje);
+                            nombresArray.add(nombreUsuario);
+                            notificadoArray.add(notificado);
+                            idEmisoresArray.add(idEmisor);
+                            fotosArray.add(foto);
+
+                        }
+
+                        Log.println(Log.ASSERT, "Mensaje Recibido", mensajesArray.toString());
+                        Log.println(Log.ASSERT, "DE: ", nombresArray.toString());
+                        Log.println(Log.ASSERT, "NOTIFICADO: ", notificadoArray.toString());
+                        Log.println(Log.ASSERT, "FOTOS: ", fotosArray.toString());
+                        Log.println(Log.ASSERT, "ID'S EMISORES: ", idEmisoresArray.toString());
+
+                        //mensaje = mensaje.replace("null", "");
+                        //Log.println(Log.ASSERT, "DE: ", mensaje);
+
+                        for (int i = 0; i < mensajesArray.size(); i++)
+                        {
+
+                            if (notificadoArray.get(i).equals("0"))
+                            {
+                                notificandoApp(nombresArray.get(i), mensajesArray.get(i), fotosArray.get(i), idEmisoresArray.get(i));
+
+                                Log.println(Log.ASSERT, "NOTIFICATION: ", nombresArray.get(i) + " - - - - - - - - - - " + mensajesArray.get(i));
+                            }
+                        }
+
+
+                        responseBody.close();
+                        responseBodyReader.close();
+                        myConnection.disconnect();
+
+                    } else {
+                        Log.println(Log.ASSERT, "Error", "Error");
+                    }
+                } catch (Exception e) {
+                    Log.println(Log.ASSERT, "Excepción", "Error de conexión, perdona2. " + e.getMessage());
+                }
+            }
+        });
+
         return root;
+    }
+
+    public int generateRandom(){
+        Random random = new Random();
+        return random.nextInt(9999 - 1000) + 1000;
+    }
+
+    public void notificandoApp(String nombreEmisor, String mensaje, String foto, String idEmisor)
+    {
+
+        final int m = generateRandom();
+
+        Intent intent=new Intent(getActivity().getApplicationContext(), Chat.class);
+
+        intent.putExtra("idReceptor", idEmisor);
+        intent.putExtra("nombre", nombreEmisor);
+        intent.putExtra("urlImagen", foto);
+
+        Log.println(Log.ASSERT, "LAFOTO", foto);
+
+
+        String CHANNEL_ID="MYCHANNEL";
+        NotificationChannel notificationChannel = new NotificationChannel(CHANNEL_ID,"name", NotificationManager.IMPORTANCE_HIGH);
+        PendingIntent pendingIntent = PendingIntent.getActivity(getActivity().getApplicationContext(),0,intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        Notification notification = new Notification.Builder(getActivity().getApplicationContext(),CHANNEL_ID)
+                .setContentTitle("DE: " + nombreEmisor)
+                .setContentText("Mensaje: " +  mensaje)
+                .setContentIntent(pendingIntent)
+                .setChannelId(CHANNEL_ID)
+                .setAutoCancel(true)
+                .setStyle(new Notification.BigTextStyle().bigText(mensaje))
+                .setSmallIcon((R.drawable.chaterinoslogo))
+                .build();
+
+        NotificationManager notificationManager = (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.createNotificationChannel(notificationChannel);
+        notificationManager.notify(m, notification);
     }
 
     @Override

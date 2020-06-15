@@ -3,6 +3,10 @@ package com.example.proyectointegradojmjq;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -69,6 +73,12 @@ public class ConfiguracionPerfil extends AppCompatActivity implements View.OnCli
     String nuevaClave;
     String nuevaClave2;
     String nuevaClaveEncriptada;
+
+    String mensaje;
+    String idEmisor;
+    String nombreUsuario;
+    String idUser;
+    String notificado;
 
     boolean todoOk = true;
 
@@ -140,8 +150,8 @@ public class ConfiguracionPerfil extends AppCompatActivity implements View.OnCli
                                 txtIn2.setHint("Nueva Clave");
                                 txtIn3.setHint("Repetir Nueva Clave");
                                 txtCorreo.setText(correoEmail);
-                                txtClave.setText("**********");
-                                txtClave2.setText("**********");
+                                txtClave.setText("");
+                                txtClave2.setText("");
                             }
                         });
 
@@ -155,6 +165,71 @@ public class ConfiguracionPerfil extends AppCompatActivity implements View.OnCli
                     }
                 } catch (Exception e) {
                     Log.println(Log.ASSERT, "Excepción", "Error de conexión, perdona. " + e.getMessage());
+                }
+            }
+        });
+
+
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run()
+            {
+                try {
+                    URL url = new URL("http://www.teamchaterinos.com/pruebachat.php?idReceptorFK=" + idUser);
+
+                    //Create connection
+                    HttpURLConnection myConnection = (HttpURLConnection) url.openConnection();
+
+                    //Establecer método por defecto GET
+                    myConnection.setRequestMethod("GET");
+
+                    if (myConnection.getResponseCode() == 200) {
+                        InputStream responseBody = myConnection.getInputStream();
+                        InputStreamReader responseBodyReader = new InputStreamReader(responseBody, "UTF-8");
+
+                        BufferedReader bR = new BufferedReader(responseBodyReader);
+                        String line = "";
+
+                        StringBuilder responseStrBuilder = new StringBuilder();
+
+                        while ((line = bR.readLine()) != null) {
+                            responseStrBuilder.append(line);
+                        }
+
+                        JSONArray result = new JSONArray(responseStrBuilder.toString());
+
+                        for (int i = 0; i < result.length(); i++)
+                        {
+                            JSONObject jsonobject = result.getJSONObject(i);
+
+                            mensaje += jsonobject.getString("mensaje") + "\n";
+                            idEmisor = jsonobject.getString("idEmisor");
+                            nombreUsuario = jsonobject.getString("nombreUsuario");
+                            notificado = jsonobject.getString("notificado");
+
+                        }
+
+                        Log.println(Log.ASSERT, "Mensaje Recibido", mensaje);
+                        Log.println(Log.ASSERT, "DE: ", idEmisor);
+
+                        mensaje = mensaje.replace("null", "");
+                        Log.println(Log.ASSERT, "DE: ", mensaje);
+
+                        if (notificado.equals("0"))
+                        {
+                            notificandoApp(nombreUsuario, mensaje);
+                        }
+
+
+                        responseBody.close();
+                        responseBodyReader.close();
+                        myConnection.disconnect();
+
+                    } else {
+                        Log.println(Log.ASSERT, "Error", "Error");
+                    }
+                } catch (Exception e) {
+                    Log.println(Log.ASSERT, "Excepción", "Error de conexión, perdona2. " + e.getMessage());
                 }
             }
         });
@@ -188,7 +263,7 @@ public class ConfiguracionPerfil extends AppCompatActivity implements View.OnCli
                     todoOk = false;
                 }
 
-                if (txtClave.getText().toString().equals("") || txtClave2.getText().toString().equals("") || !nuevaClave.equals(nuevaClave2)) {
+                if (!nuevaClave.equals(nuevaClave2)) {
                     runOnUiThread(new Runnable() {
                         public void run() {
 
@@ -201,7 +276,7 @@ public class ConfiguracionPerfil extends AppCompatActivity implements View.OnCli
 
                 if (todoOk) {
 
-                    if (nuevaClave.contains("*")) {
+                    if (nuevaClave.equals("")) {
                         AsyncTask.execute(new Runnable() {
                             @Override
                             public void run() {
@@ -338,6 +413,7 @@ public class ConfiguracionPerfil extends AppCompatActivity implements View.OnCli
                 startActivity(intencionMenuPrincipal);
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 finish();
+                break;
 
             case R.id.btnBorrarPerfilConf:
 
@@ -423,6 +499,7 @@ public class ConfiguracionPerfil extends AppCompatActivity implements View.OnCli
                     }
                 });
                 alert.show();
+                break;
         }
     }
 
@@ -442,5 +519,25 @@ public class ConfiguracionPerfil extends AppCompatActivity implements View.OnCli
             result.append(URLEncoder.encode(entry.getValue(), "UTF-8"));
         }
         return result.toString();
+    }
+
+    public void notificandoApp(String idEmisor, String mensaje)
+    {
+        Intent intent=new Intent(getApplicationContext(),MainActivity.class);
+        String CHANNEL_ID="MYCHANNEL";
+        NotificationChannel notificationChannel = new NotificationChannel(CHANNEL_ID,"name", NotificationManager.IMPORTANCE_HIGH);
+        PendingIntent pendingIntent= PendingIntent.getActivity(getApplicationContext(),1,intent,0);
+        Notification notification=new Notification.Builder(getApplicationContext(),CHANNEL_ID)
+                .setContentTitle("DE: " + idEmisor)
+                .setContentText("Mensaje: " +  mensaje)
+                .setContentIntent(pendingIntent)
+                .setChannelId(CHANNEL_ID)
+                .setStyle(new Notification.BigTextStyle().bigText(mensaje))
+                .setSmallIcon((R.drawable.chaterinoslogo))
+                .build();
+
+        NotificationManager notificationManager=(NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.createNotificationChannel(notificationChannel);
+        notificationManager.notify(1, notification);
     }
 }

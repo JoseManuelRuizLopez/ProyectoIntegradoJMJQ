@@ -305,6 +305,7 @@ public class CrearUsuario extends AppCompatActivity implements View.OnClickListe
                                         SharedPreferences.Editor editor = sharedPref.edit();
                                         editor.putString("idUsuario", respuestaId);
                                         editor.putString("nombreUsuario", nombreUsuario);
+                                        editor.putString("registroCompletado", "0");
                                         editor.commit();
 
                                         Intent intentBienvenida = new Intent(CrearUsuario.this, BienvenidaUsuario.class);

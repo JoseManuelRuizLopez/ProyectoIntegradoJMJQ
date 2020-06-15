@@ -114,7 +114,6 @@ public class Bienvenida_fragment4 extends Fragment implements View.OnClickListen
         sharedPref = getActivity().getSharedPreferences("logeado", Context.MODE_PRIVATE);
         sharedPrefB = getActivity().getSharedPreferences("prefBusqueda", Context.MODE_PRIVATE);
 
-
         lbl = view.findViewById(R.id.lblAddFotosF4);
 
         lbl.setText(getActivity().getString(R.string.lblAddFotosGaleriaB));
@@ -228,7 +227,9 @@ public class Bienvenida_fragment4 extends Fragment implements View.OnClickListen
                                 editor.commit();
 
 
-                            } else {
+                            }
+                            else
+                                {
                                 Log.println(Log.ASSERT, "Error", "Error");
                             }
                         } catch (Exception e) {
@@ -306,6 +307,7 @@ public class Bienvenida_fragment4 extends Fragment implements View.OnClickListen
                                         editor2.putInt("edadMax", 0);
                                         editor2.putString("genero", "");
                                         editor2.putString("estadoCivil", "");
+                                        editor2.putString("registroCompletado", "1");
 
 
                                         editor.commit();
@@ -313,6 +315,7 @@ public class Bienvenida_fragment4 extends Fragment implements View.OnClickListen
 
                                     }
                                 });
+
 
                                 Intent intencion = new Intent(getActivity(), MenuPrincipalApp.class);
                                 startActivity(intencion);

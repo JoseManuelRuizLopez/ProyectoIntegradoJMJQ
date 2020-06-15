@@ -1,5 +1,9 @@
 package com.example.proyectointegradojmjq.ui.MiPerfil;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -26,7 +30,9 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.proyectointegradojmjq.BienvenidaUsuario;
+import com.example.proyectointegradojmjq.Chat;
 import com.example.proyectointegradojmjq.CrearUsuario;
+import com.example.proyectointegradojmjq.MainActivity;
 import com.example.proyectointegradojmjq.MenuPrincipalApp;
 import com.example.proyectointegradojmjq.R;
 import com.google.android.material.textfield.TextInputLayout;
@@ -56,6 +62,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -90,6 +97,18 @@ public class FragmentoMiPerfil extends Fragment implements View.OnClickListener
     Bitmap bitmapFoto;
     String encoded;
     Picasso picasin;
+
+    String mensaje;
+    String idEmisor;
+    String nombreUsuario;
+    String notificado;
+    String foto;
+
+    ArrayList<String> mensajesArray;
+    ArrayList<String> nombresArray;
+    ArrayList<String> notificadoArray;
+    ArrayList<String> idEmisoresArray;
+    ArrayList<String> fotosArray;
 
     public static final String UPLOAD_KEY = "image";
 
@@ -242,9 +261,133 @@ public class FragmentoMiPerfil extends Fragment implements View.OnClickListener
             }
         });
 
+
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run()
+            {
+                try {
+                    URL url = new URL("http://www.teamchaterinos.com/pruebachat.php?idReceptorFK=" + idUser);
+
+                    //Create connection
+                    HttpURLConnection myConnection = (HttpURLConnection) url.openConnection();
+
+                    //Establecer método por defecto GET
+                    myConnection.setRequestMethod("GET");
+
+                    if (myConnection.getResponseCode() == 200) {
+                        InputStream responseBody = myConnection.getInputStream();
+                        InputStreamReader responseBodyReader = new InputStreamReader(responseBody, "UTF-8");
+
+                        BufferedReader bR = new BufferedReader(responseBodyReader);
+                        String line = "";
+
+                        StringBuilder responseStrBuilder = new StringBuilder();
+
+                        while ((line = bR.readLine()) != null) {
+                            responseStrBuilder.append(line);
+                        }
+
+                        JSONArray result = new JSONArray(responseStrBuilder.toString());
+
+                        mensajesArray = new ArrayList<String>();
+                        nombresArray = new ArrayList<String>();
+                        notificadoArray = new ArrayList<String>();
+                        idEmisoresArray = new ArrayList<String>();
+                        fotosArray= new ArrayList<String>();
+
+                        for (int i = 0; i < result.length(); i++)
+                        {
+                            JSONObject jsonobject = result.getJSONObject(i);
+
+                            mensaje = jsonobject.getString("mensaje") + "\n";
+                            idEmisor = jsonobject.getString("idEmisor");
+                            nombreUsuario = jsonobject.getString("nombreRealUsuario");
+                            notificado = jsonobject.getString("notificado");
+                            foto = jsonobject.getString("fotoPerfilUsuario");
+
+                            mensajesArray.add(mensaje);
+                            nombresArray.add(nombreUsuario);
+                            notificadoArray.add(notificado);
+                            idEmisoresArray.add(idEmisor);
+                            fotosArray.add(foto);
+
+                        }
+
+                        Log.println(Log.ASSERT, "Mensaje Recibido", mensajesArray.toString());
+                        Log.println(Log.ASSERT, "DE: ", nombresArray.toString());
+                        Log.println(Log.ASSERT, "NOTIFICADO: ", notificadoArray.toString());
+                        Log.println(Log.ASSERT, "FOTOS: ", fotosArray.toString());
+                        Log.println(Log.ASSERT, "ID'S EMISORES: ", idEmisoresArray.toString());
+
+                        mensaje = mensaje.replace("null", "");
+                        //Log.println(Log.ASSERT, "DE: ", mensaje);
+
+                        for (int i = 0; i < mensajesArray.size(); i++)
+                        {
+
+                            if (notificadoArray.get(i).equals("0"))
+                            {
+                                notificandoApp(nombresArray.get(i), mensajesArray.get(i), fotosArray.get(i), idEmisoresArray.get(i));
+
+                                Log.println(Log.ASSERT, "NOTIFICATION: ", nombresArray.get(i) + " - - - - - - - - - - " + mensajesArray.get(i));
+                            }
+                        }
+
+
+                        responseBody.close();
+                        responseBodyReader.close();
+                        myConnection.disconnect();
+
+                    } else {
+                        Log.println(Log.ASSERT, "Error", "Error");
+                    }
+                } catch (Exception e) {
+                    Log.println(Log.ASSERT, "Excepción", "Error de conexión, perdona2. " + e.getMessage());
+                }
+            }
+        });
+
         super.onCreateView(inflater, container, savedInstanceState);
 
         return view;
+    }
+
+    public int generateRandom(){
+        Random random = new Random();
+        return random.nextInt(9999 - 1000) + 1000;
+    }
+
+    public void notificandoApp(String nombreEmisor, String mensaje, String foto, String idEmisor)
+    {
+
+        final int m = generateRandom();
+
+        Intent intent=new Intent(getActivity().getApplicationContext(), Chat.class);
+
+        intent.putExtra("idReceptor", idEmisor);
+        intent.putExtra("nombre", nombreEmisor);
+        intent.putExtra("urlImagen", foto);
+
+        Log.println(Log.ASSERT, "LAFOTO", foto);
+
+
+        String CHANNEL_ID="MYCHANNEL";
+        NotificationChannel notificationChannel = new NotificationChannel(CHANNEL_ID,"name", NotificationManager.IMPORTANCE_HIGH);
+        PendingIntent pendingIntent = PendingIntent.getActivity(getActivity().getApplicationContext(),0,intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        Notification notification = new Notification.Builder(getActivity().getApplicationContext(),CHANNEL_ID)
+                .setContentTitle("DE: " + nombreEmisor)
+                .setContentText("Mensaje: " +  mensaje)
+                .setContentIntent(pendingIntent)
+                .setChannelId(CHANNEL_ID)
+                .setAutoCancel(true)
+                .setStyle(new Notification.BigTextStyle().bigText(mensaje))
+                .setSmallIcon((R.drawable.chaterinoslogo))
+                .build();
+
+        NotificationManager notificationManager = (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.createNotificationChannel(notificationChannel);
+        notificationManager.notify(m, notification);
     }
 
     @Override

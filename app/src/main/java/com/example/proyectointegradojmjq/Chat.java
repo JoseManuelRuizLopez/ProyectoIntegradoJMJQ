@@ -85,6 +85,7 @@ public class Chat extends AppCompatActivity implements View.OnClickListener, Key
         nombre = intent.getStringExtra("nombre");
         urlImagen = intent.getStringExtra("urlImagen");
 
+        //Log.println(Log.ASSERT, "IMAGEN", urlImagen);
 
         //ActionBar actionBar = setActionBar();
 
@@ -107,9 +108,8 @@ public class Chat extends AppCompatActivity implements View.OnClickListener, Key
 
         txtEnviar = findViewById(R.id.txtMensajeEnviar);
         txtFecha = findViewById(R.id.fechaMensaje);
-        //recibirMensaje();
 
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////d
+
         dbHelper = new BaseDatos(getApplicationContext());
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         if (db != null) {
@@ -241,13 +241,19 @@ public class Chat extends AppCompatActivity implements View.OnClickListener, Key
 
                                     Message m = new Message(txtEnviar.getText().toString(), true, finalMarcaDeTiempo);
                                     messageAdapter.add(m);
-/////////////////////////////////////g/////////////////////////////////////////////////////////////////////////////////////////////////
+
+                                    String nombreRealEmisor = sharedPref.getString("nombreRealUsuario", "");
+
+
+
                                     dbHelper = new BaseDatos(getApplicationContext());
                                     SQLiteDatabase db = dbHelper.getWritableDatabase();
                                     if (db != null) {
-                                        db.execSQL("INSERT INTO conversaciones (mensaje, timeStamperino, idEmisor, idReceptorFK, mePertenece) VALUES ('" + txtEnviar.getText().toString() + "'," +
-                                                "'" + tiempoSQLITE + "', " + sharedPref.getString("idUsuario", "") + ", " + idReceptor + " , 1)");
+                                        db.execSQL("INSERT INTO conversaciones (mensaje, timeStamperino, idEmisor, idReceptorFK, mePertenece, nombreEmisor) VALUES ('" + txtEnviar.getText().toString() + "'," +
+                                                "'" + tiempoSQLITE + "', " + sharedPref.getString("idUsuario", "") + ", " + idReceptor + " , 1, '" + nombreRealEmisor + "');");
                                     }
+
+
 
                                     db.close();
                                     txtEnviar.setText("");

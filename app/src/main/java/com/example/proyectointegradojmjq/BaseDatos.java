@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class BaseDatos extends SQLiteOpenHelper {
 
     private static final String COMMENTS_TABLE_CREATE = "CREATE TABLE conversaciones(_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-            "mensaje TEXT, timeStamperino TEXT, idEmisor INTEGER, idReceptorFK INTEGER , mePertenece INTEGER)";
+            "mensaje TEXT, timeStamperino TEXT, idEmisor INTEGER, idReceptorFK INTEGER , mePertenece INTEGER, nombreEmisor TEXT)";
     private static final String DB_NAME = "Chaterinos.db";
     private static final int DB_VERSION = 1;
 
