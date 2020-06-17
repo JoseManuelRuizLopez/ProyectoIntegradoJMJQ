@@ -22,7 +22,7 @@ public class VerPerfilChat extends AppCompatActivity implements KeyListener {
 
     String nombre;
     String urlImagen;
-    String edad;
+    int edad;
     String genero;
     String estadoCivil;
     String altura;
@@ -38,14 +38,16 @@ public class VerPerfilChat extends AppCompatActivity implements KeyListener {
     ImageView imgPerfilVPC;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ver_perfil_chat);
 
         Intent intent = getIntent();
         nombre = intent.getStringExtra("nombre");
         urlImagen = intent.getStringExtra("urlImagen");
-        edad = intent.getStringExtra("edad");
+        edad = intent.getIntExtra("edad", 8);
         genero = intent.getStringExtra("genero");
         altura = intent.getStringExtra("altura");
         estadoCivil = intent.getStringExtra("estadoCivil");
@@ -65,7 +67,7 @@ public class VerPerfilChat extends AppCompatActivity implements KeyListener {
         Picasso.with(this).load(urlImagen).memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE).into(imgPerfilVPC);
 
         lblNombreVPC.setText(nombre);
-        lblEdadVPC.setText(edad);
+        lblEdadVPC.setText(edad + "");
         lblAlturaVPC.setText(altura);
         lblEstadoCivilVPC.setText(estadoCivil);
         lblGeneroVPC.setText(genero);
@@ -101,7 +103,8 @@ public class VerPerfilChat extends AppCompatActivity implements KeyListener {
             this.finish();
             return true;
         }
-        return false;    }
+        return false;
+    }
 
     @Override
     public boolean onKeyUp(View view, Editable text, int keyCode, KeyEvent event) {

@@ -38,7 +38,10 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TimeZone;
@@ -46,10 +49,10 @@ import java.util.TimeZone;
 import javax.net.ssl.HttpsURLConnection;
 
 
-public class Chat extends AppCompatActivity implements View.OnClickListener, KeyListener {
+public class Chat extends AppCompatActivity implements View.OnClickListener
+{
 
     SharedPreferences sharedPref;
-
 
     String idReceptor;
     String nombre;
@@ -78,6 +81,19 @@ public class Chat extends AppCompatActivity implements View.OnClickListener, Key
 
     Boolean mePertence;
 
+    Boolean meFui = false;
+
+    String nombre2;
+    String fechaNac2;
+    String altura2;
+    String genero2;
+    String descripcion2;
+    String estadoCivil2;
+
+    int año;
+    int mes;
+    int dia;
+    int edad2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,10 +102,28 @@ public class Chat extends AppCompatActivity implements View.OnClickListener, Key
 
         sharedPref = getSharedPreferences("logeado", Context.MODE_PRIVATE);
 
+
+        AsyncTask asyntico;
+
         Intent intent = getIntent();
         idReceptor = intent.getStringExtra("idReceptor");
         nombre = intent.getStringExtra("nombre");
         urlImagen = intent.getStringExtra("urlImagen");
+
+        /*Bundle extras = getIntent().getExtras();
+        if (extras != null)
+        {
+            idReceptor = extras.getString("idReceptor");
+            nombre = extras.getString("nombre");
+            urlImagen = extras.getString("urlImagen");
+            edad = extras.getString("edad");
+            genero = extras.getString("genero");
+            altura = extras.getString("altura");
+            estadoCivil = extras.getString("estadoCivil");
+            descripcion = extras.getString("descripcion");
+        }*/
+
+
         edad = intent.getStringExtra("edad");
         genero = intent.getStringExtra("genero");
         altura = intent.getStringExtra("altura");
@@ -116,7 +150,7 @@ public class Chat extends AppCompatActivity implements View.OnClickListener, Key
 
         txtEnviar = findViewById(R.id.txtMensajeEnviar);
         txtFecha = findViewById(R.id.fechaMensaje);
-        //recibirMensaje();
+
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////d
         dbHelper = new BaseDatos(getApplicationContext());
@@ -178,29 +212,107 @@ public class Chat extends AppCompatActivity implements View.OnClickListener, Key
                 break;
 
             case R.id.imgUsuarioChat:
-                Intent intent = new Intent(this, VerPerfilChat.class);
-                intent.putExtra("urlImagen", urlImagen);
-                intent.putExtra("nombre", nombre);
-                intent.putExtra("edad", edad);
-                intent.putExtra("genero", genero);
-                intent.putExtra("altura", altura);
-                intent.putExtra("descripcion", descripcion);
-                intent.putExtra("estadoCivil", estadoCivil);
 
-                startActivity(intent);
+
+                AsyncTask.execute(new Runnable() {
+                    @Override
+                    public void run()
+                    {
+                        try {
+                            URL url = new URL("http://www.teamchaterinos.com/prueba.php?idUsuario=" + idReceptor);
+
+                            //Create connection
+                            HttpURLConnection myConnection = (HttpURLConnection) url.openConnection();
+
+                            //Establecer método por defecto GET
+                            myConnection.setRequestMethod("GET");
+
+                            if (myConnection.getResponseCode() == 200) {
+                                InputStream responseBody = myConnection.getInputStream();
+                                InputStreamReader responseBodyReader = new InputStreamReader(responseBody, "UTF-8");
+
+                                BufferedReader bR = new BufferedReader(responseBodyReader);
+                                String line = "";
+
+                                StringBuilder responseStrBuilder = new StringBuilder();
+
+                                while ((line = bR.readLine()) != null)
+                                {
+                                    responseStrBuilder.append(line);
+                                }
+
+                                JSONArray result = new JSONArray(responseStrBuilder.toString());
+
+                                for (int i = 0; i < result.length(); i++)
+                                {
+
+                                    JSONObject jsonobject = result.getJSONObject(i);
+
+
+
+                                    nombre2 = jsonobject.getString("nombreRealUsuario");
+                                    fechaNac2 = jsonobject.getString("fechaNacimientoUsuario");
+                                    altura2 = jsonobject.getString("alturaUsuario");
+                                    descripcion2 = jsonobject.getString("descripcionUsuario");
+                                    estadoCivil2 = jsonobject.getString("estadoCivilUsuario");
+                                    genero2 = jsonobject.getString("generoUsuario");
+
+
+
+                                }
+
+                                String[] diaNac = fechaNac2.split("-");
+
+                                año = Integer.parseInt(diaNac[0]);
+                                mes = Integer.parseInt(diaNac[1]);
+                                dia = Integer.parseInt(diaNac[2]);
+
+                                edad2 = getAge(año, mes, dia );
+
+                                Log.println(Log.ASSERT, "FECHANACIMIENTO", fechaNac2);
+
+                                Intent intent = new Intent(getApplicationContext(), VerPerfilChat.class);
+                                intent.putExtra("urlImagen", urlImagen);
+                                intent.putExtra("nombre", nombre2);
+                                intent.putExtra("edad", edad2);
+                                intent.putExtra("genero", genero2);
+                                intent.putExtra("altura", altura2);
+                                intent.putExtra("descripcion", descripcion2);
+                                intent.putExtra("estadoCivil", estadoCivil2);
+
+                                startActivity(intent);
+
+                                responseBody.close();
+                                responseBodyReader.close();
+                                myConnection.disconnect();
+
+                            } else {
+                                Log.println(Log.ASSERT, "Error", "Error");
+                            }
+                        } catch (Exception e) {
+                            Log.println(Log.ASSERT, "Excepción", "Error de conexión, perdona2. " + e.getMessage());
+                        }
+                    }
+                });
+
+
+
+                Log.println(Log.ASSERT, "Excepción", "COMPRO" + año + "-" + mes + "-" + dia);
+
+
                 break;
         }
     }
 
     //Metodo para enviar mensajes
     public void enviarMensaje() {
-        if(!txtEnviar.getText().toString().equals("")) {
+        if(!txtEnviar.getText().toString().equals(""))
+        {
             AsyncTask.execute(new Runnable() {
                 @Override
                 public void run() {
 
                     try {
-
 
                         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy'--'HH:mm:ss");
                         sdf.setTimeZone(TimeZone.getTimeZone("GMT+2"));
@@ -214,6 +326,8 @@ public class Chat extends AppCompatActivity implements View.OnClickListener, Key
                         postDataParams.put("idEmisor", sharedPref.getString("idUsuario", ""));
                         postDataParams.put("idReceptorFK", idReceptor);
                         postDataParams.put("timeStamperino", marcaDeTiempo);
+                        postDataParams.put("recibido", "0");
+                        postDataParams.put("notificado", "0");
 
                         URL url3 = new URL("http://www.teamchaterinos.com/pruebachat.php");
                         HttpURLConnection connection = (HttpURLConnection) url3.openConnection();
@@ -297,7 +411,8 @@ public class Chat extends AppCompatActivity implements View.OnClickListener, Key
     }
 
     //Metodo para recibir mensajes
-    public void recibirMensaje() {
+    public void recibirMensaje()
+    {
         AsyncTask.execute(new Runnable() {
             @Override
             public void run() {
@@ -305,6 +420,16 @@ public class Chat extends AppCompatActivity implements View.OnClickListener, Key
                 try {
                     URL url = null;
                     try {
+
+
+                        if (meFui)
+                        {
+                            handler.removeCallbacks(refresh);
+                            handler.removeCallbacksAndMessages(null);
+                            handler = null;
+                            refresh = null;
+                        }
+
                         url = new URL("http://www.teamchaterinos.com/pruebachat.php?idEmisor=" + idReceptor +
                                 "&idReceptorFK=" + sharedPref.getString("idUsuario", "") + "");
                         HttpURLConnection myConnection = (HttpURLConnection) url.openConnection();
@@ -360,8 +485,8 @@ public class Chat extends AppCompatActivity implements View.OnClickListener, Key
                                             dbHelper = new BaseDatos(getApplicationContext());
                                             SQLiteDatabase db = dbHelper.getWritableDatabase();
                                             if (db != null) {
-                                                db.execSQL("INSERT INTO conversaciones (mensaje, timeStamperino, idEmisor, idReceptorFK, mePertenece) VALUES ('" + mensaje + "'," +
-                                                        "'" + tiempoSQLITE + "', " + sharedPref.getString("idUsuario", "") + ", " +  idReceptor + ", 0)");
+                                                db.execSQL("INSERT INTO conversaciones (mensaje, timeStamperino, idEmisor, idReceptorFK, mePertenece, nombreEmisor) VALUES ('" + mensaje + "'," +
+                                                        "'" + tiempoSQLITE + "', " + sharedPref.getString("idUsuario", "") + ", " +  idReceptor + ", 0, '" + lblNombre.getText().toString() + "')");
                                             }
 
                                             db.close();
@@ -379,14 +504,14 @@ public class Chat extends AppCompatActivity implements View.OnClickListener, Key
 
 
                         } else {
-                            Log.println(Log.ASSERT, "Error", "Error");
+                            Log.println(Log.ASSERT, "Error1", "Error");
                         }
 
                     } catch (Exception e) {
-                        Log.println(Log.ASSERT, "Error", e.getMessage());
+                        Log.println(Log.ASSERT, "Error2", e.getMessage());
                     }
                 } catch (Exception e) {
-                    Log.println(Log.ASSERT, "Error", "Error2");
+                    Log.println(Log.ASSERT, "Error3", "Error2");
                 }
             }
             //}
@@ -394,6 +519,24 @@ public class Chat extends AppCompatActivity implements View.OnClickListener, Key
 
     }
 
+    public int getAge(int _year, int _month, int _day) {
+
+        GregorianCalendar cal = new GregorianCalendar();
+        int y, m, d, a;
+
+        y = cal.get(Calendar.YEAR);
+        m = cal.get(Calendar.MONTH);
+        d = cal.get(Calendar.DAY_OF_MONTH);
+        cal.set(_year, _month, _day);
+        a = y - cal.get(Calendar.YEAR);
+        if ((m < cal.get(Calendar.MONTH)) || ((m == cal.get(Calendar.MONTH)) && (d < cal.get(Calendar.DAY_OF_MONTH)))) {
+            --a;
+        }
+        if (a < 0) {
+            a = 0;
+        }
+        return a;
+    }
 
     private String getPostDataString(HashMap<String, String> params) throws UnsupportedEncodingException {
         StringBuilder result = new StringBuilder();
@@ -414,32 +557,10 @@ public class Chat extends AppCompatActivity implements View.OnClickListener, Key
     }
 
     @Override
-    public int getInputType() {
-        return 0;
-    }
-
-    @Override
-    public boolean onKeyDown(View view, Editable text, int keyCode, KeyEvent event) {
-
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            this.finish();
-            return true;
-        }
-        return false;
-    }
-
-    @Override
-    public boolean onKeyUp(View view, Editable text, int keyCode, KeyEvent event) {
-        return false;
-    }
-
-    @Override
-    public boolean onKeyOther(View view, Editable text, KeyEvent event) {
-        return false;
-    }
-
-    @Override
-    public void clearMetaKeyState(View view, Editable content, int states) {
-
+    public void onBackPressed()
+    {
+        meFui = true;
+        finish();
+        super.onBackPressed();
     }
 }

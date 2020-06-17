@@ -58,7 +58,8 @@ import java.util.Random;
 import java.util.StringTokenizer;
 import java.util.TimeZone;
 
-public class FragmentoConversaciones extends Fragment {
+public class FragmentoConversaciones extends Fragment
+{
 
     private ConversacionesViewModel conversacionesViewModel;
 
@@ -109,6 +110,22 @@ public class FragmentoConversaciones extends Fragment {
     ArrayList<String> idEmisoresArray;
     ArrayList<String> fotosArray;
 
+    ArrayList<String> edadesArray;
+    ArrayList<String> generoArray;
+    ArrayList<String> alturaArray;
+    ArrayList<String> estadoCivilArray;
+    ArrayList<String> descripcionArray;
+    String edad;
+    String genero;
+    String altura;
+    String estadoCivil;
+    String descripcion;
+
+    String m;
+    String t;
+    String nom;
+    String idUserino;
+
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         conversacionesViewModel = ViewModelProviders.of(this).get(ConversacionesViewModel.class);
@@ -158,6 +175,12 @@ public class FragmentoConversaciones extends Fragment {
                             marcasDeFecha = new ArrayList<String>();
                             recibidoArray = new ArrayList<String>();
 
+                            edadesArray = new ArrayList<String>();
+                            generoArray = new ArrayList<String>();
+                            alturaArray = new ArrayList<String>();
+                            estadoCivilArray = new ArrayList<String>();
+                            descripcionArray = new ArrayList<String>();
+
                             Log.println(Log.ASSERT, "RESPUESTA-->", respuesta + "");
 
                             JSONArray jsonArray1 = new JSONArray(respuesta);
@@ -181,6 +204,20 @@ public class FragmentoConversaciones extends Fragment {
                                 messages.add(sms);
                                 horas.add(hora);
                                 recibidoArray.add(recibido);
+
+
+
+                                edad = json_data.getString("fechaNacimientoUsuario");
+                                genero = json_data.getString("generoUsuario");
+                                altura = json_data.getString("alturaUsuario");
+                                estadoCivil = json_data.getString("estadoCivilUsuario");
+                                descripcion = json_data.getString("descripcionusuario");
+
+                                edadesArray.add(edad);
+                                generoArray.add(genero);
+                                estadoCivilArray.add(estadoCivil);
+                                alturaArray.add(altura);
+                                descripcionArray.add(descripcion);
 
                             }
 
@@ -212,6 +249,51 @@ public class FragmentoConversaciones extends Fragment {
                             responseBodyReader.close();
                             myConnection.disconnect();
 
+                            dbHelper = new BaseDatos(getActivity().getApplicationContext());
+                            SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+                            Log.println(Log.ASSERT, "SQLITE1-->", " - - - - " + " - - - - - ");
+                            if (db != null) {
+
+                                try {
+
+                                    Log.println(Log.ASSERT, "SQLITE2-->", " - - - - " + " - - - - - ");
+                                    Cursor c = db.rawQuery("SELECT mensaje, timeStamperino, mePertenece, nombreEmisor, idReceptorFK FROM conversaciones group by idReceptorFK order by timeStamperino desc", null);
+
+                                    c.moveToFirst();
+
+                                    do {
+
+                                        m = c.getString(c.getColumnIndex("mensaje"));
+                                        t = c.getString(c.getColumnIndex("timeStamperino"));
+                                        nom = c.getString(c.getColumnIndex("nombreEmisor"));
+                                        idUserino = c.getString(c.getColumnIndex("idReceptorFK"));
+
+
+                                        fotosPerfil.add("http://www.teamchaterinos.com/images/" + idUserino + ".png");
+
+                                        t = t.replace("-", "/");
+                                        t = t.replace("//", "  ");
+                                        t = t.substring(0, t.lastIndexOf(":"));
+
+                                        String[] hora = t.split("  ");
+                                        hora[0] = hora[0].substring(0, t.lastIndexOf("/"));
+
+                                        idUsuarios.add(idUserino);
+                                        nombres.add(nom);
+                                        messages.add(m);
+                                        marcasDeTiempo.add(hora[1]);
+                                        marcasDeFecha.add(hora[0]);
+
+                                        Log.println(Log.ASSERT, "SQLITE-->", m + " - - - - " + t + " - - - - - " + nom);
+
+
+                                    } while (c.moveToNext());
+                                } catch (Exception e) {
+
+                                }
+                            }
+
 
                             gridView = root.findViewById(R.id.gridviewCv);
                             getActivity().runOnUiThread(new Runnable() {
@@ -228,7 +310,7 @@ public class FragmentoConversaciones extends Fragment {
                                             intent.putExtra("idReceptor", idUsuarios.get(i));
                                             intent.putExtra("nombre", nombres.get(i));
                                             intent.putExtra("urlImagen", fotosPerfil.get(i));
-                                            //intent.putExtra("mensaje", messages.get(i));
+                                            //intent.putExtra("edad", edadesArray.get(i));
 
                                             startActivity(intent);
                                             getActivity().overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
@@ -325,46 +407,7 @@ public class FragmentoConversaciones extends Fragment {
                                 }
                             });
 
-                            /*dbHelper = new BaseDatos(getActivity().getApplicationContext());
-                            SQLiteDatabase db = dbHelper.getWritableDatabase();
 
-                            if (db != null) {
-
-                                try {
-
-                                    Cursor c = db.rawQuery("SELECT mensaje, timeStamperino, idEmisor, mePertenece, nombreEmisor FROM conversaciones WHERE idEmisor = " + 2 + "" +
-                                            " and idReceptorFK = " + 1 + " order by timeStamperino", null);
-
-                                    c.moveToFirst();
-
-                                    do {
-
-                                        String m = c.getString(c.getColumnIndex("mensaje"));
-                                        String t = c.getString(c.getColumnIndex("timeStamperino"));
-                                        String nom = c.getString(c.getColumnIndex("nombreEmisor"));
-                                        int esMio = c.getInt(c.getColumnIndex("mePertenece"));
-
-                                        if (esMio == 1) {
-                                            mePertence = true;
-                                        } else {
-                                            mePertence = false;
-                                        }
-
-                                        t = t.replace("-", "/");
-                                        t = t.replace("//", "  ");
-                                        t = t.substring(0, t.lastIndexOf(":"));
-
-
-
-
-                                        Log.println(Log.ASSERT, "SQLITE-->", m + " - - - - " + t + " - - - - - " + nom);
-
-
-                                    } while (c.moveToNext());
-                                } catch (Exception e) {
-
-                                }
-                            }*/
 
                             Log.println(Log.ASSERT, "NOMBREDELUSER-->", marcaDeTiempo + "");
 
@@ -406,7 +449,7 @@ public class FragmentoConversaciones extends Fragment {
 
         String CHANNEL_ID="MYCHANNEL";
         NotificationChannel notificationChannel = new NotificationChannel(CHANNEL_ID,"name", NotificationManager.IMPORTANCE_HIGH);
-        PendingIntent pendingIntent = PendingIntent.getActivity(getActivity().getApplicationContext(),0,intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getActivity(getActivity().getApplicationContext(), m,intent, PendingIntent.FLAG_UPDATE_CURRENT);
         Notification notification = new Notification.Builder(getActivity().getApplicationContext(),CHANNEL_ID)
                 .setContentTitle("DE: " + nombreEmisor)
                 .setContentText("Mensaje: " +  mensaje)

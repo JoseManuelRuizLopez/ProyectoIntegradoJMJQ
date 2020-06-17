@@ -268,7 +268,8 @@ public class VistaPerfilUsuario extends AppCompatActivity implements View.OnClic
     }
 
 
-    public int generateRandom(){
+    public int generateRandom()
+    {
         Random random = new Random();
         return random.nextInt(9999 - 1000) + 1000;
     }

@@ -475,6 +475,10 @@ public class ConfiguracionPerfil extends AppCompatActivity implements View.OnCli
                                             public void run() {
 
                                                 Toast.makeText(getApplicationContext(), R.string.cambiosGuardados, Toast.LENGTH_SHORT).show();
+                                                SharedPreferences.Editor editor = sharedPref.edit();
+                                                editor.putBoolean("isLogged", false);
+                                                editor.commit();
+
                                             }
                                         });
 

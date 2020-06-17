@@ -514,25 +514,36 @@ public class FragmentoInicio extends Fragment {
     public void notificandoApp(String nombreEmisor, String mensaje, String foto, String idEmisor)
     {
 
-        final int m = generateRandom();
+        int m = generateRandom();
+        int h = generateRandom();
 
-        Intent intent=new Intent(getActivity().getApplicationContext(), Chat.class);
+        Intent intent = new Intent(getActivity().getApplicationContext(), Chat.class);
 
-        intent.putExtra("idReceptor", idEmisor);
+        /*intent.putExtra("idReceptor", idEmisor);
         intent.putExtra("nombre", nombreEmisor);
-        intent.putExtra("urlImagen", foto);
+        intent.putExtra("urlImagen", foto);*/
 
-        Log.println(Log.ASSERT, "LAFOTO", foto);
+        Bundle bundle = new Bundle();
+        bundle.putString("idReceptor", idEmisor);
+        bundle.putString("nombre", nombreEmisor);
+        bundle.putString("urlImagen", foto);
+
+        intent.putExtras(bundle);
+
+        Log.println(Log.ASSERT, "COMPROBEMOS", foto + "------NOMBRE-------" + nombreEmisor + "-----------IDRECEPTOR-----------" +  idEmisor);
 
         String CHANNEL_ID="MYCHANNEL";
         NotificationChannel notificationChannel = new NotificationChannel(CHANNEL_ID,"name", NotificationManager.IMPORTANCE_HIGH);
-        PendingIntent pendingIntent = PendingIntent.getActivity(getActivity().getApplicationContext(),0,intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        //int uniqueInt = (int) (System.currentTimeMillis() & 0xfffffff);
+        PendingIntent pendingIntent = PendingIntent.getActivity(getActivity().getApplicationContext(), h, intent,  PendingIntent.FLAG_UPDATE_CURRENT);
+
         Notification notification = new Notification.Builder(getActivity().getApplicationContext(),CHANNEL_ID)
                 .setContentTitle("DE: " + nombreEmisor)
                 .setContentText("Mensaje: " +  mensaje)
                 .setContentIntent(pendingIntent)
                 .setChannelId(CHANNEL_ID)
                 .setAutoCancel(true)
+                //.addExtras(bundle)
                 .setStyle(new Notification.BigTextStyle().bigText(mensaje))
                 .setSmallIcon((R.drawable.chaterinoslogo))
                 .build();
