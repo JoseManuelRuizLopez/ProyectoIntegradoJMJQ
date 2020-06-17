@@ -50,7 +50,7 @@
     <string name="txtCorreoRC">ejemplo@dominio.com</string>
     <string name="btnEnviarRC">Enviar correo</string>
     <string name="btnCancelarRC">Cancelar</string>
-    <string name="tsCorreoEnviadoRC">Se el correo con exito</string>
+    <string name="tsCorreoEnviadoRC">Se envio el correo con exito</string>
     <string name="tsCorreoErrorRC">Error al enviar el correo</string>
 
     <!-- Nav Drawer/Menu principal -->
