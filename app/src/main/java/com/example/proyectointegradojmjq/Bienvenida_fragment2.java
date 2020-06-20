@@ -182,8 +182,12 @@ public class Bienvenida_fragment2 extends Fragment implements View.OnClickListen
                         nombreReal = txtNombreRealB.getText().toString();
                         descripcion = txtDescripcionB.getText().toString();
 
+                        String fechaAmericanaB [] = txtFechaNacimientoB.getText().toString().split("/");
+
+                        String fechaok = fechaAmericanaB[2] + "/" + fechaAmericanaB[1] + "/" + fechaAmericanaB[0];
+
                         getActivity().getIntent().putExtra("nombreReal", nombreReal);
-                        getActivity().getIntent().putExtra("fechaAmericana", fechaAmericana);
+                        getActivity().getIntent().putExtra("fechaAmericana", fechaok);
                         getActivity().getIntent().putExtra("descripcion", descripcion);
 
                         ((BienvenidaUsuario)getActivity()).selectTab(2);

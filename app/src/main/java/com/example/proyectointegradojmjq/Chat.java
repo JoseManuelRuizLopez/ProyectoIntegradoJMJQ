@@ -425,7 +425,7 @@ public class Chat extends AppCompatActivity implements View.OnClickListener
                         if (meFui)
                         {
                             handler.removeCallbacks(refresh);
-                            handler.removeCallbacksAndMessages(null);
+                             handler.removeCallbacksAndMessages(null);
                             handler = null;
                             refresh = null;
                         }

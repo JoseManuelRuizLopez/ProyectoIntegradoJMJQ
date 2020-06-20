@@ -37,8 +37,7 @@ import java.util.Map;
 
 import javax.net.ssl.HttpsURLConnection;
 
-public class RecordarClave extends AppCompatActivity implements View.OnClickListener, KeyListener
-{
+public class RecordarClave extends AppCompatActivity implements View.OnClickListener, KeyListener {
 
     Button btnCancelarRC;
     Button btnEnviarRC;
@@ -53,8 +52,7 @@ public class RecordarClave extends AppCompatActivity implements View.OnClickList
     boolean todoOk = true;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recordar_clave);
 
@@ -70,10 +68,8 @@ public class RecordarClave extends AppCompatActivity implements View.OnClickList
     }
 
     @Override
-    public void onClick(View v)
-    {
-        switch (v.getId())
-        {
+    public void onClick(View v) {
+        switch (v.getId()) {
             case R.id.btnEnviarRC:
 
                 correoUsuario = txtCorreo.getText().toString();
@@ -92,8 +88,7 @@ public class RecordarClave extends AppCompatActivity implements View.OnClickList
                             //Establecer método por defecto GET
                             myConnection.setRequestMethod("GET");
 
-                            if (myConnection.getResponseCode() == 200)
-                            {
+                            if (myConnection.getResponseCode() == 200) {
                                 InputStream responseBody = myConnection.getInputStream();
                                 InputStreamReader responseBodyReader = new InputStreamReader(responseBody, "UTF-8");
 
@@ -115,27 +110,23 @@ public class RecordarClave extends AppCompatActivity implements View.OnClickList
                                 responseBodyReader.close();
                                 myConnection.disconnect();
 
-                            }
-                            else
-                                {
+                            } else {
                                 Log.println(Log.ASSERT, "Error", "Error");
                             }
 
 
                             if (respuestaCorreo.equals("0")) {
                                 runOnUiThread(new Runnable() {
-                                    public void run()
-                                    {
+                                    public void run() {
                                         textInputLayoutCorreoRC.setError(getResources().getString(R.string.errorEmailUsuarioNoExisteRC));
+
                                     }
                                 });
                                 todoOk = false;
                             }
 
-                            if (todoOk)
-                            {
-                                try
-                                {
+                            if (todoOk) {
+                                try {
 
                                     String respuesta = "";
                                     HashMap<String, String> postDataParams = new HashMap<String, String>();
@@ -159,44 +150,42 @@ public class RecordarClave extends AppCompatActivity implements View.OnClickList
 
                                     int responseCode = connection.getResponseCode();
 
-                                    if (responseCode == HttpsURLConnection.HTTP_OK)
-                                    {
+                                    if (responseCode == HttpsURLConnection.HTTP_OK) {
                                         String line;
                                         BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 
-                                        while ((line = br.readLine()) != null)
-                                        {
+                                        while ((line = br.readLine()) != null) {
                                             respuesta += line;
                                         }
-                                    }
-                                    else
-                                    {
+                                    } else {
                                         respuesta = "";
                                     }
                                     connection.getResponseCode();
 
-                                    if (connection.getResponseCode() == 200)
-                                    {
-                                        Log.println(Log.ASSERT, "Registro exitoso", "Registrado con éxito: " + respuesta);
-                                        //cargaCU.setVisibility(View.GONE);
-                                        connection.disconnect();
+                                    if (connection.getResponseCode() == 200) {
+                                        Log.println(Log.ASSERT, "Registro exitoso", "se envio la wea y se cerro: " + respuesta);
+
+                                        myConnection.disconnect();
 
                                         finish();
-                                    }
-                                    else
-                                        {
+
+                                        runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                Toast.makeText(getApplicationContext(), R.string.tsCorreoEnviadoRC, Toast.LENGTH_SHORT).show();
+
+                                            }
+                                        });
+
+                                    } else {
                                         Log.println(Log.ASSERT, "Error", "Error");
                                     }
-                                }
-                                catch (Exception e)
-                                {
+                                } catch (Exception e) {
                                     Log.println(Log.ASSERT, "Excepción", e.getMessage());
                                 }
                             }
 
-                        }
-                        catch (Exception e)
-                        {
+                        } catch (Exception e) {
                             Log.println(Log.ASSERT, "Excepción", "Error de conexión, perdona");
                         }
                     }
@@ -223,8 +212,7 @@ public class RecordarClave extends AppCompatActivity implements View.OnClickList
         StringBuilder result = new StringBuilder();
         boolean first = true;
 
-        for (Map.Entry<String, String> entry : params.entrySet())
-        {
+        for (Map.Entry<String, String> entry : params.entrySet()) {
             if (first) {
                 first = false;
             } else {
