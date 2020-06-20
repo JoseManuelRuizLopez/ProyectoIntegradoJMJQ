@@ -152,8 +152,7 @@ public class ConfiguracionPerfil extends AppCompatActivity implements View.OnCli
                                 txtIn2.setHint("Nueva Clave");
                                 txtIn3.setHint("Repetir Nueva Clave");
                                 txtCorreo.setText(correoEmail);
-                                txtClave.setText("**********");
-                                txtClave2.setText("**********");
+
                             }
                         });
 

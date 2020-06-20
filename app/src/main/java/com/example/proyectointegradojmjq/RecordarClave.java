@@ -181,16 +181,6 @@ public class RecordarClave extends AppCompatActivity implements View.OnClickList
                                         //cargaCU.setVisibility(View.GONE);
                                         connection.disconnect();
 
-                                        String respuestaId = "";
-
-                                        JSONArray result = new JSONArray(respuesta.toString());
-
-                                        for(int i=0; i < result.length(); i++)
-                                        {
-                                            JSONObject jsonobject = result.getJSONObject(i);
-
-                                            respuestaId = jsonobject.getString("idUsuario");
-                                        }
                                         finish();
                                     }
                                     else
